@@ -93,5 +93,90 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
         {
             throw new NotImplementedException();
         }
+
+        double IVessel.GetRadarHeight()
+        {
+            throw new NotImplementedException();
+        }
+
+        double IVessel.GetHeight()
+        {
+            throw new NotImplementedException();
+        }
+
+        double IVessel.GetOrbitSpeed()
+        {
+            throw new NotImplementedException();
+        }
+
+        SVector IVessel.GetOrbitVelocity()
+        {
+            throw new NotImplementedException();
+        }
+
+        double IVessel.GetSurfaceSpeed()
+        {
+            throw new NotImplementedException();
+        }
+
+        SVector IVessel.GetSurfaceVelocity()
+        {
+            throw new NotImplementedException();
+        }
+
+        ICelestialBody IVessel.GetParentBody()
+        {
+            throw new NotImplementedException();
+        }
+
+        double IVessel.GetDryMass()
+        {
+            throw new NotImplementedException();
+        }
+
+        double IVessel.GetMass()
+        {
+            throw new NotImplementedException();
+        }
+
+        SVector IVessel.GetCenterOfMass()
+        {
+            throw new NotImplementedException();
+        }
+
+        SVector IVessel.GetCenterOfDryMass()
+        {
+            throw new NotImplementedException();
+        }
+
+        SVector IVessel.GetMomentOfInertia()
+        {
+            throw new NotImplementedException();
+        }
+
+        LuaTable IVessel.GetEngines()
+        {
+            throw new NotImplementedException();
+        }
+
+        SVector ITarget.GetPosition()
+        {
+            throw new NotImplementedException();
+        }
+
+        UnityEngine.Quaternion ITarget.GetRotation()
+        {
+            throw new NotImplementedException();
+        }
+
+        string ITarget.GetName()
+        {
+            return "testVessel";
+        }
+
+        IControls IVessel.GetControls()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

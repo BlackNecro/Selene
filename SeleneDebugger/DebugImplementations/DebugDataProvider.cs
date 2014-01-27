@@ -71,6 +71,7 @@ luanet.load_assembly('SeleneCore')
 luanet.load_assembly('SeleneDebugger')
 luanet.load_assembly('UnityEngine')
 Vector = luanet.import_type('Selene.DataTypes.Vector')
+local val = luanet.import_type('SeleneDebugger.DebugImplementations.DebugDataProvider')
 Quaternion = luanet.import_type('UnityEngine.Quaternion')
 local QuaternionUtil = luanet.import_type('Selene.DataTypes.QuaternionUtil')
 
@@ -84,7 +85,6 @@ vmt.__add = Vector.Add
 vmt.__sub = Vector.Substract
 vmt.__mul = Vector.Multiply
 vmt.__div = Vector.Divide
-luanet = nil;
 ");
             luaState["Selene"] = this;
 

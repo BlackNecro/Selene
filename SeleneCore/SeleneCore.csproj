@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\ICelestialBody.cs" />
+    <Compile Include="DataTypes\IControls.cs" />
     <Compile Include="DataTypes\IEngineInfo.cs" />
     <Compile Include="DataTypes\QuaternionUtil.cs" />
     <Compile Include="GUI\IButton.cs" />

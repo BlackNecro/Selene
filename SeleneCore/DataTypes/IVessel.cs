@@ -11,7 +11,9 @@ namespace Selene.DataTypes
         double GetRadarHeight();
         double GetHeight();
         double GetOrbitSpeed();
-        double GetSurfaceSpeed();        
+        Vector GetOrbitVelocity();
+        double GetSurfaceSpeed();
+        Vector GetSurfaceVelocity();
         ICelestialBody GetParentBody();
         #endregion
         #region Vessel properties
@@ -24,5 +26,6 @@ namespace Selene.DataTypes
         #region Part Info
         NLua.LuaTable GetEngines();
         #endregion
+        IControls GetControls();
     }
 }

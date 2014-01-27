@@ -15,6 +15,13 @@ namespace Selene.DataTypes
         {
             x = y = z = 0;
         }
+
+        public Vector(UnityEngine.Vector3 init)
+        {
+            x = init.x;
+            y = init.y;
+            z = init.z;
+        }
         public Vector(Vector3d init)
         {
             x = init.x;
