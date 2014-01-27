@@ -1,0 +1,61 @@
+Feature Scope:	
+	IO Stuff
+		Handle Callbacks
+		GUI Elements
+			Buttons 
+			Sliders
+			Textbox
+			Label
+			
+	Debug Output
+		Logging to console
+		Logging to file
+
+	DataTypes:		
+		3D Vector
+		Target 
+			Get
+				Rotation															
+				Position
+		Vessel : Target
+			Get
+				Height over Ground / Ocean
+				Velocity
+				Controls
+				Stage List
+					Stage Info
+						Resource Stuff
+				Engine List
+					Engine Info
+						Offset
+						Enabled
+						Max Throttle Percentage
+						Max Thrust
+				Action Groups
+				Parent Celestial Body
+				Dry Mass				
+				Mass
+				Center of Mass
+				Moment of Inertia
+			Set
+				Controls
+				Staging
+					Trigger Stage
+					Trigger Undock?
+				Engine Info
+					Enabled
+					Max Throttle Percentage
+				Action Groups
+		Celestial Body : Target
+			Get 
+				Atmospheric parameters
+				SOI size
+
+	Data Provider:
+		Get Executing Vessel
+		Get Commanded Vessel
+		Get Current Target
+		Get Vessel (List) By Name 
+		Get Celestial Body By Name
+
+
