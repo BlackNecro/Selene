@@ -13,6 +13,8 @@ namespace SeleneKSP
     {
         ModuleSelene parentModule;
         NLua.Lua luaState;
+        event RegisterCallback CreateTickCallback;
+
         public KSPDataProvider(ModuleSelene parent)
         {
             parentModule = parent;
@@ -143,6 +145,41 @@ vmt.__div = Vector.Divide
         NLua.Lua IDataProvider.GetLuaState()
         {
             return luaState;
+        }
+
+
+        public void Log(string toLog)
+        {
+            UnityEngine.Debug.Log(toLog);
+        }
+
+
+        public void RegisterCallbackEvent(RegisterCallback toCall)
+        {
+            CreateTickCallback += toCall;
+        }
+
+        public void RegisterTick(NLua.LuaFunction toCall, string name, double delay)
+        {
+            CreateTickCallback(CallbackType.Tick,toCall, name, (int)delay);
+        }
+
+
+        public void RegisterTick(NLua.LuaFunction toCall, string name)
+        {
+            RegisterTick(toCall, name, 1);
+        }
+
+        public void RegisterTick(NLua.LuaFunction toCall)
+        {
+            RegisterTick(toCall, "_tick");
+        }
+        public NLua.LuaFunction OnTick
+        {
+            set
+            {
+                RegisterTick(value, "_tick", 1);
+            }
         }
     }
 }

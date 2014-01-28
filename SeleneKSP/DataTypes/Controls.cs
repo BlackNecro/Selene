@@ -17,15 +17,15 @@ namespace SeleneKSP.DataTypes
         {
             vessel = parentVessel;            
         }
-        
 
-        SVector IControls.GetTranslational()
+
+        public SVector GetTranslational()
         {
             var ctrls = vessel.ctrlState;
             return new SVector(ctrls.X, ctrls.Y, ctrls.Z);
         }
 
-        void IControls.SetTranslational(SVector newValue)
+        public void SetTranslational(SVector newValue)
         {
             var ctrls = vessel.ctrlState;
             ctrls.X = (float)newValue.x;
@@ -33,13 +33,13 @@ namespace SeleneKSP.DataTypes
             ctrls.Z = (float)newValue.z;
         }
 
-        SVector IControls.GetRotational()
+        public SVector GetRotational()
         {
             var ctrls = vessel.ctrlState;
             return new SVector(ctrls.pitch, ctrls.yaw, ctrls.roll);
         }
 
-        void IControls.SetRotational(SVector newValue)
+        public void SetRotational(SVector newValue)
         {
             var ctrls = vessel.ctrlState;
             ctrls.pitch = (float)newValue.x;
@@ -47,13 +47,13 @@ namespace SeleneKSP.DataTypes
             ctrls.roll = (float)newValue.z;
         }
 
-        double IControls.GetThrust()
+        public double GetThrottle()
         {
             var ctrls = vessel.ctrlState;
             return ctrls.mainThrottle;
         }
 
-        void IControls.SetThrust(double newValue)
+        public void SetThrottle(double newValue)
         {
             var ctrls = vessel.ctrlState;
             ctrls.mainThrottle = (float)newValue;

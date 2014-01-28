@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CallbackType.cs" />
     <Compile Include="DataTypes\ICelestialBody.cs" />
     <Compile Include="DataTypes\IControls.cs" />
     <Compile Include="DataTypes\IEngineInfo.cs" />

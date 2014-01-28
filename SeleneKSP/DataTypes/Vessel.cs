@@ -19,87 +19,87 @@ namespace SeleneKSP.DataTypes
             vessel = toUse;
         }
 
-        double IVessel.GetRadarHeight()
+        public double GetRadarHeight()
         {
             return vessel.heightFromTerrain;
         }
 
-        double IVessel.GetHeight()
+        public double GetHeight()
         {
             return vessel.heightFromSurface;
         }
 
-        double IVessel.GetOrbitSpeed()
+        public double GetOrbitSpeed()
         {
             return vessel.obt_speed;
         }
-        SVector IVessel.GetOrbitVelocity()
+        public SVector GetOrbitVelocity()
         {
             return new SVector(vessel.obt_velocity);
         }
 
-        double IVessel.GetSurfaceSpeed()
+        public double GetSurfaceSpeed()
         {
             return vessel.srfSpeed;
         }
 
-        SVector IVessel.GetSurfaceVelocity()
+        public SVector GetSurfaceVelocity()
         {
             return new SVector(vessel.srf_velocity);
         }
 
-        ICelestialBody IVessel.GetParentBody()
+        public ICelestialBody GetParentBody()
         {
             throw new NotImplementedException();
         }
 
-        double IVessel.GetDryMass()
+        public double GetDryMass()
         {
             throw new NotImplementedException();
         }
 
-        double IVessel.GetMass()
+        public double GetMass()
         {
             return vessel.GetTotalMass();
         }
 
-        SVector IVessel.GetCenterOfMass()
+        public SVector GetCenterOfMass()
         {
             throw new NotImplementedException();
         }
 
-        SVector IVessel.GetCenterOfDryMass()
+        public SVector GetCenterOfDryMass()
         {
             throw new NotImplementedException();
         }
 
-        SVector IVessel.GetMomentOfInertia()
+        public SVector GetMomentOfInertia()
         {
             throw new NotImplementedException();
         }
 
-        LuaTable IVessel.GetEngines()
+        public LuaTable GetEngines()
         {
             throw new NotImplementedException();
         }
 
-        SVector ITarget.GetPosition()
+        public SVector GetPosition()
         {
             throw new NotImplementedException();
         }
 
-        UnityEngine.Quaternion ITarget.GetRotation()
+        public UnityEngine.Quaternion GetRotation()
         {
             UnityEngine.Quaternion copy = vessel.transform.rotation;            
             return copy;
         }
 
-        string ITarget.GetName()
+        public string GetName()
         {
             return vessel.GetName(); 
         }
 
-        IControls IVessel.GetControls()
+        public IControls GetControls()
         {
             return new Controls(vessel); 
         }

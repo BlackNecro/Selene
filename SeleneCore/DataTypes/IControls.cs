@@ -12,8 +12,8 @@ namespace Selene.DataTypes
         Vector GetRotational();
         void SetRotational(Vector newValue);
 
-        double GetThrust();
-        void SetThrust(double newValue);
+        double GetThrottle();
+        void SetThrottle(double newValue);
 
     }
 }

@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Selene;
 
 namespace SeleneDebugger.DebugImplementations
 {
     class DebugDataProvider : Selene.IDataProvider
     {
         NLua.Lua luaState = new NLua.Lua();
+
+        event RegisterCallback CreateTickCallback;
+
+
         public DebugDataProvider()
         {
             LoadLuaClasses();
         }
 
+        #region Lua methods
         public double GetUniverseTime()
         {
             return 42;
@@ -41,7 +47,7 @@ namespace SeleneDebugger.DebugImplementations
             throw new NotImplementedException();
         }
 
-        public List<Selene.DataTypes.IManeuverNode> GetManeuverNodes()
+        public NLua.LuaTable GetManeuverNodes()
         {
             throw new NotImplementedException();
         }
@@ -60,6 +66,51 @@ namespace SeleneDebugger.DebugImplementations
         Selene.GUI.IButton Selene.IDataProvider.CreateNewButton(string Name)
         {
             throw new NotImplementedException();
+        }
+
+
+        public void Log(string toLog)
+        {
+            Console.WriteLine(toLog);
+        }
+
+        public void RegisterTick(NLua.LuaFunction toCall, string name, double delay)
+        {
+            if (delay > 0)
+            {
+                CreateTickCallback(Selene.CallbackType.Tick, toCall, name, (int) (1 / delay));
+            }
+        }
+        public void RegisterTick(NLua.LuaFunction toCall, string name)
+        {
+            RegisterTick(toCall, name, 1);
+        }
+        public void RegisterTick(NLua.LuaFunction toCall)
+        {
+            RegisterTick(toCall, "_tick");
+        }
+        #region Custom Crap
+
+        public NLua.LuaFunction OnTick
+        {
+            set
+            {
+                RegisterTick(value,"_tick",1);
+            }
+        }
+
+        #endregion
+
+
+        #endregion
+
+        NLua.Lua Selene.IDataProvider.GetLuaState()
+        {
+            return luaState;
+        }
+        void Selene.IDataProvider.RegisterCallbackEvent(RegisterCallback toCall)
+        {
+            CreateTickCallback += toCall;
         }
 
 
@@ -88,18 +139,7 @@ vmt.__div = Vector.Divide
 ");
             luaState["Selene"] = this;
 
-   
-        }
 
-
-        NLua.LuaTable Selene.IDataProvider.GetManeuverNodes()
-        {
-            throw new NotImplementedException();
-        }
-
-        public NLua.Lua GetLuaState()
-        {
-            return luaState;
         }
     }
 }

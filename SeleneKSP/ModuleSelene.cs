@@ -18,9 +18,12 @@ namespace SeleneKSP
         public void Init()
         {
             interpreter = new SeleneInterpreter(new KSPDataProvider(this));
-            interpreter.CreateProcess("test.lua");
+            string input = KSP.IO.File.ReadAllText<Selene.SeleneInterpreter>("test.lua");
+
+            interpreter.CreateProcess(new String[] { input }, "test.lua");
+            //interpreter.CreateProcess("test.lua");
         }
-        public void Update()
+        public void FixedUpdate()
         {
             if (interpreter == null) return;
 
@@ -31,11 +34,10 @@ namespace SeleneKSP
             if (!run )
             {
                 return;
-            }
-            UnityEngine.Debug.Log("Executing Lua stuff");
+            }         
             interpreter.ExecuteProcess();
             lastRun = DateTime.Now;
-            run = false;
+           // run = false;
         }
         public override void OnStart(PartModule.StartState state)
         {
@@ -55,8 +57,7 @@ namespace SeleneKSP
         [KSPEvent(guiActive = true, guiName = "Run Program")]
         public void Activate()
         {
-            UnityEngine.Debug.Log("Clickity Click");
-            run = true;
+            run = !run;
         }
     }
 }
