@@ -74,20 +74,9 @@ namespace SeleneDebugger.DebugImplementations
             Console.WriteLine(toLog);
         }
 
-        public void RegisterTick(NLua.LuaFunction toCall, string name, double delay)
-        {
-            if (delay > 0)
-            {
-                CreateTickCallback(Selene.CallbackType.Tick, toCall, name, (int) (1 / delay));
-            }
-        }
-        public void RegisterTick(NLua.LuaFunction toCall, string name)
-        {
-            RegisterTick(toCall, name, 1);
-        }
         public void RegisterTick(NLua.LuaFunction toCall)
         {
-            RegisterTick(toCall, "_tick");
+            CreateTickCallback(Selene.CallbackType.Tick, toCall);
         }
         #region Custom Crap
 
@@ -95,7 +84,7 @@ namespace SeleneDebugger.DebugImplementations
         {
             set
             {
-                RegisterTick(value,"_tick",1);
+                RegisterTick(value);
             }
         }
 
@@ -140,6 +129,16 @@ vmt.__div = Vector.Divide
             luaState["Selene"] = this;
 
 
+        }
+
+        public void RegisterControl(NLua.LuaFunction toCall)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IControl CreateControlState(FlightCtrlState toCreate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

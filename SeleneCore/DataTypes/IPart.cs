@@ -5,8 +5,10 @@ using System.Text;
 
 namespace Selene.DataTypes
 {
-    public interface ICelestialBody : ITarget
+    public interface IPart
     {
-        double GetRadius(); 
+        Vector GetOffset();
+        string GetName();
+        string GetTitle();
     }
 }

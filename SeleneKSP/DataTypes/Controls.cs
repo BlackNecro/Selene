@@ -11,52 +11,46 @@ namespace SeleneKSP.DataTypes
 {
     class Controls : IControls
     {
-        KSPVessel vessel;
+        FlightCtrlState ctrlstate;
 
-        public Controls(KSPVessel parentVessel)
+        public Controls(FlightCtrlState newState)
         {
-            vessel = parentVessel;            
+            ctrlstate = newState;            
         }
 
 
-        public SVector GetTranslational()
+        public SVector GetTranslation()
         {
-            var ctrls = vessel.ctrlState;
-            return new SVector(ctrls.X, ctrls.Y, ctrls.Z);
+            return new SVector(ctrlstate.X, ctrlstate.Z, ctrlstate.Y);
         }
 
-        public void SetTranslational(SVector newValue)
+        public void SetTranslation(SVector newValue)
         {
-            var ctrls = vessel.ctrlState;
-            ctrls.X = (float)newValue.x;
-            ctrls.Y = (float)newValue.y;
-            ctrls.Z = (float)newValue.z;
+            ctrlstate.X = (float)newValue.x;
+            ctrlstate.Y = (float)newValue.z;
+            ctrlstate.Z = (float)newValue.y;
         }
 
-        public SVector GetRotational()
+        public SVector GetRotation()
         {
-            var ctrls = vessel.ctrlState;
-            return new SVector(ctrls.pitch, ctrls.yaw, ctrls.roll);
+            return new SVector(ctrlstate.pitch, ctrlstate.yaw, ctrlstate.roll);
         }
 
-        public void SetRotational(SVector newValue)
+        public void SetRotation(SVector newValue)
         {
-            var ctrls = vessel.ctrlState;
-            ctrls.pitch = (float)newValue.x;
-            ctrls.yaw = (float)newValue.y;
-            ctrls.roll = (float)newValue.z;
+            ctrlstate.pitch = (float)newValue.x;
+            ctrlstate.yaw = (float)newValue.y;
+            ctrlstate.roll = (float)newValue.z;
         }
 
         public double GetThrottle()
         {
-            var ctrls = vessel.ctrlState;
-            return ctrls.mainThrottle;
+            return ctrlstate.mainThrottle;
         }
 
         public void SetThrottle(double newValue)
         {
-            var ctrls = vessel.ctrlState;
-            ctrls.mainThrottle = (float)newValue;
+            ctrlstate.mainThrottle = (float)newValue;
         }
     }
 }

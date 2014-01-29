@@ -6,13 +6,12 @@ using UnityEngine;
 
 namespace Selene.DataTypes
 {
-    public interface IEngineInfo
+    public interface IEngineInfo : IPart
     {
-        Vector GetOffset();
         Boolean GetEnabled();
         void SetEnabled(bool newValue);
-        double GetThrottlePercentage();
-        void SetThrottlePercentage(double newValue);
+        double GetThrustPercentage();
+        void SetThrustPercentage(double newValue);
         double GetMaxThrust();
     }
 }

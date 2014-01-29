@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Selene.DataTypes
+namespace Selene.GUI
 {
-    public interface ICelestialBody : ITarget
+    interface ILabel : IGUIElement
     {
-        double GetRadius(); 
     }
 }

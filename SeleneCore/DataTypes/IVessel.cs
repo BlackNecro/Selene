@@ -9,11 +9,18 @@ namespace Selene.DataTypes
     {
         #region Positional Info
         double GetRadarHeight();
-        double GetHeight();
+        double GetSurfaceHeight();
         double GetOrbitSpeed();
-        Vector GetOrbitVelocity();
+        Vector GetOrbitVelocity(); 
         double GetSurfaceSpeed();
         Vector GetSurfaceVelocity();
+        Vector GetAngularVelocity();
+
+        double GetApoapsis();
+        double GetPeriapsis();
+
+
+        UnityEngine.Quaternion GetSurfaceRelativeRotation();
         ICelestialBody GetParentBody();
         #endregion
         #region Vessel properties
@@ -26,6 +33,6 @@ namespace Selene.DataTypes
         #region Part Info
         NLua.LuaTable GetEngines();
         #endregion
-        IControls GetControls();
+        IControls GetLastControls();
     }
 }

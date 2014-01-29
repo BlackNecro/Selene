@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KPart = global::Part;
 using KSPVessel = global::Vessel;
 using Selene;
 using Selene.DataTypes;
@@ -13,10 +14,21 @@ namespace SeleneKSP.DataTypes
     class Vessel : IVessel
     {
         KSPVessel vessel;
+        KSPDataProvider provider;
 
-        public Vessel(KSPVessel toUse)
+        public Vessel(KSPVessel toUse, KSPDataProvider prov)
         {
             vessel = toUse;
+            provider = prov;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj is Vessel)
+            {
+                return ((Vessel)obj).vessel == this.vessel;
+            }
+            return base.Equals(obj);
         }
 
         public double GetRadarHeight()
@@ -24,7 +36,7 @@ namespace SeleneKSP.DataTypes
             return vessel.heightFromTerrain;
         }
 
-        public double GetHeight()
+        public double GetSurfaceHeight()
         {
             return vessel.heightFromSurface;
         }
@@ -65,7 +77,7 @@ namespace SeleneKSP.DataTypes
 
         public SVector GetCenterOfMass()
         {
-            throw new NotImplementedException();
+            return new SVector(vessel.findLocalCenterOfMass());
         }
 
         public SVector GetCenterOfDryMass()
@@ -80,18 +92,27 @@ namespace SeleneKSP.DataTypes
 
         public LuaTable GetEngines()
         {
-            throw new NotImplementedException();
+            LuaTable tab = provider.GetNewTable();
+            int index = 1;
+            foreach(KPart part in vessel.Parts)
+            {
+                foreach(ModuleEngines engine in part.FindModulesImplementing<ModuleEngines>())
+                {
+                    EngineInfo info = new EngineInfo(part, engine);
+                    tab[index++] = info;
+                }
+            }
+            return tab;
         }
 
         public SVector GetPosition()
         {
-            throw new NotImplementedException();
+            return new SVector(vessel.GetWorldPos3D());
         }
 
         public UnityEngine.Quaternion GetRotation()
-        {
-            UnityEngine.Quaternion copy = vessel.transform.rotation;            
-            return copy;
+        {   
+            return vessel.transform.rotation;
         }
 
         public string GetName()
@@ -99,9 +120,32 @@ namespace SeleneKSP.DataTypes
             return vessel.GetName(); 
         }
 
-        public IControls GetControls()
+        public IControls GetLastControls()
         {
-            return new Controls(vessel); 
+            return new Controls(vessel.ctrlState); 
+        }
+
+
+        public UnityEngine.Quaternion GetSurfaceRelativeRotation()
+        {     
+            return vessel.srfRelRotation;
+        }
+
+        public SVector GetAngularVelocity()
+        {
+            return new SVector(vessel.angularVelocity);
+        }
+
+
+
+        public double GetApoapsis()
+        {
+            return vessel.orbit.ApA;
+        }
+
+        public double GetPeriapsis()
+        {
+            return vessel.orbit.PeA;
         }
     }
 }

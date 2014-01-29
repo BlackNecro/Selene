@@ -174,7 +174,7 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
             return "testVessel";
         }
 
-        IControls IVessel.GetControls()
+        IControls IVessel.GetLastControls()
         {
             throw new NotImplementedException();
         }

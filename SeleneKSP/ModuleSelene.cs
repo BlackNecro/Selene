@@ -17,11 +17,22 @@ namespace SeleneKSP
         }
         public void Init()
         {
+            DeleteInterpreter();
             interpreter = new SeleneInterpreter(new KSPDataProvider(this));
+            vessel.OnFlyByWire += interpreter.OnFlyByWire;
             string input = KSP.IO.File.ReadAllText<Selene.SeleneInterpreter>("test.lua");
-
+            
             interpreter.CreateProcess(new String[] { input }, "test.lua");
             //interpreter.CreateProcess("test.lua");
+        }
+
+        private void DeleteInterpreter()
+        {
+            if (interpreter != null)
+            {
+                vessel.OnFlyByWire -= interpreter.OnFlyByWire;
+                interpreter = null;
+            }
         }
         public void FixedUpdate()
         {
@@ -45,8 +56,7 @@ namespace SeleneKSP
             if (state == StartState.Editor || state == StartState.None)
             {
                 return;
-            }
-            Init();
+            }            
         }
         [KSPEvent(guiActive = true, guiName = "Reload Program")]
         public void Reload()
@@ -58,6 +68,15 @@ namespace SeleneKSP
         public void Activate()
         {
             run = !run;
+            if(run)
+            {                
+                Init();
+            }
+            else
+            {
+                DeleteInterpreter();
+            }
+            
         }
     }
 }

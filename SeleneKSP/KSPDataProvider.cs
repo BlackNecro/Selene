@@ -13,7 +13,7 @@ namespace SeleneKSP
     {
         ModuleSelene parentModule;
         NLua.Lua luaState;
-        event RegisterCallback CreateTickCallback;
+        event RegisterCallback CreateCallback;
 
         public KSPDataProvider(ModuleSelene parent)
         {
@@ -54,7 +54,7 @@ vmt.__div = Vector.Divide
 
         public IVessel GetExecutingVessel()
         {
-            return new SVessel(parentModule.part.vessel);
+            return new SVessel(parentModule.part.vessel,this);
         }
 
         public IVessel GetCommandedVessel()
@@ -64,7 +64,15 @@ vmt.__div = Vector.Divide
 
         public ITarget GetCurrentTarget()
         {
-            throw new NotImplementedException();
+            ITargetable target = FlightGlobals.fetch.VesselTarget;        
+            if(target != null)
+            {
+                if(target is Vessel)
+                {
+                    return new SVessel((Vessel)target,this);
+                }                
+            }
+            return null;
         }
 
         public ICelestialBody GetCelestialBody(string name)
@@ -97,51 +105,6 @@ vmt.__div = Vector.Divide
             throw new NotImplementedException();
         }
 
-        double IDataProvider.GetUniverseTime()
-        {
-            throw new NotImplementedException();
-        }
-
-        IVessel IDataProvider.GetExecutingVessel()
-        {
-            throw new NotImplementedException();
-        }
-
-        IVessel IDataProvider.GetCommandedVessel()
-        {
-            throw new NotImplementedException();
-        }
-
-        ITarget IDataProvider.GetCurrentTarget()
-        {
-            throw new NotImplementedException();
-        }
-
-        ICelestialBody IDataProvider.GetCelestialBody(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        IManeuverNode IDataProvider.GetNextManeuverNode()
-        {
-            throw new NotImplementedException();
-        }
-
-        NLua.LuaTable IDataProvider.GetManeuverNodes()
-        {
-            throw new NotImplementedException();
-        }
-
-        IManeuverNode IDataProvider.CreateNewManeuverNode()
-        {
-            throw new NotImplementedException();
-        }
-
-        Selene.GUI.IButton IDataProvider.CreateNewButton(string Name)
-        {
-            throw new NotImplementedException();
-        }
-
         NLua.Lua IDataProvider.GetLuaState()
         {
             return luaState;
@@ -156,30 +119,45 @@ vmt.__div = Vector.Divide
 
         public void RegisterCallbackEvent(RegisterCallback toCall)
         {
-            CreateTickCallback += toCall;
-        }
-
-        public void RegisterTick(NLua.LuaFunction toCall, string name, double delay)
-        {
-            CreateTickCallback(CallbackType.Tick,toCall, name, (int)delay);
-        }
-
-
-        public void RegisterTick(NLua.LuaFunction toCall, string name)
-        {
-            RegisterTick(toCall, name, 1);
+            CreateCallback += toCall;
         }
 
         public void RegisterTick(NLua.LuaFunction toCall)
         {
-            RegisterTick(toCall, "_tick");
+            CreateCallback(CallbackType.Tick,toCall);
         }
+
         public NLua.LuaFunction OnTick
         {
             set
             {
-                RegisterTick(value, "_tick", 1);
+                RegisterTick(value);
             }
+        }
+
+
+        public void RegisterControl(NLua.LuaFunction toCall)
+        {
+            CreateCallback(CallbackType.Control, toCall);
+        }
+        public NLua.LuaFunction OnControl
+        {
+            set
+            {
+                RegisterControl(value);
+            }
+        }
+
+
+        Selene.DataTypes.IControls Selene.IDataProvider.CreateControlState(FlightCtrlState toCreate)
+        {
+            return (Selene.DataTypes.IControls)new Controls(toCreate);
+        }
+
+
+        public NLua.LuaTable GetNewTable()
+        {
+            return (NLua.LuaTable)luaState.DoString("return {}")[0];
         }
     }
 }

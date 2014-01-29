@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataTypes\Controls.cs" />
+    <Compile Include="DataTypes\EngineInfo.cs" />
+    <Compile Include="DataTypes\Part.cs" />
     <Compile Include="DataTypes\Vessel.cs" />
     <Compile Include="KSPDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
