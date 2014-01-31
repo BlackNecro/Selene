@@ -1,56 +1,71 @@
-Debug.Log("Hello World")
-local function print(...)
-	local args = {...}	
-	for k,v in pairs(args) do
-		args[k] = tostring(v)
-	end
-	Debug.Log(table.concat(args," "))
-end
 local vessel = Selene:GetExecutingVessel()
 local throttle = 0
 local override = true;
 local steering = Vector(0,0,0)
 local translation = Vector(0,0,0)
 local engines = vessel:GetEngines()
+--[[
 for k,v in pairs(engines) do
 	print(k)
 	print(" Offset",v:GetOffset())
 	print(" Enabled",v:GetEnabled())
 	print(" Percentage",v:GetThrustPercentage())
 	print(" Max Thrust",v:GetMaxThrust())
-end
-function Selene:OnTick(delta)
+end]]
+
+local StopToGetReady = 1
+local Approach = 2
+local AssistedTranslation = 3 
+
+local mode = 0
+local setspeed = 10
+local maxspeed = 20
+
+local proc2 = Selene:CreateProcessFromString("test proc 2","Debug.Log('1') function Selene:OnTick(delta) Debug.Log('tick b') return 500 end"); 
+proc2.Active = true
+function Selene:OnTick(delta)	
+	--proc2:Reload()
+	Debug.Log('tick a')
+	do return 100 end
 	local other = Selene:GetCurrentTarget()
-	local offset = (vessel:GetPosition() - other:GetPosition())
-	local mySpeed = vessel:GetOrbitVelocity()
-	local otherSpeed = other:GetOrbitVelocity()
-	local speedOffset = mySpeed - otherSpeed
-	if offset.Length > 20 then		
-		
-		local offsetLocal = Quaternion.Inverse(vessel:GetRotation()) * offset
-		translation = offsetLocal
-		if speedOffset.Length > 2 then
-			translation.Length = 0
-		else
-			translation.Length = 1
+	if other ~= nil then
+		local offset = (vessel:GetPosition() - other:GetPosition())
+		local mySpeed = vessel:GetOrbitVelocity()
+		local otherSpeed = other:GetOrbitVelocity()
+		local speedOffset = mySpeed - otherSpeed
+		local offsetLocal = Quaternion.Inverse(vessel:GetRotation()) * offset		
+		if offset.Length > 20 then						
+			if mode == 0 or speedOffset.Length > maxspeed then
+				mode = StopToGetReady		
+			end
+		else	
+			mode = AssistedTranslation
+		end		
+		if mode == StopToGetReady or mode == AssistedTranslation  then						
+			if speedOffset.Length > 0.01 then
+				local offsetLocal = Quaternion.Inverse(vessel:GetRotation()) * speedOffset
+				translation = offsetLocal
+				translation.Length = math.min(speedOffset.Length * 10,0.5)
+				return 0
+			else
+				if mode == StopToGetReady then
+					mode = Approach
+				end
+			end
 		end
-		return 0
-	else		
-		if speedOffset.Length > 0.01 then
-			local offsetLocal = Quaternion.Inverse(vessel:GetRotation()) * speedOffset
-			translation = offsetLocal
-			translation.Length = math.min(speedOffset.Length * 10,0.5)
-			return 0
+		if mode == Approach then
+			if speedOffset.Length < setspeed then
+				translation = offsetLocal				
+				return 0
+			end
 		end
 	end
 	translation = Vector(0,0,0)
-	return 0;
+	return 50;
 end
-
 function Selene:OnControl(ctrl,delta)
-	--Debug.Log("control "..tostring(delta))	
-	--ctrl:SetRotation(steering + ctrl:GetRotation())
 	ctrl:SetTranslation(translation + ctrl:GetTranslation())
 	ctrl:SetRotation(steering + ctrl:GetRotation())
 	return 0
 end
+

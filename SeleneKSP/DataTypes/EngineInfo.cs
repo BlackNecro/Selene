@@ -33,12 +33,12 @@ namespace SeleneKSP.DataTypes
 
         public double GetThrustPercentage()
         {
-            return engine.thrustPercentage;
+            return engine.thrustPercentage / 100;
         }
 
         public void SetThrustPercentage(double newValue)
         {
-            engine.thrustPercentage = (float)newValue;
+            engine.thrustPercentage = (float)(newValue * 100);
         }
 
         public double GetMaxThrust()

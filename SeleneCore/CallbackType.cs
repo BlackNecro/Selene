@@ -6,8 +6,6 @@ using NLua;
 
 namespace Selene
 {
-
-    public delegate void RegisterCallback(CallbackType type, LuaFunction callback);
     public enum CallbackType
     {
         Tick,

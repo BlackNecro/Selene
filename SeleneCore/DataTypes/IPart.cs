@@ -10,5 +10,7 @@ namespace Selene.DataTypes
         Vector GetOffset();
         string GetName();
         string GetTitle();
+        double GetMass();
+        double GetDryMass();
     }
 }

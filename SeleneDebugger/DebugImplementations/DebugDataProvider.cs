@@ -6,7 +6,7 @@ using Selene;
 
 namespace SeleneDebugger.DebugImplementations
 {
-    class DebugDataProvider : Selene.IDataProvider
+    class DebugDataProvider : Selene.ILuaDataProvider
     {
         NLua.Lua luaState = new NLua.Lua();
 
@@ -63,7 +63,7 @@ namespace SeleneDebugger.DebugImplementations
             throw new NotImplementedException();
         }
 
-        Selene.GUI.IButton Selene.IDataProvider.CreateNewButton(string Name)
+        Selene.GUI.IButton Selene.ILuaDataProvider.CreateNewButton(string Name)
         {
             throw new NotImplementedException();
         }
@@ -93,11 +93,11 @@ namespace SeleneDebugger.DebugImplementations
 
         #endregion
 
-        NLua.Lua Selene.IDataProvider.GetLuaState()
+        NLua.Lua Selene.ILuaDataProvider.GetLuaState()
         {
             return luaState;
         }
-        void Selene.IDataProvider.RegisterCallbackEvent(RegisterCallback toCall)
+        void Selene.ILuaDataProvider.RegisterCallbackEvent(RegisterCallback toCall)
         {
             CreateTickCallback += toCall;
         }

@@ -1,0 +1,160 @@
+Vector
+	ctor:
+		Vector()
+		Vector(x,y,z)
+		Vector(Vector3)	 --Quaternion
+		Vector(Vector3d) --Quaternion
+	x,y,z components
+Quaternion
+	ctor:
+		Quaternion(x,y,z,w)
+
+Selene
+	Selene:CreateNewManeuverNode() ManeuverNode
+		Creates a new Maneuver Node 
+	Selene:GetCelestialBody(string name) CelestialBody
+		Gets the celestial body identified by name
+	Selene:GetCommandedVessel() Vessel
+		Gets the currently commanded vessel
+	Selene:GetCurrentTarget() Target
+		Gets the currently set target (vessel or celestial body)
+	Selene:GetExecutingVessel() Vessel
+		Gets the vessel the script is being executed on
+	Selene:GetManeuverNodes() table of ManeuverNode
+		Gets a table of all manneuver nodes
+	Selene:GetNextManeuverNode()  ManeuverNode
+		Gets the next maneuver node
+	Selene:GetUniverseTime() float
+		Gets the current
+	Selene:GetVessels() table of Vessel
+		Gets all vessels
+	Selene:ReadFile(string name) string
+		Reads and returns the content of the specified file
+	Selene:RegisterTick(function(delta))
+		Registers passed function as tick function short form 
+			function Selene:OnTick(delta) end
+	Selene:RegisterControl(function(Controls, delta))
+		Registers passed function as control function - short form 
+			function Selene:OnControl(Controls, delta) end
+	Selene:Log(string, [verbosity])
+		Logs a message for the current process with the set verbosity level
+	Selene:CreateProcessFromFile(string file) Process
+		Creates a new process from the specified file, returns nil if creation failed
+	Selene:CreateProcessFromString(string name, string source) Process
+		Creates a new process from the specified source string, returns nil if creation failed
+	Selene.CurrentProcess 
+		reference to the current process
+	
+
+Target
+	GetName() string
+		returns name 
+	GetPosition() Vector
+		returns position 
+	GetRotation() Quaternion
+		returns rotation 
+
+CelestialBody : Target
+	GetRadius() number
+		returns the radius
+
+Vessel : Target
+	GetAngularVelocity() Vector
+		returns angular velocity (rotation speed)
+	GetApoapsis() number
+		returns the current apoapsis
+	GetCenterOfDryMass() Vector
+		returns the vessels center of mass excluding resources
+	GetCenterOfMass() Vector
+		returns the vessels center of mass including resources
+	GetDryMass() number
+		returns the vessels mass excluding resources
+	GetEngines() table of Engines
+		returns a table of the vessels engines 
+	GetLastControls() Controls
+		returns the last executed control state of the vessel
+	GetMass() number
+		returns the vessels mass including resources
+	GetMomentOfInertia() Vector
+		returns the vessels moment of Inertia
+	GetOrbitSpeed() number
+		returns current orbit speed
+	GetOrbitVelocity() Vector
+		returns current orbit velocity
+	GetParentBody() CelestialBody
+		returns the celestial body the vessel is orbiting
+	GetPeriapsis() number
+		returns the current periapsis
+	GetRadarHeight() number
+		returns the height over terrain
+	GetNormalHeight() number
+		returns the height over sea level
+	GetSurfaceRelativeRotation() Quaternion
+		returns the vessels rotation relative to the surface
+	GetSurfaceSpeed() number
+		returns the speed over ground
+	GetSurfaceVelocity() Vector
+		returns the velocity relative to ground
+
+Part
+	GetOffset() Vector
+		returns the position relative to the vessel
+	GetName() string
+		returns the internal partname
+	GetTitle() string
+		returns the printed part name
+	GetDryMass() number
+		returns the part mass excluding resources
+	GetMass() number
+		returns the part mass including resources
+	
+
+Engine : Part
+	GetEnabled() bool
+		gets whether the engine is enabled or not
+	SetEnabled(bool)
+		enables or disables the engine
+	GetThrustPercentage() number
+		gets the thrust percentage set via the tweakables / context menu (0 to 1)
+	SetThrustPercetage(number) 
+		Sets the thrust percentage 
+	GetMaxThrust() number
+		Gets the maximum engine thrust
+
+
+Controls
+	GetRotation() Vector
+		Gets the rotational input
+		x = pitch, y = yaw, z = roll
+	SetRotation(Vector)
+		Sets the rotational input
+	GetThrottle() number
+		Gets the Throttle percentage (0 to 1)
+	SetThrottle(number)
+		Sets the Throttle percentage
+	GetTranslation() Vector
+		Gets the translational input
+	SetTranslation(Vector)
+		Sets the translational input
+		
+Process
+	Env table
+		reference to the namespace table used by the process
+		use this to set values or call functions in child or parent processes	
+	Active bool
+		sets whether the process should run or not
+	Priority number 
+		sets the process priority defaults to 0
+		lower numbers get executed first
+		for now has no effect on root level processes
+	LoadFromFile(string path) bool
+		reloads the process from a file 
+		returns whether it was successful
+	LoadFromString(string name, string source) bool
+		reloads the process from a source string
+		returns whether it was successful
+	Reload() bool
+		reloads the process
+		returns whether it was successful
+	Delete()
+		Deletes the process

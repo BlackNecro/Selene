@@ -31,12 +31,17 @@ namespace SeleneKSP.DataTypes
             return base.Equals(obj);
         }
 
+        public override int GetHashCode()
+        {
+            return vessel.GetHashCode();
+        }
+
         public double GetRadarHeight()
         {
             return vessel.heightFromTerrain;
         }
 
-        public double GetSurfaceHeight()
+        public double GetNormalHegiht()
         {
             return vessel.heightFromSurface;
         }

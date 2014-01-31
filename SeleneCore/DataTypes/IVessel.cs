@@ -9,7 +9,7 @@ namespace Selene.DataTypes
     {
         #region Positional Info
         double GetRadarHeight();
-        double GetSurfaceHeight();
+        double GetNormalHegiht();
         double GetOrbitSpeed();
         Vector GetOrbitVelocity(); 
         double GetSurfaceSpeed();

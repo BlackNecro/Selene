@@ -8,7 +8,11 @@ namespace SeleneKSP
     class ModuleSelene : PartModule
     {
         SeleneInterpreter interpreter;
-        DateTime lastRun = DateTime.Now;
+
+        public SeleneInterpreter Interpreter
+        {
+            get { return interpreter; }
+        }
         bool run = false;
 
         public void RunTestScript()
@@ -20,10 +24,8 @@ namespace SeleneKSP
             DeleteInterpreter();
             interpreter = new SeleneInterpreter(new KSPDataProvider(this));
             vessel.OnFlyByWire += interpreter.OnFlyByWire;
-            string input = KSP.IO.File.ReadAllText<Selene.SeleneInterpreter>("test.lua");
-            
-            interpreter.CreateProcess(new String[] { input }, "test.lua");
-            //interpreter.CreateProcess("test.lua");
+            interpreter.CreateProcess("test.lua");
+            run = true;
         }
 
         private void DeleteInterpreter()
@@ -41,14 +43,8 @@ namespace SeleneKSP
             if (part.State == PartStates.DEAD)
             {
                 return;
-            }
-            if (!run )
-            {
-                return;
-            }         
+            }  
             interpreter.ExecuteProcess();
-            lastRun = DateTime.Now;
-           // run = false;
         }
         public override void OnStart(PartModule.StartState state)
         {
@@ -56,27 +52,32 @@ namespace SeleneKSP
             if (state == StartState.Editor || state == StartState.None)
             {
                 return;
-            }            
+            }
+            Init();
         }
         [KSPEvent(guiActive = true, guiName = "Reload Program")]
         public void Reload()
         {
             UnityEngine.Debug.Log("Reloading");
-            Init(); ;
+            foreach(var proc in interpreter.RootProcess.Children)
+            {
+                UnityEngine.Debug.Log("Reloading " + proc.fileName);
+                proc.Reload();
+            }
         }
         [KSPEvent(guiActive = true, guiName = "Run Program")]
         public void Activate()
         {
-            run = !run;
-            if(run)
-            {                
-                Init();
-            }
-            else
+            bool set = true;
+            foreach(var proc in interpreter.RootProcess.Children)
             {
-                DeleteInterpreter();
+                if(set)
+                {
+                    run = !proc.Active;
+                    set = false;
+                }
+                proc.Active = run;
             }
-            
         }
     }
 }

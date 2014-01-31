@@ -28,5 +28,16 @@ namespace SeleneKSP.DataTypes
         {
             return part.partInfo.title;
         }
+
+
+        public double GetMass()
+        {
+            return part.mass + part.GetResourceMass();
+        }
+
+        public double GetDryMass()
+        {
+            return part.mass;
+        }
     }
 }

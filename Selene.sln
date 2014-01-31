@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D9CDFA59-BA8E-44C5-96A6-9AF8531FCEC5}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		Reference.txt = Reference.txt
 		TODO.txt = TODO.txt
 	EndProjectSection
 EndProject
