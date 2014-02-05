@@ -1,9 +1,24 @@
-local vessel = Selene:GetExecutingVessel()
-local throttle = 0
-local override = true;
-local steering = Vector(0,0,0)
-local translation = Vector(0,0,0)
-local engines = vessel:GetEngines()
+--test.lua
+Selene:Log("Hello World")
+MyVar = 5
+proc = Selene:CreateProcessFromFile("test2.lua")
+proc.Env.otherVar = 1
+Selene:Log("Other Process Var " .. tostring(proc.Env.MyVar))
+tab = {
+	derper = {1,2,3},
+	value = 15,
+	123	
+	}
+	
+
+vessel = Selene:GetExecutingVessel()
+throttle = 0
+override = true;
+steering = Vector(0,0,0)
+translation = Vector(0,0,0)
+engines = vessel:GetEngines()
+Debug.Log("test "..tostring(_G))
+Selene:Log("Test Messages")
 --[[
 for k,v in pairs(engines) do
 	print(k)
@@ -13,20 +28,41 @@ for k,v in pairs(engines) do
 	print(" Max Thrust",v:GetMaxThrust())
 end]]
 
-local StopToGetReady = 1
-local Approach = 2
-local AssistedTranslation = 3 
+StopToGetReady = 1
+Approach = 2
+AssistedTranslation = 3 
 
-local mode = 0
-local setspeed = 10
-local maxspeed = 20
+mode = 0
+setspeed = 10
+maxspeed = 20
+Debug.Log("Their Stuff")
+for k,v in pairs(proc.Env) do
+	if(type(v) ~= "table") and type(v) ~= "function" and false then
+		Debug.Log(tostring(k) .. " " .. tostring(v))
+	end
+end
+Debug.Log(unique)
+Debug.Log("MyStuff")
+for k,v in pairs(_G) do
+	if(type(v) ~= "table") and type(v) ~= "function" and false then
+		Debug.Log(tostring(k) .. " " .. tostring(v))
+	end
+end
+--proc.Active = true
 
-local proc2 = Selene:CreateProcessFromString("test proc 2","Debug.Log('1') function Selene:OnTick(delta) Debug.Log('tick b') return 500 end"); 
-proc2.Active = true
+
+local proc2 = Selene:CreateProcessFromString("test proc 2",[[Selene:Log('Proc 2') function Selene:OnTick(delta) Selene:Log(tostring(testVar)) return 500 end]]); 
+--proc2.Active = true
+
+counter = 0
 function Selene:OnTick(delta)	
+	Selene:Log("Test")
+	counter = counter + 1
+	Selene:Log(tostring(proc.Env.testVar))
+	proc.Env.testVar = tostring(counter)
 	--proc2:Reload()
-	Debug.Log('tick a')
-	do return 100 end
+	Selene:Log('tick a')
+	do return 200 end
 	local other = Selene:GetCurrentTarget()
 	if other ~= nil then
 		local offset = (vessel:GetPosition() - other:GetPosition())

@@ -18,9 +18,7 @@ namespace Selene.DataTypes
 
         double GetApoapsis();
         double GetPeriapsis();
-
-
-        UnityEngine.Quaternion GetSurfaceRelativeRotation();
+        UnityEngine.QuaternionD GetSurfaceRelativeRotation();
         ICelestialBody GetParentBody();
         #endregion
         #region Vessel properties
@@ -34,5 +32,6 @@ namespace Selene.DataTypes
         NLua.LuaTable GetEngines();
         #endregion
         IControls GetLastControls();
+
     }
 }

@@ -65,7 +65,10 @@
     <Compile Include="DataTypes\EngineInfo.cs" />
     <Compile Include="DataTypes\Part.cs" />
     <Compile Include="DataTypes\Vessel.cs" />
-    <Compile Include="GUI\MainGUIBehaviour.cs" />
+    <Compile Include="GUI\GUIBehaviour.cs" />
+    <Compile Include="GUI\MainTreeView.cs" />
+    <Compile Include="GUI\ProcessWindow.cs" />
+    <Compile Include="GUI\TreeViewBase.cs" />
     <Compile Include="KSPDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModuleSelene.cs" />
@@ -77,6 +80,14 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>COPY $(TargetDir)$(TargetFileName) $(SolutionDir)Plugins
+COPY $(TargetDir)SeleneCore.dll $(SolutionDir)Plugins</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

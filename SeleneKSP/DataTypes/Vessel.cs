@@ -52,7 +52,7 @@ namespace SeleneKSP.DataTypes
         }
         public SVector GetOrbitVelocity()
         {
-            return new SVector(vessel.obt_velocity);
+            return new SVector(vessel.obt_velocity) ;
         }
 
         public double GetSurfaceSpeed()
@@ -115,7 +115,7 @@ namespace SeleneKSP.DataTypes
             return new SVector(vessel.GetWorldPos3D());
         }
 
-        public UnityEngine.Quaternion GetRotation()
+        public UnityEngine.QuaternionD GetRotation()
         {   
             return vessel.transform.rotation;
         }
@@ -131,7 +131,7 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public UnityEngine.Quaternion GetSurfaceRelativeRotation()
+        public UnityEngine.QuaternionD GetSurfaceRelativeRotation()
         {     
             return vessel.srfRelRotation;
         }
@@ -151,6 +151,21 @@ namespace SeleneKSP.DataTypes
         public double GetPeriapsis()
         {
             return vessel.orbit.PeA;
+        }
+
+
+        public SVector WorldToLocal(SVector toTransform)
+        {
+
+
+            UnityEngine.QuaternionD test = vessel.transform.rotation;
+
+            return new SVector(((UnityEngine.QuaternionD) vessel.transform.rotation) * toTransform.Vector3D);
+        }
+
+        public SVector LocalToWorld(SVector toTransform)
+        {
+            return new SVector(UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform.Vector3D);
         }
     }
 }

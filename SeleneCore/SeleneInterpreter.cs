@@ -27,6 +27,7 @@ namespace Selene
         {
             luaState = provider;
             RootProcess = new SeleneProcess(provider);
+            RootProcess.fileName = "Root";
             RootProcess.Active = true;
         }
         public bool CreateProcess(string file)

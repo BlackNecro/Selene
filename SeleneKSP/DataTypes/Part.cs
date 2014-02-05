@@ -39,5 +39,11 @@ namespace SeleneKSP.DataTypes
         {
             return part.mass;
         }
+
+
+        public UnityEngine.QuaternionD GetRotation()
+        {
+            return part.orgRot;
+        }
     }
 }

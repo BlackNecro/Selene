@@ -53,6 +53,10 @@ Target
 		returns position 
 	GetRotation() Quaternion
 		returns rotation 
+	WorldToLocal(Vector toTransform) Vector 
+		transforms a given world space vector into local space
+    Vector LocalToWorld(Vector toTransform);
+		transforms a given local space vector into world space
 
 CelestialBody : Target
 	GetRadius() number

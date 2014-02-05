@@ -30,27 +30,33 @@ namespace Selene
             get { return luaState; }
         }
 
-        LuaTable BaseEnvironment;
+        LuaTable baseEnvironment;
+
+        public LuaTable BaseEnvironment
+        {
+            get { return baseEnvironment; }
+        }
 
         public SeleneLuaState()
         {
             luaState = new Lua();
             CreateBaseLibrary();
 
-            BaseEnvironment = GetNewTable();
+            baseEnvironment = GetNewTable();
             foreach (string global in ((LuaTable)luaState["_G"]).Keys)
             {
-                BaseEnvironment[global] = luaState[global];
+                baseEnvironment[global] = luaState[global];
             }
         }
 
         private void CreateBaseLibrary()
         {
-            luaState.DoString(@"
-                luanet.load_assembly('SeleneCore')
+            luaState.DoString(@"                                
                 luanet.load_assembly('UnityEngine')
+                luanet.load_assembly('Assembly-CSharp')
+                luanet.load_assembly('SeleneCore')
                 Vector = luanet.import_type('Selene.DataTypes.Vector')
-                Quaternion = luanet.import_type('UnityEngine.Quaternion')
+                Quaternion = luanet.import_type('UnityEngine.QuaternionD')
                 Debug = luanet.import_type('UnityEngine.Debug')
                 local QuaternionUtil = luanet.import_type('Selene.DataTypes.QuaternionUtil')
 
@@ -69,7 +75,7 @@ namespace Selene
                 qmt = nil
                 vmt = nil
                 QuaternionUnil = nil
-            ");
+            ", "Library Initialization");
             luaState["Selene"] = this;
             FinalizeLuaState();
         }
@@ -104,14 +110,15 @@ namespace Selene
             return (LuaTable)luaState.DoString("return {}")[0];
         }
 
+        private int envNum = 0;
         public LuaTable GetNewEnvironment()
         {
             LuaTable toReturn = GetNewTable();
-            foreach (string key in BaseEnvironment.Keys)
+            foreach (string key in baseEnvironment.Keys)
             {
-                toReturn[key] = BaseEnvironment[key];
+                toReturn[key] = baseEnvironment[key];
             }
-            //TODO Potentially reimporting base library
+            toReturn["_G"] = toReturn;
             return toReturn;
         }
 
@@ -129,7 +136,14 @@ namespace Selene
 
         public void Log(string toLog, double priority)
         {
-            CurrentProcess.Log(toLog, (int)priority);
+            if (CurrentProcess != null)
+            {
+                CurrentProcess.Log(toLog, (int)priority);
+            }
+            else
+            {
+                UnityEngine.Debug.Log("No Process: " + toLog);
+            }            
         }
 
         public SeleneProcess CreateProcessFromFile(string file)

@@ -8,6 +8,7 @@ namespace Selene.DataTypes
     public interface IPart
     {
         Vector GetOffset();
+        UnityEngine.QuaternionD GetRotation();
         string GetName();
         string GetTitle();
         double GetMass();

@@ -9,15 +9,17 @@ Feature Scope:
 			
 	Debug Output
 		Logging to console
-		Logging to file
+		Save log to file
+	Persistance
+		Saving / Loading Key Value Store thingy
 
 	DataTypes:		
-		3D Vector
-		Target 
+		3D Vector - Done
+		Target - Done
 			Get
 				Rotation															
 				Position
-		Vessel : Target
+		Vessel : Target 
 			Get
 				Height over Ground / Ocean
 				Velocity
@@ -51,7 +53,7 @@ Feature Scope:
 				Atmospheric parameters
 				SOI size
 
-	Data Provider:
+	Data Provider: - Done
 		Get Executing Vessel
 		Get Commanded Vessel
 		Get Current Target

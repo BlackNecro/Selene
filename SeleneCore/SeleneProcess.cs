@@ -6,8 +6,23 @@ using NLua;
 
 namespace Selene
 {
-    public class SeleneProcess
+    public class SeleneProcess 
     {
+        public class LogEntry
+        {
+            public string message;
+            public int priority;
+            public SeleneCallback callback;
+            public LogEntry(SeleneCallback Callback, string Message, int Prio)
+            {
+                callback = Callback;
+                message = Message;
+                priority = Prio;
+            }
+                        
+        }
+
+
         private int priority = 0;
 
         public int Priority
@@ -30,9 +45,39 @@ namespace Selene
         SeleneLuaState luaState;
         LuaTable environment;
 
+        
+        public LinkedList<LogEntry> LogList = new LinkedList<LogEntry>();
+
         public LuaTable Env
         {
             get { return environment; }
+        }
+
+
+        public bool IsCustomVariable(object key)
+        {
+            if(luaState.BaseEnvironment[key] == null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public LuaTable CustomEnvironment
+        {
+            get
+            {
+                LuaTable toReturn = luaState.GetNewTable();
+                LuaTable myEnv = Env;                
+                foreach (object key in myEnv.Keys)
+                {   
+                    if(luaState.BaseEnvironment[key] == null)
+                    {
+                        toReturn[key] = myEnv[key];
+                    }    
+                }
+                return toReturn;
+            }            
         }
 
         SeleneCallback currentCallback;
@@ -47,6 +92,22 @@ namespace Selene
         {
             get { return run; }
             set { run = value; }
+        }
+
+        public bool IsActive
+        {
+            get
+            {
+                if(!Active)
+                {
+                    return false;
+                }
+                if(Parent != null)
+                {
+                    return Parent.IsActive;
+                }
+                return Active;
+            }
         }
 
         public void AddChildProcess(SeleneProcess proc)
@@ -92,7 +153,11 @@ namespace Selene
 
         private bool LoadSource()
         {
-            Children.Clear();
+            LogList.Clear();
+
+            List<SeleneProcess> toDelete = new List<SeleneProcess>(Children);
+            toDelete.ForEach(child => child.Delete());
+
             foreach(var callbackList in Callbacks)
             {
                 callbackList.Clear();
@@ -100,12 +165,17 @@ namespace Selene
             luaState.CurrentProcess = this;
             environment = luaState.GetNewEnvironment();
             try
-            {
-                LuaFunction originalFunction = luaState.LuaState.LoadString(source, fileName);
-                LuaTable newEnvironment = luaState.GetNewEnvironment();
-                LuaFunction envChanger = (LuaFunction)luaState.LuaState.LoadString("local args = {...} debug.setupvalue(args[1],1,args[2])", "Environment Changer");
-                envChanger.Call((object)originalFunction, (object)newEnvironment);
-                originalFunction.Call();
+            {                
+                LuaFunction originalFunction = luaState.LuaState.LoadString(source, fileName);                
+                LuaFunction envChanger = (LuaFunction)luaState.LuaState.LoadString(@"
+                    local args = {...}                                 
+                    setfenv(args[1],args[2])                    
+                    return args[1]
+                        "
+                    , "Environment Changer");
+                LuaFunction newFunction = (LuaFunction)envChanger.Call(originalFunction,environment)[0];
+                newFunction.Call();
+                
             }
             catch (NLua.Exceptions.LuaException ex)
             {
@@ -131,7 +201,15 @@ namespace Selene
 
         public void Delete()
         {
-            Parent.Children.Remove(this);
+            foreach (var proc in Children)
+            {
+                proc.Delete();
+            }
+            if (this.Parent != null)
+            {
+                Parent.Children.Remove(this);
+                this.Parent = null;
+            }
         }
 
 
@@ -160,6 +238,10 @@ namespace Selene
 
         public void Log(string message, int priority)
         {
+
+
+            LogList.AddLast(new LogEntry(this.currentCallback,message,priority));
+                                 /*
             UnityEngine.Debug.Log("***");
             UnityEngine.Debug.Log("Process " + this.fileName);
             if (currentCallback != null)
@@ -167,7 +249,7 @@ namespace Selene
                 UnityEngine.Debug.Log("Callback" + this.currentCallback.CallbackType);
             }
             UnityEngine.Debug.Log(message);
-            UnityEngine.Debug.Log("***");
+            UnityEngine.Debug.Log("***");          */
         }
     }
 }
