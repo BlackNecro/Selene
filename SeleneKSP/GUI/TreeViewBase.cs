@@ -20,6 +20,11 @@ namespace SeleneKSP.GUI
         public float buttonWidth = 25;
         public float indentSize = 30;
 
+        public void Start()
+        {
+            curIndent = 0;
+        }
+
         HashSet<object> ExpandedObjects = new HashSet<object>();
         public void CollapseButton(object toToggle)
         {
@@ -43,6 +48,25 @@ namespace SeleneKSP.GUI
             GUILayout.EndHorizontal();
             return ret;
         }
+        public bool CollapsibleButton(string title, object toggle, GUIStyle layout)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(curIndent);
+            CollapseButton(toggle);
+            bool ret = GUILayout.Button(title,layout);
+            GUILayout.EndHorizontal();
+            return ret;
+        }
+
+        public bool SpacedButton(string title, GUIStyle layout)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(curIndent);
+            bool ret = GUILayout.Button(title, layout);
+            GUILayout.EndHorizontal();
+            return ret;
+        }
+
 
         public void DrawSpacer()
         {

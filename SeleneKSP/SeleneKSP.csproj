@@ -68,6 +68,7 @@
     <Compile Include="GUI\GUIBehaviour.cs" />
     <Compile Include="GUI\MainTreeView.cs" />
     <Compile Include="GUI\ProcessWindow.cs" />
+    <Compile Include="GUI\TreeFileBrowser.cs" />
     <Compile Include="GUI\TreeViewBase.cs" />
     <Compile Include="KSPDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

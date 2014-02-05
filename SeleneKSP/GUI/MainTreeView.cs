@@ -14,7 +14,7 @@ namespace SeleneKSP.GUI
 
         Dictionary<Vessel, HashSet<SeleneKSP.ModuleSelene>> loadedModules = new Dictionary<Vessel, HashSet<SeleneKSP.ModuleSelene>>();
         private bool Displayed = false;
-        Rect WindowPosition = new Rect();
+        Rect WindowPosition = new Rect(0,Screen.height/4,0,0);
 
         float indentSize = 30;
 
@@ -26,6 +26,27 @@ namespace SeleneKSP.GUI
         HashSet<Selene.SeleneProcess> ProcessesToDelete = new HashSet<Selene.SeleneProcess>();
 
         Dictionary<Selene.SeleneProcess, ProcessWindow> ProcessWindows = new Dictionary<Selene.SeleneProcess,ProcessWindow>();
+
+        /*
+
+        FileBrowser fileBrowser;
+        Selene.SeleneProcess processAddTo;
+
+        public void OpenFileBrowser()
+        {
+            fileBrowser = new FileBrowser(new Rect(Screen.width / 2 - 200, Screen.height / 2 - 300, 400, 600), "Create Process From File", new FileBrowser.FinishedCallback(SelectedFile));
+            fileBrowser.CurrentDirectory = "";//KSPUtil.ApplicationRootPath + "GameData/Selene/Plugins/PluginData/SeleneCore";            
+        }
+
+        public void SelectedFile(string file)
+        {
+            fileBrowser = null;
+
+
+            var newProcess = processAddTo.CreateChildProcess();
+            newProcess.LoadFromFile(file);
+            processAddTo = null;
+        }   */
 
         public void ReloadModuleList()
         {
@@ -222,8 +243,9 @@ namespace SeleneKSP.GUI
             else
             {
                 if(GUILayout.Button("+",GUILayout.Width(buttonWidth)))
-                {
+                {                    
                     //Todo Add Process
+
                 }
             }
             string caption = "■";

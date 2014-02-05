@@ -77,6 +77,21 @@ namespace Selene
                 QuaternionUnil = nil
             ", "Library Initialization");
             luaState["Selene"] = this;
+            luaState.DoString(@"
+                function print(...)
+                    local args = {...}
+                    local sorted = {}
+                    local max = 0
+                    for k,v in pairs(args) do                        
+                        if k > max then
+                            max = k
+                        end
+                    end
+                    for i = 1,max do
+                        sorted[i] = tostring(args[i])
+                    end
+                    Selene:Log(table.concat(sorted,' '))
+                end");
             FinalizeLuaState();
         }
 
@@ -110,7 +125,6 @@ namespace Selene
             return (LuaTable)luaState.DoString("return {}")[0];
         }
 
-        private int envNum = 0;
         public LuaTable GetNewEnvironment()
         {
             LuaTable toReturn = GetNewTable();

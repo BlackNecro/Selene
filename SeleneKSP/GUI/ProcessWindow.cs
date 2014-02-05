@@ -14,18 +14,42 @@ namespace SeleneKSP.GUI
 
         Rect windowPos = new Rect(300, 300, 300, 300);
         GUIStyle LogStyle = new GUIStyle();
+        GUIStyle VariableStyle = new GUIStyle();
 
         Vector2 LogScrollPos = new Vector2();
+
+        Vector2 VariableScrollPos = new Vector2();
         string debugInput = "";
 
         TreeViewHandler CallbackTreeView = new TreeViewHandler();
         TreeViewHandler VariableTreeView = new TreeViewHandler();
 
+        bool resizing = false;
+        Rect resizeStartRect = new Rect();
+        Vector2 resizeStartPos = new Vector2();
 
+        float resizeSize = 10;
+
+        Rect lastLogScrollSize;
+        Rect lastLogContentSize;
+        Rect lastVariableContentSize;
         public ProcessWindow(int ID, Selene.SeleneProcess proc)
         {
             windowID = ID;
             process = proc;
+            windowPos.x = Screen.width / 2 - 200;
+            windowPos.y = Screen.height / 2 - 150;
+        }
+
+        int lastLogCounter = 0;
+
+
+        public Rect ResizeHandle
+        {
+            get
+            {
+                return new Rect(windowPos.x + windowPos.width - resizeSize - 3, windowPos.y + windowPos.height - resizeSize - 3, resizeSize, resizeSize);
+            }
         }
 
 
@@ -33,7 +57,9 @@ namespace SeleneKSP.GUI
         {
             if (draw)
             {
-                windowPos = GUILayout.Window(windowID, windowPos, DrawWindow, process.fileName);
+                windowPos = GUILayout.Window(windowID, windowPos, DrawWindow, process.fileName, GUILayout.MinHeight(300), GUILayout.MinWidth(400));
+                UnityEngine.GUI.Box(ResizeHandle, "", HighLogic.Skin.box);
+                HandleResize();
             }
         }
 
@@ -44,6 +70,12 @@ namespace SeleneKSP.GUI
             {
                 LogStyle = new GUIStyle(UnityEngine.GUI.skin.box);
                 LogStyle.alignment = TextAnchor.MiddleLeft;
+                LogStyle.padding.left += 5;
+
+                VariableStyle = new GUIStyle(UnityEngine.GUI.skin.button);
+                VariableStyle.alignment = TextAnchor.MiddleLeft;
+                VariableStyle.padding.left += 5;
+
             }
         }
 
@@ -52,30 +84,24 @@ namespace SeleneKSP.GUI
 
             GUILayout.BeginHorizontal();
 
-            //TODO Readd Log List
+            #region Variable List
+            GUILayout.BeginVertical();
+
+
             
+            VariableScrollPos = GUILayout.BeginScrollView(VariableScrollPos,false,true,GUILayout.Width(lastVariableContentSize.width + 25));
+            GUILayout.BeginHorizontal();
             GUILayout.BeginVertical();
 
-            //LogScrollPos = GUILayout.BeginScrollView(LogScrollPos);
-            foreach (var logentry in process.LogList)
-            {
-                GUILayout.Label(logentry.message, LogStyle);
-            }
-           // GUILayout.EndScrollView();
-            debugInput = GUILayout.TextField(debugInput);
-            GUILayout.EndVertical();
-             
-            GUILayout.BeginVertical();
-
-            //TODO List Hooks
-            CallbackTreeView.CollapsibleButton("Hooks", "Hooks");
+            CallbackTreeView.Start();
+            CallbackTreeView.CollapsibleButton("Hooks", "Hooks", VariableStyle);
             if (CallbackTreeView.Expanded("Hooks"))
             {
                 CallbackTreeView.Indent();
                 foreach (var type in Enum.GetValues(typeof(Selene.CallbackType)))
                 {
                     var callbacks = process.Callbacks[(int)type];
-                    CallbackTreeView.CollapsibleButton(type.ToString() + " (" + callbacks.Count + ")", callbacks);
+                    CallbackTreeView.CollapsibleButton(type.ToString() + " (" + callbacks.Count + ")", callbacks, VariableStyle);
                     if (CallbackTreeView.Expanded(callbacks))
                     {
                         CallbackTreeView.Indent();
@@ -83,7 +109,7 @@ namespace SeleneKSP.GUI
                         {
                             GUILayout.BeginHorizontal();
                             CallbackTreeView.DrawSpacer();
-                            if (GUILayout.Button(callback.CallCounter + " " + callback.CallDelay))
+                            if (GUILayout.Button(callback.CallCounter + " " + callback.CallDelay, VariableStyle))
                             {
 
                             }
@@ -95,23 +121,140 @@ namespace SeleneKSP.GUI
                 CallbackTreeView.Unindent();
             }
 
-            //Todo List Vars            
 
 
             var tab = process.Env;
             string keyPath = "";
 
 
-            //Todo fix variable listing
-            VariableTreeView.CollapsibleButton("Variables", keyPath);
+            VariableTreeView.Start();
+            VariableTreeView.CollapsibleButton("Variables", keyPath, VariableStyle);
             if (VariableTreeView.Expanded(keyPath))
             {
                 ListVariable(tab, keyPath);
             }
+
             GUILayout.EndVertical();
+            if (Event.current.type == EventType.Repaint)
+            {
+                lastVariableContentSize = GUILayoutUtility.GetLastRect();
+            }
+
+            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
 
-            UnityEngine.GUI.DragWindow();
+            GUILayout.FlexibleSpace();
+            
+            GUILayout.EndScrollView();
+
+            GUILayout.EndVertical();
+
+
+            #endregion
+
+
+
+            GUILayout.BeginVertical(GUILayout.ExpandWidth(true));
+            #region log list
+
+            if (lastLogCounter != process.LogList.Count)
+            {
+                lastLogCounter = process.LogList.Count;
+                float scrollableArea = (lastLogContentSize.height - lastLogScrollSize.height);
+                if (scrollableArea > 0)
+                {
+                    if (LogScrollPos.y > scrollableArea)
+                    {
+                        LogScrollPos.y = float.MaxValue;
+                    }
+                }
+                else
+                {
+                    LogScrollPos.y = float.MaxValue;
+                }
+            }                               
+
+            
+            LogScrollPos = GUILayout.BeginScrollView(LogScrollPos,false,true, GUILayout.ExpandWidth(true));
+                GUILayout.BeginVertical();
+                    foreach (var entry in process.LogList)
+                    {
+                        GUILayout.Label(entry.message, LogStyle, GUILayout.ExpandWidth(true));
+                    }
+                    GUILayout.FlexibleSpace();
+                GUILayout.EndVertical();
+
+                if (Event.current.type == EventType.Repaint)
+                {
+                    lastLogContentSize = GUILayoutUtility.GetLastRect();
+                }
+
+            GUILayout.EndScrollView();
+
+            if (Event.current.type == EventType.Repaint)
+            {
+                lastLogScrollSize = GUILayoutUtility.GetLastRect();                
+            }
+            
+            #endregion
+
+            #region debug input line            
+            if (Event.current.type == EventType.keyUp && Event.current.keyCode == KeyCode.Return && UnityEngine.GUI.GetNameOfFocusedControl() == "DebugInput")
+            {
+                process.Log(String.Format("Executing: {0}", debugInput), 0);
+                if (process.RunString(debugInput, "Console Input"))
+                {
+                    debugInput = string.Empty;
+                }
+                LogScrollPos.y = float.MaxValue;
+            }
+            UnityEngine.GUI.SetNextControlName("DebugInput");
+            debugInput = GUILayout.TextField(debugInput, GUILayout.ExpandWidth(true));
+            #endregion
+
+            
+            GUILayout.BeginHorizontal(GUILayout.ExpandWidth(true));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndHorizontal();
+
+
+            GUILayout.EndVertical();
+
+            GUILayout.EndHorizontal();
+
+            HandleResize();
+
+            if (!resizing)
+            {
+                UnityEngine.GUI.DragWindow();
+            }
+        }
+
+        private void HandleResize()
+        {
+            if (Event.current.isMouse)
+            {
+                Vector2 MousePos = new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y);
+                if (Event.current.type == EventType.MouseDown)
+                {
+                    if (ResizeHandle.Contains(MousePos))
+                    {
+                        resizing = true;
+                        resizeStartPos = MousePos;
+                        resizeStartRect = windowPos;
+                    }
+                }
+                else if (Event.current.type == EventType.MouseUp)
+                {
+                    resizing = false;
+                }
+                else if (resizing)
+                {
+                    Vector2 delta = MousePos - resizeStartPos;
+                    windowPos.width = resizeStartRect.width + delta.x;
+                    windowPos.height = resizeStartRect.height + delta.y;
+                }
+            }
         }
 
         private void ListVariable(NLua.LuaTable tab, string keyPath)
@@ -120,30 +263,63 @@ namespace SeleneKSP.GUI
             List<object> Keys = new List<object>();
             foreach (var key in tab.Keys)
             {
-                if(keyPath != "" || process.IsCustomVariable(key))
+                if (keyPath != "" || process.IsCustomVariable(key))
                 {
                     Keys.Add(key);
-                }                
+                }
             }
-            Keys.OrderBy(key => key.ToString());
-            foreach (var key in Keys)
+            foreach (var key in Keys.OrderBy(key => key.ToString()))
             {
-
-                if (tab[key] is NLua.LuaTable)
+                object value = tab[key];
+                if (value is NLua.LuaTable)
                 {
 
                     string newPath = keyPath + "/" + key;
-                    VariableTreeView.CollapsibleButton(key.ToString(), newPath);
+                    VariableTreeView.CollapsibleButton(key.ToString() + " (Table)", newPath, VariableStyle);
                     if (VariableTreeView.Expanded(newPath))
                     {
-                        ListVariable((NLua.LuaTable)tab[key], newPath);
+                        ListVariable((NLua.LuaTable)value, newPath);
+                    }
+                }
+                else if(value is Selene.DataTypes.Vector)
+                {
+                    string newPath = keyPath + "/" + key;
+                    VariableTreeView.CollapsibleButton(key.ToString() + " (Vector)", newPath, VariableStyle);
+                    if (VariableTreeView.Expanded(newPath))
+                    {
+                        VariableTreeView.Indent();                      
+                        Selene.DataTypes.Vector vec = (Selene.DataTypes.Vector)value;
+                        VariableTreeView.SpacedButton("x = " + vec.x, VariableStyle);
+                        VariableTreeView.SpacedButton("y = " + vec.y, VariableStyle);
+                        VariableTreeView.SpacedButton("z = " + vec.z, VariableStyle);
+                        VariableTreeView.SpacedButton("length = " + vec.Length, VariableStyle);
+                        VariableTreeView.Unindent();
+                    }
+                }
+                else if (value is UnityEngine.QuaternionD)
+                {
+                    string newPath = keyPath + "/" + key;
+                    VariableTreeView.CollapsibleButton(key.ToString() + " (Quaternion)", newPath, VariableStyle);
+                    if (VariableTreeView.Expanded(newPath))
+                    {
+                        VariableTreeView.Indent();
+                        UnityEngine.QuaternionD quat = (UnityEngine.QuaternionD)value;
+                        VariableTreeView.SpacedButton("x = " + quat.x, VariableStyle);
+                        VariableTreeView.SpacedButton("y = " + quat.y, VariableStyle);
+                        VariableTreeView.SpacedButton("z = " + quat.z, VariableStyle);
+                        VariableTreeView.SpacedButton("w= " + quat.w, VariableStyle);
+                        VariableTreeView.Unindent();
                     }
                 }
                 else
                 {
                     GUILayout.BeginHorizontal();
                     VariableTreeView.DrawSpacer();
-                    GUILayout.Button(key.ToString() + " = " + tab[key].ToString());
+
+                    //GUILayout.Button(key.ToString(), LogStyle);
+                    //GUILayout.Button(tab[key].ToString());                    
+                    //GUILayout.Button(tab[key].ToString(), ValueStyle);
+                    GUILayout.Button(key.ToString() + " = " + value.ToString(), VariableStyle);
                     GUILayout.EndHorizontal();
                 }
             }

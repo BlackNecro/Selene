@@ -151,6 +151,30 @@ namespace Selene
             return true;
         }
 
+        public bool RunString(string src, string name)
+        {
+            luaState.CurrentProcess = this;
+            try
+            {
+
+                LuaFunction function = luaState.LuaState.LoadString(src, name);
+                LuaFunction envChanger = (LuaFunction)luaState.LuaState.LoadString(@"
+                    local args = {...}                                 
+                    setfenv(args[1],args[2])         
+                    ", "Environment Changer");
+                envChanger.Call(function, environment);
+                function.Call();
+            }
+            catch (NLua.Exceptions.LuaException ex)
+            {
+                luaState.Log(string.Format("Lua Error in {0}:\n{1} ", fileName, ex.Message));
+                luaState.revertCallStack();
+                return false;
+            }
+            luaState.revertCallStack();
+            return true;
+        }
+
         private bool LoadSource()
         {
             LogList.Clear();
@@ -162,29 +186,8 @@ namespace Selene
             {
                 callbackList.Clear();
             }
-            luaState.CurrentProcess = this;
             environment = luaState.GetNewEnvironment();
-            try
-            {                
-                LuaFunction originalFunction = luaState.LuaState.LoadString(source, fileName);                
-                LuaFunction envChanger = (LuaFunction)luaState.LuaState.LoadString(@"
-                    local args = {...}                                 
-                    setfenv(args[1],args[2])                    
-                    return args[1]
-                        "
-                    , "Environment Changer");
-                LuaFunction newFunction = (LuaFunction)envChanger.Call(originalFunction,environment)[0];
-                newFunction.Call();
-                
-            }
-            catch (NLua.Exceptions.LuaException ex)
-            {
-                luaState.Log(string.Format("Error Loading Source {0}:\n{1} ", fileName, ex.Message));
-                luaState.revertCallStack();
-                return false;
-            }
-            luaState.revertCallStack();
-            return true;
+            return RunString(source,fileName);
         }
 
         public bool Reload()
@@ -250,6 +253,13 @@ namespace Selene
             }
             UnityEngine.Debug.Log(message);
             UnityEngine.Debug.Log("***");          */
+        }
+
+        public SeleneProcess CreateChildProcess()
+        {
+            var proc = new SeleneProcess(luaState);
+            AddChildProcess(proc);
+            return proc;             
         }
     }
 }

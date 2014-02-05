@@ -70,7 +70,7 @@ namespace Selene
 
         public string GetInterpreterVersion()
         {
-            return "Selene v1 Lua 5.2";
+            return "Selene v1 Lua 5.1";
         }
     }
 }

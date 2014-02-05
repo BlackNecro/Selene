@@ -56,13 +56,13 @@ local proc2 = Selene:CreateProcessFromString("test proc 2",[[Selene:Log('Proc 2'
 
 counter = 0
 function Selene:OnTick(delta)	
-	Selene:Log("Test")
-	counter = counter + 1
-	Selene:Log(tostring(proc.Env.testVar))
-	proc.Env.testVar = tostring(counter)
+	--Selene:Log("Test")
+	--counter = counter + 1
+	--Selene:Log(tostring(proc.Env.testVar))
+	--proc.Env.testVar = tostring(counter)
 	--proc2:Reload()
-	Selene:Log('tick a')
-	do return 200 end
+	--Selene:Log('tick a '..tostring(counter) )
+	do return 10 end
 	local other = Selene:GetCurrentTarget()
 	if other ~= nil then
 		local offset = (vessel:GetPosition() - other:GetPosition())
