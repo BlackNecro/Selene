@@ -5,7 +5,6 @@ using System.Text;
 using KSPVessel = Vessel;
 using Selene;
 using Selene.DataTypes;
-using SVector = Selene.DataTypes.Vector;
 
 namespace SeleneKSP.DataTypes
 {
@@ -19,24 +18,24 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public SVector GetTranslation()
+        public Vector3d GetTranslation()
         {
-            return new SVector(ctrlstate.X, ctrlstate.Z, ctrlstate.Y);
+            return new Vector3d(ctrlstate.X, ctrlstate.Z, ctrlstate.Y);
         }
 
-        public void SetTranslation(SVector newValue)
+        public void SetTranslation(Vector3d newValue)
         {
             ctrlstate.X = (float)newValue.x;
             ctrlstate.Y = (float)newValue.z;
             ctrlstate.Z = (float)newValue.y;
         }
 
-        public SVector GetRotation()
+        public Vector3d GetRotation()
         {
-            return new SVector(ctrlstate.pitch, ctrlstate.yaw, ctrlstate.roll);
+            return new Vector3d(ctrlstate.pitch, ctrlstate.yaw, ctrlstate.roll);
         }
 
-        public void SetRotation(SVector newValue)
+        public void SetRotation(Vector3d newValue)
         {
             ctrlstate.pitch = (float)newValue.x;
             ctrlstate.yaw = (float)newValue.y;

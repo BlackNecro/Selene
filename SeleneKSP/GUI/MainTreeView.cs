@@ -215,10 +215,10 @@ namespace SeleneKSP.GUI
         void ListProcesses(ModuleSelene mod)
         {
             var proc = mod.Interpreter.RootProcess;
-            ListProcess(proc);
+            ListProcess(mod.Interpreter,proc);
         }
 
-        private void ListProcess(Selene.SeleneProcess proc)
+        private void ListProcess(Selene.SeleneInterpreter interp, Selene.SeleneProcess proc)
         {
             curIndent += indentSize;
 
@@ -228,7 +228,7 @@ namespace SeleneKSP.GUI
             {
                 DrawCollapseButton(proc);
             }
-            if (GUILayout.Button(proc.fileName))
+            if (GUILayout.Button(proc.name))
             {
                 ToggleWindow(proc);
             }
@@ -245,7 +245,7 @@ namespace SeleneKSP.GUI
                 if(GUILayout.Button("+",GUILayout.Width(buttonWidth)))
                 {                    
                     //Todo Add Process
-
+                    interp.CreateProcess("test.lua");                    
                 }
             }
             string caption = "■";
@@ -276,7 +276,7 @@ namespace SeleneKSP.GUI
             {
                 foreach (var child in proc.Children)
                 {
-                    ListProcess(child);
+                    ListProcess(interp,child);
                 }
             }
             curIndent -= indentSize;

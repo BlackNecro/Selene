@@ -37,9 +37,11 @@ namespace Selene
             get { return baseEnvironment; }
         }
 
+        LuaFunction luaToStringFunction;
         public SeleneLuaState()
         {
             luaState = new Lua();
+            luaToStringFunction = luaState.LoadString("return tostring(...)","Lua tostring");
             CreateBaseLibrary();
 
             baseEnvironment = GetNewTable();
@@ -54,27 +56,28 @@ namespace Selene
             luaState.DoString(@"                                
                 luanet.load_assembly('UnityEngine')
                 luanet.load_assembly('Assembly-CSharp')
+                luanet.load_assembly('Assembly-CSharp-firstpass')
                 luanet.load_assembly('SeleneCore')
-                Vector = luanet.import_type('Selene.DataTypes.Vector')
+                Vector = luanet.import_type('Vector3d')
                 Quaternion = luanet.import_type('UnityEngine.QuaternionD')
                 Debug = luanet.import_type('UnityEngine.Debug')
-                local QuaternionUtil = luanet.import_type('Selene.DataTypes.QuaternionUtil')
-
+                local util = luanet.import_type('Selene.DataTypes.VectorQuaternionUtil')
+                
                 local quat = Quaternion(0,0,0,0)
                 local qmt = getmetatable(quat)
-                qmt.__mul = QuaternionUtil.Multiply
+                qmt.__mul = util.MultiplyQuat
 
-                local vec = Vector()
+                local vec = Vector.zero
                 local vmt = getmetatable(vec)
-                vmt.__add = Vector.Add
-                vmt.__sub = Vector.Substract
-                vmt.__mul = Vector.Multiply
-                vmt.__div = Vector.Divide
+                vmt.__add = util.AddVec
+                vmt.__sub = util.SubstractVec
+                vmt.__mul = util.MultiplyVec
+                vmt.__div = util.DivideVec
                 quat = nil
                 ve = nil
                 qmt = nil
                 vmt = nil
-                QuaternionUnil = nil
+                util = nil
             ", "Library Initialization");
             luaState["Selene"] = this;
             luaState.DoString(@"
@@ -120,6 +123,8 @@ namespace Selene
                 RegisterControl(value);
             }
         }
+
+        //TODO Add Register Save and Load functions
         public LuaTable GetNewTable()
         {
             return (LuaTable)luaState.DoString("return {}")[0];
@@ -182,7 +187,17 @@ namespace Selene
                 return toReturn;
             }
             return null;
-        } 
+        }
+
+        public void Persist(string varName)
+        {
+            CurrentProcess.Persist(varName);
+        }
+
+        public string LuaToString(object obj)
+        {
+            return (string)luaToStringFunction.Call(obj)[0];
+        }
 
         abstract public double GetUniverseTime();
 
@@ -205,5 +220,10 @@ namespace Selene
         abstract public string ReadFile(string path);
 
         abstract public DataTypes.IControls CreateControlState(FlightCtrlState toCreate);
+
+
+        abstract public bool AppendFile(string path, string content);
+
+        abstract public bool WriteFile(string path, string content);
     }
 }

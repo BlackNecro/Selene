@@ -19,7 +19,7 @@ namespace Selene
         {
             Selene.DataTypes.IControls luaControlObject = ((ILuaDataProvider)luaState).CreateControlState(newState);
             object[] parameters = { (object)luaControlObject };
-            RootProcess.Execute(CallbackType.Control,parameters);                       
+            RootProcess.Execute(CallbackType.Control, parameters);
         }
 
 
@@ -27,13 +27,13 @@ namespace Selene
         {
             luaState = provider;
             RootProcess = new SeleneProcess(provider);
-            RootProcess.fileName = "Root";
+            RootProcess.name = "Root";
             RootProcess.Active = true;
         }
         public bool CreateProcess(string file)
         {
             SeleneProcess newProcess = new SeleneProcess(luaState);
-            if(newProcess.LoadFromFile(file))
+            if (newProcess.LoadFromFile(file))
             {
                 RootProcess.AddChildProcess(newProcess);
                 newProcess.Active = true;
@@ -45,7 +45,7 @@ namespace Selene
         public bool CreateProcess(string[] lines, string filename)
         {
             SeleneProcess newProcess = new SeleneProcess(luaState);
-            if(newProcess.LoadFromString(String.Join("\n", lines),filename))
+            if (newProcess.LoadFromString(String.Join("\n", lines), filename))
             {
                 RootProcess.AddChildProcess(newProcess);
                 newProcess.Active = true;
@@ -54,8 +54,8 @@ namespace Selene
             return false;
         }
         public void ExecuteProcess()
-        {                      
-            RootProcess.Execute(CallbackType.Tick, new object[]{});
+        {
+            RootProcess.Execute(CallbackType.Tick, new object[] { });
         }
 
         public bool HasVariable(string name)
@@ -71,6 +71,34 @@ namespace Selene
         public string GetInterpreterVersion()
         {
             return "Selene v1 Lua 5.1";
+        }
+
+        public void SaveState(ConfigNode saveInto)
+        {
+            saveInto.ClearData();
+            saveInto.AddValue("Active", RootProcess.Active.ToString());
+            foreach (var Proc in RootProcess.Children)
+            {
+                Proc.Execute(CallbackType.Save);
+                Proc.SaveObject(saveInto);
+            }
+        }
+
+        public void LoadState(ConfigNode loadFrom)
+        {
+            UnityEngine.Debug.Log("Start Interpreter LoadState");
+            if (loadFrom.HasValue("Active"))
+            {
+                UnityEngine.Debug.Log("has active node");
+                RootProcess.Active = Boolean.Parse(loadFrom.GetValue("Active"));
+            }
+            foreach (ConfigNode procNode in loadFrom.GetNodes("Process"))
+            {
+                SeleneProcess newProc = RootProcess.CreateChildProcess();
+                newProc.LoadState(procNode);
+                newProc.Execute(CallbackType.Load);
+            }
+
         }
     }
 }

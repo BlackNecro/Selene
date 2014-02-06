@@ -7,7 +7,6 @@ using KSPVessel = global::Vessel;
 using Selene;
 using Selene.DataTypes;
 using NLua;
-using SVector = Selene.DataTypes.Vector;
 
 namespace SeleneKSP.DataTypes
 {    
@@ -50,9 +49,9 @@ namespace SeleneKSP.DataTypes
         {
             return vessel.obt_speed;
         }
-        public SVector GetOrbitVelocity()
+        public Vector3d GetOrbitVelocity()
         {
-            return new SVector(vessel.obt_velocity) ;
+            return vessel.obt_velocity;
         }
 
         public double GetSurfaceSpeed()
@@ -60,9 +59,9 @@ namespace SeleneKSP.DataTypes
             return vessel.srfSpeed;
         }
 
-        public SVector GetSurfaceVelocity()
+        public Vector3d GetSurfaceVelocity()
         {
-            return new SVector(vessel.srf_velocity);
+            return vessel.srf_velocity;
         }
 
         public ICelestialBody GetParentBody()
@@ -80,17 +79,17 @@ namespace SeleneKSP.DataTypes
             return vessel.GetTotalMass();
         }
 
-        public SVector GetCenterOfMass()
+        public Vector3d GetCenterOfMass()
         {
-            return new SVector(vessel.findLocalCenterOfMass());
+            return vessel.findLocalCenterOfMass();
         }
 
-        public SVector GetCenterOfDryMass()
+        public Vector3d GetCenterOfDryMass()
         {
             throw new NotImplementedException();
         }
 
-        public SVector GetMomentOfInertia()
+        public Vector3d GetMomentOfInertia()
         {
             throw new NotImplementedException();
         }
@@ -110,9 +109,9 @@ namespace SeleneKSP.DataTypes
             return tab;
         }
 
-        public SVector GetPosition()
+        public Vector3d GetPosition()
         {
-            return new SVector(vessel.GetWorldPos3D());
+            return vessel.GetWorldPos3D();
         }
 
         public UnityEngine.QuaternionD GetRotation()
@@ -136,9 +135,9 @@ namespace SeleneKSP.DataTypes
             return vessel.srfRelRotation;
         }
 
-        public SVector GetAngularVelocity()
+        public Vector3d GetAngularVelocity()
         {
-            return new SVector(vessel.angularVelocity);
+            return vessel.angularVelocity;
         }
 
 
@@ -154,18 +153,18 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public SVector WorldToLocal(SVector toTransform)
+        public Vector3d WorldToLocal(Vector3d toTransform)
         {
 
 
             UnityEngine.QuaternionD test = vessel.transform.rotation;
 
-            return new SVector(((UnityEngine.QuaternionD) vessel.transform.rotation) * toTransform.Vector3D);
+            return ((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform;
         }
 
-        public SVector LocalToWorld(SVector toTransform)
+        public Vector3d LocalToWorld(Vector3d toTransform)
         {
-            return new SVector(UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform.Vector3D);
+            return UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform;
         }
     }
 }

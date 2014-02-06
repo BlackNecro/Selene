@@ -13,7 +13,6 @@ namespace SeleneKSP
         {
             get { return interpreter; }
         }
-        bool run = false;
 
         public void RunTestScript()
         {
@@ -21,11 +20,17 @@ namespace SeleneKSP
         }
         public void Init()
         {
-            DeleteInterpreter();
-            interpreter = new SeleneInterpreter(new KSPDataProvider(this));
-            vessel.OnFlyByWire += interpreter.OnFlyByWire;
-            interpreter.CreateProcess("test.lua");
-            run = true;
+            UnityEngine.Debug.Log("Init");
+            if(interpreter == null)
+            {
+                UnityEngine.Debug.Log("Creating interpreter");
+                interpreter = new SeleneInterpreter(new KSPDataProvider(this));
+            }
+            if(vessel != null)
+            {
+                vessel.OnFlyByWire += interpreter.OnFlyByWire;
+            }                        
+            UnityEngine.Debug.Log("End Init");
         }
 
         private void DeleteInterpreter()
@@ -47,37 +52,49 @@ namespace SeleneKSP
             interpreter.ExecuteProcess();
         }
         public override void OnStart(PartModule.StartState state)
-        {
+        {            
             //Do not start from editor and at KSP first loading
+            UnityEngine.Debug.Log("On Start");
             if (state == StartState.Editor || state == StartState.None)
             {
                 return;
             }
             Init();
+            UnityEngine.Debug.Log("End Start");
         }
-        [KSPEvent(guiActive = true, guiName = "Reload Program")]
-        public void Reload()
+        
+        public override void OnLoad(ConfigNode node)
         {
-            UnityEngine.Debug.Log("Reloading");
-            foreach(var proc in interpreter.RootProcess.Children)
+            UnityEngine.Debug.Log("On Load");
+            base.OnLoad(node);
+            Init();
+            if (node != null)
             {
-                UnityEngine.Debug.Log("Reloading " + proc.fileName);
-                proc.Reload();
-            }
-        }
-        [KSPEvent(guiActive = true, guiName = "Run Program")]
-        public void Activate()
-        {
-            bool set = true;
-            foreach(var proc in interpreter.RootProcess.Children)
-            {
-                if(set)
+                UnityEngine.Debug.Log("got Node");
+                if (node.HasNode("SeleneInterpreter"))
                 {
-                    run = !proc.Active;
-                    set = false;
+                    UnityEngine.Debug.Log("has Interpreter node");
+                    interpreter.LoadState(node.GetNode("SeleneInterpreter"));
                 }
-                proc.Active = run;
             }
+            UnityEngine.Debug.Log("End Load");
         }
+
+        public override void OnSave(ConfigNode node)
+        {
+            UnityEngine.Debug.Log("On Save");            
+            if (node != null)
+            {
+                ConfigNode saveInto = node.GetNode("SeleneInterpreter");
+                if (saveInto == null)
+                {
+                    saveInto = new ConfigNode("SeleneInterpreter");
+                    node.AddNode(saveInto);
+                }
+                interpreter.SaveState(saveInto);
+            }
+            UnityEngine.Debug.Log("End Save");
+            base.OnSave(node);
+        }        
     }
 }

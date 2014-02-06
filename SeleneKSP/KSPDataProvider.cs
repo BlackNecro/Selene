@@ -8,7 +8,7 @@ using Selene;
 using Selene.DataTypes;
 
 using SVessel = SeleneKSP.DataTypes.Vessel;
-using SeleneKSP.DataTypes;    
+using SeleneKSP.DataTypes;
 
 namespace SeleneKSP
 {
@@ -16,16 +16,17 @@ namespace SeleneKSP
     {
         ModuleSelene parentModule;
 
-        public KSPDataProvider(ModuleSelene parent) : base()
+        public KSPDataProvider(ModuleSelene parent)
+            : base()
         {
-            parentModule = parent;         
+            parentModule = parent;
         }
 
         protected override void FinalizeLuaState()
         {
             luaState.DoString(@"luanet.load_assembly('SeleneKSP')");
         }
-        
+
         public override double GetUniverseTime()
         {
             return Planetarium.fetch.time;
@@ -33,7 +34,7 @@ namespace SeleneKSP
 
         public override IVessel GetExecutingVessel()
         {
-            return new SVessel(parentModule.part.vessel,this);
+            return new SVessel(parentModule.part.vessel, this);
         }
 
         public override IVessel GetCommandedVessel()
@@ -43,13 +44,13 @@ namespace SeleneKSP
 
         public override ITarget GetCurrentTarget()
         {
-            ITargetable target = FlightGlobals.fetch.VesselTarget;        
-            if(target != null)
+            ITargetable target = FlightGlobals.fetch.VesselTarget;
+            if (target != null)
             {
-                if(target is Vessel)
+                if (target is Vessel)
                 {
-                    return new SVessel((Vessel)target,this);
-                }                
+                    return new SVessel((Vessel)target, this);
+                }
             }
             return null;
         }
@@ -83,11 +84,37 @@ namespace SeleneKSP
         public override string ReadFile(string path)
         {
             return KSP.IO.File.ReadAllText<SeleneInterpreter>(path);
-        }     
+        }
 
         public override NLua.LuaTable GetVessels()
         {
             throw new NotImplementedException();
+        }
+
+        public override bool AppendFile(string path, string content)
+        {
+            try
+            {
+                KSP.IO.File.AppendAllText<SeleneInterpreter>(content, path);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public override bool WriteFile(string path, string content)
+        {
+            try
+            {
+                KSP.IO.File.WriteAllText<SeleneInterpreter>(content, path);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

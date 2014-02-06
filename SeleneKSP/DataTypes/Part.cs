@@ -14,9 +14,9 @@ namespace SeleneKSP.DataTypes
             part = toUse;                                
         }
 
-        public Selene.DataTypes.Vector GetOffset()
+        public Vector3d GetOffset()
         {
-            return new Selene.DataTypes.Vector(part.orgPos);
+            return part.orgPos;
         }
 
         public string GetName()

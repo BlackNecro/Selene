@@ -1,4 +1,12 @@
 --test.lua
+P = { 1,"String",true,
+["key"] = "value",
+["bool"] = true,
+["vec"] = Vector(1,2,3),
+["quat"] = Quaternion(1,2,3,4)
+}
+Selene:Persist("P")
+do return end
 Selene:Log("Hello World")
 MyVar = 5
 proc = Selene:CreateProcessFromFile("test2.lua")

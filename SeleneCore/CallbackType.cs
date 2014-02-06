@@ -10,6 +10,7 @@ namespace Selene
     {
         Tick,
         Control,
-        GUI
+        Save,
+        Load
     }
 }

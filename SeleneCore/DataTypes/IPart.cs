@@ -7,7 +7,7 @@ namespace Selene.DataTypes
 {
     public interface IPart
     {
-        Vector GetOffset();
+        Vector3d GetOffset();
         UnityEngine.QuaternionD GetRotation();
         string GetName();
         string GetTitle();

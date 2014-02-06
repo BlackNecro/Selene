@@ -68,13 +68,12 @@
     <Compile Include="DataTypes\IControls.cs" />
     <Compile Include="DataTypes\IEngineInfo.cs" />
     <Compile Include="DataTypes\IPart.cs" />
-    <Compile Include="DataTypes\QuaternionUtil.cs" />
+    <Compile Include="DataTypes\Util.cs" />
     <Compile Include="GUI\IButton.cs" />
     <Compile Include="GUI\IGUIElement.cs" />
     <Compile Include="DataTypes\IManeuverNode.cs" />
     <Compile Include="DataTypes\ITarget.cs" />
     <Compile Include="DataTypes\IVessel.cs" />
-    <Compile Include="DataTypes\Vector.cs" />
     <Compile Include="GUI\ILabel.cs" />
     <Compile Include="ILuaDataProvider.cs" />
     <Compile Include="IInterpreter.cs" />

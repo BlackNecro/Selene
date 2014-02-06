@@ -5,9 +5,11 @@ Vector
 		Vector(Vector3)	 --Quaternion
 		Vector(Vector3d) --Quaternion
 	x,y,z components
-Quaternion
+	
+Quaternion See UnityEngine.QuaternionD
 	ctor:
 		Quaternion(x,y,z,w)
+	
 
 Selene
 	Selene:CreateNewManeuverNode() ManeuverNode
@@ -24,12 +26,16 @@ Selene
 		Gets a table of all manneuver nodes
 	Selene:GetNextManeuverNode()  ManeuverNode
 		Gets the next maneuver node
-	Selene:GetUniverseTime() float
-		Gets the current
+	Selene:GetUniverseTime() number
+		Gets the current time
 	Selene:GetVessels() table of Vessel
 		Gets all vessels
-	Selene:ReadFile(string name) string
+	Selene:ReadFile(string path) string
 		Reads and returns the content of the specified file
+	Selene:WriteFile(string path, string content) bool
+		Writes content to specified file returns true on success
+	Selene:AppendFile(string name) string
+		Appends content to specified file returns true on success
 	Selene:RegisterTick(function(delta))
 		Registers passed function as tick function short form 
 			function Selene:OnTick(delta) end
@@ -44,6 +50,10 @@ Selene
 		Creates a new process from the specified source string, returns nil if creation failed
 	Selene.CurrentProcess 
 		reference to the current process
+	Selene:Persist(string varName)
+		marks the global variable with the name varName for saving and loading
+		only works with basic datatypes: 
+			number, string, bool, table, vector and quaternion
 	
 
 Target
@@ -55,7 +65,7 @@ Target
 		returns rotation 
 	WorldToLocal(Vector toTransform) Vector 
 		transforms a given world space vector into local space
-    Vector LocalToWorld(Vector toTransform);
+    LocalToWorld(Vector toTransform) Vector
 		transforms a given local space vector into world space
 
 CelestialBody : Target

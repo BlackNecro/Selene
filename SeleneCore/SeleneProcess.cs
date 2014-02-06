@@ -6,7 +6,7 @@ using NLua;
 
 namespace Selene
 {
-    public class SeleneProcess 
+    public class SeleneProcess
     {
         public class LogEntry
         {
@@ -19,7 +19,7 @@ namespace Selene
                 message = Message;
                 priority = Prio;
             }
-                        
+
         }
 
 
@@ -45,7 +45,9 @@ namespace Selene
         SeleneLuaState luaState;
         LuaTable environment;
 
-        
+        public HashSet<string> persistentVariables = new HashSet<string>();
+
+
         public LinkedList<LogEntry> LogList = new LinkedList<LogEntry>();
 
         public LuaTable Env
@@ -56,7 +58,7 @@ namespace Selene
 
         public bool IsCustomVariable(object key)
         {
-            if(luaState.BaseEnvironment[key] == null)
+            if (luaState.BaseEnvironment[key] == null)
             {
                 return true;
             }
@@ -68,20 +70,20 @@ namespace Selene
             get
             {
                 LuaTable toReturn = luaState.GetNewTable();
-                LuaTable myEnv = Env;                
+                LuaTable myEnv = Env;
                 foreach (object key in myEnv.Keys)
-                {   
-                    if(luaState.BaseEnvironment[key] == null)
+                {
+                    if (luaState.BaseEnvironment[key] == null)
                     {
                         toReturn[key] = myEnv[key];
-                    }    
+                    }
                 }
                 return toReturn;
-            }            
+            }
         }
 
         SeleneCallback currentCallback;
-        public string fileName = "";
+        public string name = "";
         public string source = "";
         bool fromFile = false;
         bool run = false;
@@ -98,11 +100,11 @@ namespace Selene
         {
             get
             {
-                if(!Active)
+                if (!Active)
                 {
                     return false;
                 }
-                if(Parent != null)
+                if (Parent != null)
                 {
                     return Parent.IsActive;
                 }
@@ -133,7 +135,7 @@ namespace Selene
 
         public bool LoadFromFile(string path)
         {
-            fileName = path;
+            name = path;
             source = ((ILuaDataProvider)luaState).ReadFile(path);
             fromFile = true;
 
@@ -144,7 +146,7 @@ namespace Selene
         public bool LoadFromString(string newSource, string file)
         {
             fromFile = false;
-            fileName = file;
+            name = file;
             source = newSource;
 
             LoadSource();
@@ -167,7 +169,7 @@ namespace Selene
             }
             catch (NLua.Exceptions.LuaException ex)
             {
-                luaState.Log(string.Format("Lua Error in {0}:\n{1} ", fileName, ex.Message));
+                luaState.Log(string.Format("Lua Error in {0}:\n{1} ", name, ex.Message));
                 luaState.revertCallStack();
                 return false;
             }
@@ -182,23 +184,23 @@ namespace Selene
             List<SeleneProcess> toDelete = new List<SeleneProcess>(Children);
             toDelete.ForEach(child => child.Delete());
 
-            foreach(var callbackList in Callbacks)
+            foreach (var callbackList in Callbacks)
             {
                 callbackList.Clear();
             }
             environment = luaState.GetNewEnvironment();
-            return RunString(source,fileName);
+            return RunString(source, name);
         }
 
         public bool Reload()
         {
             if (fromFile)
             {
-                return LoadFromFile(fileName);
+                return LoadFromFile(name);
             }
             else
             {
-                return LoadFromString(source, fileName);
+                return LoadFromString(source, name);
             }
         }
 
@@ -216,7 +218,7 @@ namespace Selene
         }
 
 
-        public void Execute(CallbackType type, object[] parameters)
+        public void Execute(CallbackType type, params object[] parameters)
         {
             if (run)
             {
@@ -241,25 +243,195 @@ namespace Selene
 
         public void Log(string message, int priority)
         {
-
-
-            LogList.AddLast(new LogEntry(this.currentCallback,message,priority));
-                                 /*
-            UnityEngine.Debug.Log("***");
-            UnityEngine.Debug.Log("Process " + this.fileName);
-            if (currentCallback != null)
-            {
-                UnityEngine.Debug.Log("Callback" + this.currentCallback.CallbackType);
-            }
-            UnityEngine.Debug.Log(message);
-            UnityEngine.Debug.Log("***");          */
+            LogList.AddLast(new LogEntry(this.currentCallback, message, priority));
         }
 
         public SeleneProcess CreateChildProcess()
         {
             var proc = new SeleneProcess(luaState);
             AddChildProcess(proc);
-            return proc;             
+            return proc;
+        }
+        private static string EncodeString(string val)
+        {
+            return Convert.ToBase64String(Encoding.Unicode.GetBytes(val)).Replace('=','-');
+        }
+        private static string DecodeString(string val)
+        {
+            return Encoding.Unicode.GetString(Convert.FromBase64String(val.Replace('-','=')));
+        }
+
+        public void SaveObject(ConfigNode saveInto)
+        {
+            ConfigNode proc = new ConfigNode("Process");
+            saveInto.AddNode(proc);
+            proc.AddValue("Name", EncodeString(name));
+            proc.AddValue("Active", Active);
+            if (!fromFile)
+            {
+                proc.AddValue("Source", EncodeString(source));
+            }
+            proc.AddValue("FromFile", fromFile);
+
+            ConfigNode varsNode = new ConfigNode("Variables");
+            proc.AddNode(varsNode);     
+
+            foreach (string varName in persistentVariables)
+            {
+                ConfigNode varNode = new ConfigNode(EncodeString(varName));
+                if (SaveObject(varNode, environment[varName], new HashSet<string>()))
+                {
+                    varsNode.AddNode(varNode);
+                }
+            }
+        }
+
+        private bool SaveObject(ConfigNode saveInto, object val, HashSet<string> savedTables)
+        {
+            UnityEngine.Debug.Log("Saving Object: " + val.ToString());
+            if (val != null)
+            {
+                ConfigNode newNode = new ConfigNode();
+                if (val is double)
+                {
+                    UnityEngine.Debug.Log("It's a double");
+                    newNode.name = "Double";
+                    newNode.AddValue("Value", val.ToString());
+                }
+                else if (val is String)
+                {
+                    UnityEngine.Debug.Log("It's a string");
+                    newNode.name = "String";
+                    newNode.AddValue("Value", EncodeString(val.ToString()));
+                }
+                else if (val is Boolean)
+                {
+                    UnityEngine.Debug.Log("It's a bool");
+                    newNode.name = "Boolean";
+                    newNode.AddValue("Value", val.ToString());
+                }
+                else if (val is LuaTable)
+                {
+                    UnityEngine.Debug.Log("It's a table");
+                    LuaTable tab = (LuaTable)val;
+                    if (savedTables.Contains(luaState.LuaToString(tab)))
+                    {
+                        UnityEngine.Debug.Log("Already got this one - aborting");
+                        return false;
+                    }
+                    savedTables.Add(luaState.LuaToString(tab));
+                    
+                    newNode.name = "Table";
+                    foreach (object key in tab.Keys)
+                    {
+                        UnityEngine.Debug.Log("Try saving key value pair");
+                        ConfigNode entry = new ConfigNode("Entry");
+                        if (SaveObject(entry, key, savedTables) && SaveObject(entry, tab[key], savedTables))
+                        {
+                            newNode.AddNode(entry);
+                        }
+                    }
+
+                }
+                else if (val is Vector3d)
+                {
+                    UnityEngine.Debug.Log("It's a vector");
+                    Vector3d vec = (Vector3d)val;
+                    newNode.name = "Vector";
+                    newNode.AddValue("X", vec.x);
+                    newNode.AddValue("Y", vec.y);
+                    newNode.AddValue("Z", vec.z);
+                }
+                else if (val is UnityEngine.QuaternionD)
+                {
+                    UnityEngine.Debug.Log("It's a quat");
+                    UnityEngine.QuaternionD quat = (UnityEngine.QuaternionD)val;
+                    newNode.name = "Quaternion";
+                    newNode.AddValue("X", quat.x);
+                    newNode.AddValue("Y", quat.y);
+                    newNode.AddValue("Z", quat.z);
+                    newNode.AddValue("W", quat.w);
+
+                }
+                else
+                {
+                    UnityEngine.Debug.Log("It's something different aborting");
+                    return false;
+                }
+                UnityEngine.Debug.Log("success - adding var");
+                saveInto.AddNode(newNode);
+                return true;
+            }
+            return false;
+        }
+
+        public void LoadState(ConfigNode loadFrom)
+        {
+            UnityEngine.Debug.Log("Start Proc LoadState");
+            if (loadFrom != null)
+            {
+                name = DecodeString(loadFrom.GetValue("Name"));
+                Active = Boolean.Parse(loadFrom.GetValue("Active"));
+                fromFile = Boolean.Parse(loadFrom.GetValue("FromFile"));
+                if (loadFrom.HasValue("Source"))
+                {
+                    string val = loadFrom.GetValue("Source");
+
+                    source = DecodeString(val);
+                }
+
+                Reload();
+                foreach (ConfigNode varNode in loadFrom.GetNode("Variables").nodes)
+                {
+                    string key = DecodeString(varNode.name);
+                    object value = LoadObject(varNode.nodes[0]);
+                    Env[key] = value;
+                }
+            }            
+            UnityEngine.Debug.Log("EndProc LoadState");
+        }
+
+        private object LoadObject(ConfigNode loadFrom)
+        {
+            switch(loadFrom.name)
+            {
+                case "Double":
+                    return Double.Parse(loadFrom.GetValue("Value"));
+                case "String":
+                    return DecodeString(loadFrom.GetValue("Value"));
+                case "Boolean":
+                    return Boolean.Parse(loadFrom.GetValue("Value"));
+                case "Vector":
+                    return new Vector3d(
+                        Double.Parse(loadFrom.GetValue("X")),
+                        Double.Parse(loadFrom.GetValue("Y")),
+                        Double.Parse(loadFrom.GetValue("Z")));
+                case "Quaternion":
+                    return new UnityEngine.QuaternionD(
+                        Double.Parse(loadFrom.GetValue("X")),
+                        Double.Parse(loadFrom.GetValue("Y")),
+                        Double.Parse(loadFrom.GetValue("Z")),
+                        Double.Parse(loadFrom.GetValue("W")));
+                case "Table":
+                    LuaTable tab = luaState.GetNewTable();
+                    foreach(var entry in loadFrom.GetNodes("Entry"))
+                    {
+                        if(entry.nodes.Count == 2)
+                        {
+                            object key = LoadObject(entry.nodes[0]);
+                            object value = LoadObject(entry.nodes[1]);
+                            tab[key] = value;
+                        }
+                    }
+                    return tab;
+                default:
+                    return null;
+            }
+        }
+
+        public void Persist(string varName)
+        {
+            persistentVariables.Add(varName);
         }
     }
 }

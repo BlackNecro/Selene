@@ -19,6 +19,8 @@ namespace Selene
         LuaTable GetManeuverNodes();
         IManeuverNode CreateNewManeuverNode();
         string ReadFile(string path);
+        bool AppendFile(string path, string content);
+        bool WriteFile(string path, string content);
         IControls CreateControlState(FlightCtrlState toCreate);
 
     }
