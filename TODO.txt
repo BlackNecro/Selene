@@ -1,50 +1,38 @@
 Next Up:
-	Persistance Load/Save Hooks	 DONE
-	proper load file dialog
 	Log Filtering	
-	ingame script editor / create file internally (urgh)
+	ingame script editor / create file internally
 
-Feature Scope:	
-	IO Stuff
-		GUI Elements
-			Buttons 
-			Sliders
-			Textbox
-			Label
+Feature Scope Missing:	
+	GUI Elements
+		Buttons 
+		Sliders
+		Textbox
+		Label
 			
 	Debug Output
 		Logging to console - Mostly done missing filters
-		Save log to file  
 
-	Persistance - Mostly done missing load and save hooks
-		
 	DataTypes:				
 		ManeuverNodes 
 
 		Vessel : Target 
-			Get
-				Height over Ground / Ocean				
-				Stage List
-					Stage Info
-						Resource Stuff
-				Engine List
-					Engine Info
-						Offset
-						Enabled
-						Max Throttle Percentage
-						Max Thrust
-				Action Groups
-				Parent Celestial Body			
-				Mass
-				Moment of Inertia
-			Set
-				Staging
-					Trigger Stage
-					Trigger Undock?
+			Height over Ground / Ocean - inaccurate returns -1 at times have to look into it
+			Part List
+			Stage List
+				Stage Info
+					Resource Stuff
+			Engine List
 				Engine Info
+					Offset
 					Enabled
 					Max Throttle Percentage
-				Action Groups
+					Max Thrust
+			Action Groups + Staging
+				Hook onto
+				Firing them
+			Parent Celestial Body			
+			Mass
+			Moment of Inertia
 		Celestial Body : Target
 			Get 
 				Atmospheric parameters
