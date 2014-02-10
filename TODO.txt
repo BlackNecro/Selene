@@ -1,6 +1,11 @@
+Next Up:
+	Persistance Load/Save Hooks	 DONE
+	proper load file dialog
+	Log Filtering	
+	ingame script editor / create file internally (urgh)
+
 Feature Scope:	
 	IO Stuff
-		Handle Callbacks
 		GUI Elements
 			Buttons 
 			Sliders
@@ -8,22 +13,17 @@ Feature Scope:
 			Label
 			
 	Debug Output
-		Logging to console
-		Save log to file
-	Persistance
-		Saving / Loading Key Value Store thingy
+		Logging to console - Mostly done missing filters
+		Save log to file  
 
-	DataTypes:		
-		3D Vector - Done
-		Target - Done
-			Get
-				Rotation															
-				Position
+	Persistance - Mostly done missing load and save hooks
+		
+	DataTypes:				
+		ManeuverNodes 
+
 		Vessel : Target 
 			Get
-				Height over Ground / Ocean
-				Velocity
-				Controls
+				Height over Ground / Ocean				
 				Stage List
 					Stage Info
 						Resource Stuff
@@ -34,13 +34,10 @@ Feature Scope:
 						Max Throttle Percentage
 						Max Thrust
 				Action Groups
-				Parent Celestial Body
-				Dry Mass				
+				Parent Celestial Body			
 				Mass
-				Center of Mass
 				Moment of Inertia
 			Set
-				Controls
 				Staging
 					Trigger Stage
 					Trigger Undock?
@@ -52,12 +49,5 @@ Feature Scope:
 			Get 
 				Atmospheric parameters
 				SOI size
-
-	Data Provider: - Done
-		Get Executing Vessel
-		Get Commanded Vessel
-		Get Current Target
-		Get Vessel (List) By Name 
-		Get Celestial Body By Name
 
 

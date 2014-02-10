@@ -20,17 +20,14 @@ namespace SeleneKSP
         }
         public void Init()
         {
-            UnityEngine.Debug.Log("Init");
             if(interpreter == null)
             {
-                UnityEngine.Debug.Log("Creating interpreter");
                 interpreter = new SeleneInterpreter(new KSPDataProvider(this));
             }
             if(vessel != null)
             {
                 vessel.OnFlyByWire += interpreter.OnFlyByWire;
             }                        
-            UnityEngine.Debug.Log("End Init");
         }
 
         private void DeleteInterpreter()
@@ -54,35 +51,28 @@ namespace SeleneKSP
         public override void OnStart(PartModule.StartState state)
         {            
             //Do not start from editor and at KSP first loading
-            UnityEngine.Debug.Log("On Start");
             if (state == StartState.Editor || state == StartState.None)
             {
                 return;
             }
             Init();
-            UnityEngine.Debug.Log("End Start");
         }
         
         public override void OnLoad(ConfigNode node)
         {
-            UnityEngine.Debug.Log("On Load");
             base.OnLoad(node);
             Init();
             if (node != null)
             {
-                UnityEngine.Debug.Log("got Node");
                 if (node.HasNode("SeleneInterpreter"))
                 {
-                    UnityEngine.Debug.Log("has Interpreter node");
                     interpreter.LoadState(node.GetNode("SeleneInterpreter"));
                 }
             }
-            UnityEngine.Debug.Log("End Load");
         }
 
         public override void OnSave(ConfigNode node)
-        {
-            UnityEngine.Debug.Log("On Save");            
+        {     
             if (node != null)
             {
                 ConfigNode saveInto = node.GetNode("SeleneInterpreter");
@@ -93,7 +83,6 @@ namespace SeleneKSP
                 }
                 interpreter.SaveState(saveInto);
             }
-            UnityEngine.Debug.Log("End Save");
             base.OnSave(node);
         }        
     }

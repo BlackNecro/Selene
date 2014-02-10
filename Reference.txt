@@ -42,6 +42,12 @@ Selene
 	Selene:RegisterControl(function(Controls, delta))
 		Registers passed function as control function - short form 
 			function Selene:OnControl(Controls, delta) end
+	Selene:RegisterLoad(function())
+		Registers passed function as load hook - short form 
+			function Selene:OnLoad() end
+	Selene:RegisterSave(function())
+		Registers passed function as save hook - short form 
+			function Selene:OnSave() end
 	Selene:Log(string, [verbosity])
 		Logs a message for the current process with the set verbosity level
 	Selene:CreateProcessFromFile(string file) Process

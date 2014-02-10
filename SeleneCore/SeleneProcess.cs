@@ -288,54 +288,47 @@ namespace Selene
 
         private bool SaveObject(ConfigNode saveInto, object val, HashSet<string> savedTables)
         {
-            UnityEngine.Debug.Log("Saving Object: " + val.ToString());
             if (val != null)
             {
                 ConfigNode newNode = new ConfigNode();
                 if (val is double)
                 {
-                    UnityEngine.Debug.Log("It's a double");
                     newNode.name = "Double";
                     newNode.AddValue("Value", val.ToString());
                 }
                 else if (val is String)
                 {
-                    UnityEngine.Debug.Log("It's a string");
                     newNode.name = "String";
                     newNode.AddValue("Value", EncodeString(val.ToString()));
                 }
                 else if (val is Boolean)
                 {
-                    UnityEngine.Debug.Log("It's a bool");
                     newNode.name = "Boolean";
                     newNode.AddValue("Value", val.ToString());
                 }
                 else if (val is LuaTable)
                 {
-                    UnityEngine.Debug.Log("It's a table");
                     LuaTable tab = (LuaTable)val;
-                    if (savedTables.Contains(luaState.LuaToString(tab)))
+                    string tableName = luaState.LuaToString(tab);
+                    if (savedTables.Contains(tableName))
                     {
-                        UnityEngine.Debug.Log("Already got this one - aborting");
                         return false;
                     }
-                    savedTables.Add(luaState.LuaToString(tab));
+                    savedTables.Add(tableName);
                     
                     newNode.name = "Table";
                     foreach (object key in tab.Keys)
                     {
-                        UnityEngine.Debug.Log("Try saving key value pair");
                         ConfigNode entry = new ConfigNode("Entry");
                         if (SaveObject(entry, key, savedTables) && SaveObject(entry, tab[key], savedTables))
                         {
                             newNode.AddNode(entry);
                         }
                     }
-
+                    savedTables.Remove(tableName);
                 }
                 else if (val is Vector3d)
                 {
-                    UnityEngine.Debug.Log("It's a vector");
                     Vector3d vec = (Vector3d)val;
                     newNode.name = "Vector";
                     newNode.AddValue("X", vec.x);
@@ -344,7 +337,6 @@ namespace Selene
                 }
                 else if (val is UnityEngine.QuaternionD)
                 {
-                    UnityEngine.Debug.Log("It's a quat");
                     UnityEngine.QuaternionD quat = (UnityEngine.QuaternionD)val;
                     newNode.name = "Quaternion";
                     newNode.AddValue("X", quat.x);
@@ -355,10 +347,8 @@ namespace Selene
                 }
                 else
                 {
-                    UnityEngine.Debug.Log("It's something different aborting");
                     return false;
                 }
-                UnityEngine.Debug.Log("success - adding var");
                 saveInto.AddNode(newNode);
                 return true;
             }
@@ -367,7 +357,6 @@ namespace Selene
 
         public void LoadState(ConfigNode loadFrom)
         {
-            UnityEngine.Debug.Log("Start Proc LoadState");
             if (loadFrom != null)
             {
                 name = DecodeString(loadFrom.GetValue("Name"));
@@ -388,7 +377,6 @@ namespace Selene
                     Env[key] = value;
                 }
             }            
-            UnityEngine.Debug.Log("EndProc LoadState");
         }
 
         private object LoadObject(ConfigNode loadFrom)

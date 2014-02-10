@@ -86,10 +86,8 @@ namespace Selene
 
         public void LoadState(ConfigNode loadFrom)
         {
-            UnityEngine.Debug.Log("Start Interpreter LoadState");
             if (loadFrom.HasValue("Active"))
             {
-                UnityEngine.Debug.Log("has active node");
                 RootProcess.Active = Boolean.Parse(loadFrom.GetValue("Active"));
             }
             foreach (ConfigNode procNode in loadFrom.GetNodes("Process"))

@@ -124,6 +124,32 @@ namespace Selene
             }
         }
 
+        public void RegisterSave(LuaFunction toCall)
+        {
+            CurrentProcess.AddCallback(CallbackType.Save, toCall);
+        }
+
+        public LuaFunction OnSave
+        {
+            set
+            {
+                RegisterSave(value);
+            }
+        }
+
+        public void RegisterLoad(LuaFunction toCall)
+        {
+            CurrentProcess.AddCallback(CallbackType.Load, toCall);
+        }
+
+        public LuaFunction OnLoad
+        {
+            set
+            {
+                RegisterLoad(value);
+            }
+        }
+
         //TODO Add Register Save and Load functions
         public LuaTable GetNewTable()
         {
@@ -198,6 +224,8 @@ namespace Selene
         {
             return (string)luaToStringFunction.Call(obj)[0];
         }
+
+
 
         abstract public double GetUniverseTime();
 

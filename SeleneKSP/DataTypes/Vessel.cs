@@ -156,6 +156,7 @@ namespace SeleneKSP.DataTypes
         public Vector3d WorldToLocal(Vector3d toTransform)
         {
 
+            var config = KSP.IO.PluginConfiguration.CreateForType<SeleneInterpreter>();
 
             UnityEngine.QuaternionD test = vessel.transform.rotation;
 
