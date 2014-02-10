@@ -149,8 +149,6 @@ namespace Selene
                 RegisterLoad(value);
             }
         }
-
-        //TODO Add Register Save and Load functions
         public LuaTable GetNewTable()
         {
             return (LuaTable)luaState.DoString("return {}")[0];
