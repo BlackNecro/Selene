@@ -37,8 +37,11 @@ Selene
 	Selene:AppendFile(string name) string
 		Appends content to specified file returns true on success
 	Selene:RegisterTick(function(delta))
-		Registers passed function as tick function short form 
+		Registers passed function as tick function, called each frame
 			function Selene:OnTick(delta) end
+	Selene:RegisterPhysicsUpdate(function(delta))
+		Registers passed function as PhysicsUpdate function, called each physics update
+			function Selene:OnPhysicsUpdate(delta) end
 	Selene:RegisterControl(function(Controls, delta))
 		Registers passed function as control function - short form 
 			function Selene:OnControl(Controls, delta) end
