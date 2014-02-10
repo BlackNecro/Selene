@@ -34,12 +34,16 @@ namespace SeleneKSP
 
         public override IVessel GetExecutingVessel()
         {
+            if(parentModule == null)
+            {
+                return null;
+            }
             return new SVessel(parentModule.part.vessel, this);
         }
 
         public override IVessel GetCommandedVessel()
         {
-            throw new NotImplementedException();
+            return new SVessel(FlightGlobals.ActiveVessel, this);
         }
 
         public override ITarget GetCurrentTarget()

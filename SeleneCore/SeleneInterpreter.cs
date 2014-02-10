@@ -55,7 +55,7 @@ namespace Selene
         }
         public void ExecuteProcess()
         {
-            RootProcess.Execute(CallbackType.Tick, new object[] { });
+            RootProcess.Execute(CallbackType.Tick);
         }
 
         public bool HasVariable(string name)
@@ -97,6 +97,11 @@ namespace Selene
                 newProc.Execute(CallbackType.Load);
             }
 
+        }
+
+        public void PhysicsUpdate()
+        {
+            RootProcess.Execute(CallbackType.PhysicsUpdate);
         }
     }
 }

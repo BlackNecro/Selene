@@ -20,14 +20,14 @@ namespace SeleneKSP
         }
         public void Init()
         {
-            if(interpreter == null)
+            if (interpreter == null)
             {
                 interpreter = new SeleneInterpreter(new KSPDataProvider(this));
             }
-            if(vessel != null)
+            if (vessel != null)
             {
                 vessel.OnFlyByWire += interpreter.OnFlyByWire;
-            }                        
+            }
         }
 
         private void DeleteInterpreter()
@@ -45,11 +45,25 @@ namespace SeleneKSP
             if (part.State == PartStates.DEAD)
             {
                 return;
-            }  
+            }
+            interpreter.PhysicsUpdate();
+        }
+
+        public void Update()
+        {
+            if (interpreter == null) 
+            {
+                return;
+            }
+            if (part.State == PartStates.DEAD)
+            {
+                return;
+            }
             interpreter.ExecuteProcess();
         }
+
         public override void OnStart(PartModule.StartState state)
-        {            
+        {
             //Do not start from editor and at KSP first loading
             if (state == StartState.Editor || state == StartState.None)
             {
@@ -57,7 +71,7 @@ namespace SeleneKSP
             }
             Init();
         }
-        
+
         public override void OnLoad(ConfigNode node)
         {
             base.OnLoad(node);
@@ -72,7 +86,7 @@ namespace SeleneKSP
         }
 
         public override void OnSave(ConfigNode node)
-        {     
+        {
             if (node != null)
             {
                 ConfigNode saveInto = node.GetNode("SeleneInterpreter");
@@ -84,6 +98,6 @@ namespace SeleneKSP
                 interpreter.SaveState(saveInto);
             }
             base.OnSave(node);
-        }        
+        }
     }
 }

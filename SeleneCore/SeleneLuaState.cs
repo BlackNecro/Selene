@@ -112,6 +112,18 @@ namespace Selene
                 RegisterTick(value);
             }
         }
+        public void RegisterPhysicsUpdate(NLua.LuaFunction toCall)
+        {
+            CurrentProcess.AddCallback(CallbackType.PhysicsUpdate, toCall);
+        }
+
+        public NLua.LuaFunction OnPhysicsUpdate
+        {
+            set
+            {
+                RegisterPhysicsUpdate(value);
+            }
+        }
         public void RegisterControl(NLua.LuaFunction toCall)
         {
             CurrentProcess.AddCallback(CallbackType.Control, toCall);

@@ -9,6 +9,7 @@ namespace Selene
     public enum CallbackType
     {
         Tick,
+        PhysicsUpdate,
         Control,
         Save,
         Load
