@@ -27,6 +27,8 @@ namespace SeleneKSP.GUI
 
         Dictionary<Selene.SeleneProcess, ProcessWindow> ProcessWindows = new Dictionary<Selene.SeleneProcess,ProcessWindow>();
 
+        TreeFileBrowser fileSelection;
+
         /*
 
         FileBrowser fileBrowser;
@@ -94,6 +96,11 @@ namespace SeleneKSP.GUI
 
         public void Draw()
         {
+            if (fileSelection != null)
+            {
+                fileSelection.Draw();
+            }
+
             if (Displayed)
             {
                 WindowPosition = GUILayout.Window(windowID, WindowPosition, DrawWindow, "Selene", GUILayout.ExpandWidth(true));
@@ -244,8 +251,14 @@ namespace SeleneKSP.GUI
             {
                 if(GUILayout.Button("+",GUILayout.Width(buttonWidth)))
                 {                    
-                    //Todo Add Process
-                    interp.CreateProcess("test.lua");                    
+                    fileSelection = new TreeFileBrowser(
+                    (success,path)=>{
+                        if(success)
+                        {
+                            interp.CreateProcess(path);
+                        }
+                        return true;
+                    }, AssemblyLoader.GetPathByType(typeof(Selene.SeleneInterpreter)), 243885754);                  
                 }
             }
             string caption = "■";

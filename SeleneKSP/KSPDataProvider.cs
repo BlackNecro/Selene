@@ -83,7 +83,8 @@ namespace SeleneKSP
 
         public override string ReadFile(string path)
         {
-            return KSP.IO.File.ReadAllText<SeleneInterpreter>(path);
+            path = System.IO.Path.Combine(AssemblyLoader.GetPathByType(typeof(Selene.SeleneInterpreter)),path);
+            return System.IO.File.ReadAllText(path);
         }
 
         public override NLua.LuaTable GetVessels()

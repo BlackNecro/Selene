@@ -21,8 +21,8 @@ namespace SeleneKSP.GUI
         Vector2 VariableScrollPos = new Vector2();
         string debugInput = "";
 
-        TreeViewHandler CallbackTreeView = new TreeViewHandler();
-        TreeViewHandler VariableTreeView = new TreeViewHandler();
+        TreeViewHelper CallbackTreeView = new TreeViewHelper();
+        TreeViewHelper VariableTreeView = new TreeViewHelper();
 
         bool resizing = false;
         Rect resizeStartRect = new Rect();

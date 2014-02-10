@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace SeleneKSP.GUI
 {
-    class TreeViewHandler
+    class TreeViewHelper
     {
 
         public Stack<float> indentStack = new Stack<float>();
