@@ -19,7 +19,7 @@ namespace SeleneKSP.GUI
         {
             main = new MainTreeView();
             toolbarButton = Toolbar.ToolbarManager.Instance.add("Selene", "selenebutton");
-            toolbarButton.TexturePath = "WernherChecker/Data/icon";
+            toolbarButton.TexturePath = "000_Toolbar/icon";
             toolbarButton.ToolTip = "Selene";
             toolbarButton.OnClick += (e) => main.Toggle();
         }
