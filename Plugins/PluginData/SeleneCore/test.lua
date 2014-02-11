@@ -81,7 +81,7 @@ function Selene:OnTick(delta)
 end
 
 function Selene:OnControl(ctrl,delta)
-	ctrl:SetTranslation(translation + ctrl:GetTranslation)
+	ctrl:SetTranslation(translation + ctrl:GetTranslation())
 	ctrl:SetRotation(steering + ctrl:GetRotation())
 	return 0
 end
