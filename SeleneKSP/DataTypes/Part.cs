@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using KPart = Part;
+using Selene.DataTypes;
 
 namespace SeleneKSP.DataTypes
 {
@@ -14,9 +15,9 @@ namespace SeleneKSP.DataTypes
             part = toUse;                                
         }
 
-        public Vector3d GetOffset()
+        public SeleneVector GetOffset()
         {
-            return part.orgPos;
+            return new SeleneVector(part.orgPos);
         }
 
         public string GetName()

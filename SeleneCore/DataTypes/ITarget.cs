@@ -8,11 +8,11 @@ namespace Selene.DataTypes
 {
     public interface ITarget
     {
-        Vector3d GetPosition();
+        SeleneVector GetPosition();
         QuaternionD GetRotation();
         string GetName();
 
-        Vector3d WorldToLocal(Vector3d toTransform);
-        Vector3d LocalToWorld(Vector3d toTransform);
+        SeleneVector WorldToLocal(SeleneVector toTransform);
+        SeleneVector LocalToWorld(SeleneVector toTransform);
     }
 }

@@ -11,10 +11,10 @@ namespace Selene.DataTypes
         double GetRadarHeight();
         double GetNormalHegiht();
         double GetOrbitSpeed();
-        Vector3d GetOrbitVelocity(); 
+        SeleneVector GetOrbitVelocity(); 
         double GetSurfaceSpeed();
-        Vector3d GetSurfaceVelocity();
-        Vector3d GetAngularVelocity();
+        SeleneVector GetSurfaceVelocity();
+        SeleneVector GetAngularVelocity();
 
         double GetApoapsis();
         double GetPeriapsis();
@@ -24,9 +24,9 @@ namespace Selene.DataTypes
         #region Vessel properties
         double GetDryMass();
         double GetMass();
-        Vector3d GetCenterOfMass();
-        Vector3d GetCenterOfDryMass();
-        Vector3d GetMomentOfInertia();
+        SeleneVector GetCenterOfMass();
+        SeleneVector GetCenterOfDryMass();
+        SeleneVector GetMomentOfInertia();
         #endregion
         #region Part Info
         NLua.LuaTable GetEngines();

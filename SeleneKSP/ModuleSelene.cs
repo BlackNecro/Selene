@@ -87,7 +87,7 @@ namespace SeleneKSP
 
         public override void OnSave(ConfigNode node)
         {
-            if (node != null)
+            if (interpreter != null && node != null)
             {
                 ConfigNode saveInto = node.GetNode("SeleneInterpreter");
                 if (saveInto == null)

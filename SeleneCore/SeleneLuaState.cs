@@ -58,7 +58,7 @@ namespace Selene
                 luanet.load_assembly('Assembly-CSharp')
                 luanet.load_assembly('Assembly-CSharp-firstpass')
                 luanet.load_assembly('SeleneCore')
-                Vector = luanet.import_type('Vector3d')
+                Vector = luanet.import_type('Selene.DataTypes.SeleneVector')
                 Quaternion = luanet.import_type('UnityEngine.QuaternionD')
                 Debug = luanet.import_type('UnityEngine.Debug')
                 local util = luanet.import_type('Selene.DataTypes.VectorQuaternionUtil')
@@ -67,7 +67,7 @@ namespace Selene
                 local qmt = getmetatable(quat)
                 qmt.__mul = util.MultiplyQuat
 
-                local vec = Vector.zero
+                local vec = Vector(0,0,0)
                 local vmt = getmetatable(vec)
                 vmt.__add = util.AddVec
                 vmt.__sub = util.SubstractVec

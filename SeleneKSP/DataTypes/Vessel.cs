@@ -9,7 +9,7 @@ using Selene.DataTypes;
 using NLua;
 
 namespace SeleneKSP.DataTypes
-{    
+{
     class Vessel : IVessel
     {
         KSPVessel vessel;
@@ -23,7 +23,7 @@ namespace SeleneKSP.DataTypes
 
         public override bool Equals(object obj)
         {
-            if(obj is Vessel)
+            if (obj is Vessel)
             {
                 return ((Vessel)obj).vessel == this.vessel;
             }
@@ -49,9 +49,9 @@ namespace SeleneKSP.DataTypes
         {
             return vessel.obt_speed;
         }
-        public Vector3d GetOrbitVelocity()
+        public SeleneVector GetOrbitVelocity()
         {
-            return vessel.obt_velocity;
+            return new SeleneVector(vessel.obt_velocity);
         }
 
         public double GetSurfaceSpeed()
@@ -59,9 +59,9 @@ namespace SeleneKSP.DataTypes
             return vessel.srfSpeed;
         }
 
-        public Vector3d GetSurfaceVelocity()
+        public SeleneVector GetSurfaceVelocity()
         {
-            return vessel.srf_velocity;
+            return new SeleneVector(vessel.srf_velocity);
         }
 
         public ICelestialBody GetParentBody()
@@ -79,17 +79,17 @@ namespace SeleneKSP.DataTypes
             return vessel.GetTotalMass();
         }
 
-        public Vector3d GetCenterOfMass()
+        public SeleneVector GetCenterOfMass()
         {
-            return vessel.findLocalCenterOfMass();
+            return new SeleneVector(vessel.findLocalCenterOfMass());
         }
 
-        public Vector3d GetCenterOfDryMass()
+        public SeleneVector GetCenterOfDryMass()
         {
             throw new NotImplementedException();
         }
 
-        public Vector3d GetMomentOfInertia()
+        public SeleneVector GetMomentOfInertia()
         {
             throw new NotImplementedException();
         }
@@ -98,9 +98,9 @@ namespace SeleneKSP.DataTypes
         {
             LuaTable tab = provider.GetNewTable();
             int index = 1;
-            foreach(KPart part in vessel.Parts)
+            foreach (KPart part in vessel.Parts)
             {
-                foreach(ModuleEngines engine in part.FindModulesImplementing<ModuleEngines>())
+                foreach (ModuleEngines engine in part.FindModulesImplementing<ModuleEngines>())
                 {
                     EngineInfo info = new EngineInfo(part, engine);
                     tab[index++] = info;
@@ -109,35 +109,35 @@ namespace SeleneKSP.DataTypes
             return tab;
         }
 
-        public Vector3d GetPosition()
+        public SeleneVector GetPosition()
         {
-            return vessel.GetWorldPos3D();
+            return new SeleneVector(vessel.GetWorldPos3D());
         }
 
         public UnityEngine.QuaternionD GetRotation()
-        {   
+        {
             return vessel.transform.rotation;
         }
 
         public string GetName()
         {
-            return vessel.GetName(); 
+            return vessel.GetName();
         }
 
         public IControls GetLastControls()
         {
-            return new Controls(vessel.ctrlState); 
+            return new Controls(vessel.ctrlState);
         }
 
 
         public UnityEngine.QuaternionD GetSurfaceRelativeRotation()
-        {     
+        {
             return vessel.srfRelRotation;
         }
 
-        public Vector3d GetAngularVelocity()
+        public SeleneVector GetAngularVelocity()
         {
-            return vessel.angularVelocity;
+            return new SeleneVector(vessel.angularVelocity);
         }
 
 
@@ -153,19 +153,19 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public Vector3d WorldToLocal(Vector3d toTransform)
+        public SeleneVector WorldToLocal(SeleneVector toTransform)
         {
 
             var config = KSP.IO.PluginConfiguration.CreateForType<SeleneInterpreter>();
 
             UnityEngine.QuaternionD test = vessel.transform.rotation;
 
-            return ((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform;
+            return new SeleneVector(((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform);
         }
 
-        public Vector3d LocalToWorld(Vector3d toTransform)
+        public SeleneVector LocalToWorld(SeleneVector toTransform)
         {
-            return UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform;
+            return new SeleneVector( UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform);
         }
     }
 }

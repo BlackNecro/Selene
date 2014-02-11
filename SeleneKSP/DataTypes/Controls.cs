@@ -18,24 +18,24 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public Vector3d GetTranslation()
+        public SeleneVector GetTranslation()
         {
-            return new Vector3d(ctrlstate.X, ctrlstate.Z, ctrlstate.Y);
+            return new SeleneVector(ctrlstate.X, ctrlstate.Z, ctrlstate.Y);
         }
 
-        public void SetTranslation(Vector3d newValue)
+        public void SetTranslation(SeleneVector newValue)
         {
             ctrlstate.X = (float)newValue.x;
             ctrlstate.Y = (float)newValue.z;
             ctrlstate.Z = (float)newValue.y;
         }
 
-        public Vector3d GetRotation()
+        public SeleneVector GetRotation()
         {
-            return new Vector3d(ctrlstate.pitch, ctrlstate.yaw, ctrlstate.roll);
+            return new SeleneVector(ctrlstate.pitch, ctrlstate.yaw, ctrlstate.roll);
         }
 
-        public void SetRotation(Vector3d newValue)
+        public void SetRotation(SeleneVector newValue)
         {
             ctrlstate.pitch = (float)newValue.x;
             ctrlstate.yaw = (float)newValue.y;

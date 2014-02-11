@@ -7,10 +7,10 @@ namespace Selene.DataTypes
 {
     public interface IControls
     {
-        Vector3d GetTranslation();
-        void SetTranslation(Vector3d newValue);
-        Vector3d GetRotation();
-        void SetRotation(Vector3d newValue);
+        SeleneVector GetTranslation();
+        void SetTranslation(SeleneVector newValue);
+        SeleneVector GetRotation();
+        void SetRotation(SeleneVector newValue);
 
         double GetThrottle();
         void SetThrottle(double newValue);

@@ -9,7 +9,6 @@ Vector
 Quaternion See UnityEngine.QuaternionD
 	ctor:
 		Quaternion(x,y,z,w)
-	
 
 Selene
 	Selene:CreateNewManeuverNode() ManeuverNode
@@ -53,6 +52,7 @@ Selene
 			function Selene:OnSave() end
 	Selene:Log(string, [verbosity])
 		Logs a message for the current process with the set verbosity level
+			Shortcut print(...) but verbosity is always 0
 	Selene:CreateProcessFromFile(string file) Process
 		Creates a new process from the specified file, returns nil if creation failed
 	Selene:CreateProcessFromString(string name, string source) Process

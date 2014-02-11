@@ -6,7 +6,7 @@ P = { 1,"String",true,
 ["quat"] = Quaternion(1,2,3,4)
 }
 Selene:Persist("P")
-do return end
+
 Selene:Log("Hello World")
 MyVar = 5
 proc = Selene:CreateProcessFromFile("test2.lua")
@@ -43,14 +43,12 @@ AssistedTranslation = 3
 mode = 0
 setspeed = 10
 maxspeed = 20
-Debug.Log("Their Stuff")
+
 for k,v in pairs(proc.Env) do
 	if(type(v) ~= "table") and type(v) ~= "function" and false then
 		Debug.Log(tostring(k) .. " " .. tostring(v))
 	end
 end
-Debug.Log(unique)
-Debug.Log("MyStuff")
 for k,v in pairs(_G) do
 	if(type(v) ~= "table") and type(v) ~= "function" and false then
 		Debug.Log(tostring(k) .. " " .. tostring(v))
@@ -58,11 +56,12 @@ for k,v in pairs(_G) do
 end
 --proc.Active = true
 
-
+print("a")
 local proc2 = Selene:CreateProcessFromString("test proc 2",[[Selene:Log('Proc 2') function Selene:OnTick(delta) Selene:Log(tostring(testVar)) return 500 end]]); 
 --proc2.Active = true
 
 counter = 0
+print("b")
 function Selene:OnTick(delta)	
 	--Selene:Log("Test")
 	--counter = counter + 1
@@ -70,6 +69,7 @@ function Selene:OnTick(delta)
 	--proc.Env.testVar = tostring(counter)
 	--proc2:Reload()
 	--Selene:Log('tick a '..tostring(counter) )
+		print("tick")
 	do return 10 end
 	local other = Selene:GetCurrentTarget()
 	if other ~= nil then
@@ -107,9 +107,22 @@ function Selene:OnTick(delta)
 	translation = Vector(0,0,0)
 	return 50;
 end
+print("c")
+
 function Selene:OnControl(ctrl,delta)
-	ctrl:SetTranslation(translation + ctrl:GetTranslation())
-	ctrl:SetRotation(steering + ctrl:GetRotation())
+	print("ctrl")	
+	local back = ctrl:GetTranslation()
+	print("translation","current Control")
+	print(translation,back)
+	print("adding")
+	print(getmetatable(translation),getmetatable(back))
+	local newVal = translation + back
+	print("added ",newVal)
+	ctrl:SetTranslation(newVal)
+	print("set ctrl")
+	--ctrl:SetRotation(steering + ctrl:GetRotation())
+	print("ctrl end")
 	return 0
 end
+print("d")
 

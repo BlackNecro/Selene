@@ -11,28 +11,28 @@ namespace Selene.DataTypes
         {
             return (left * right);
         }
-        public static Vector3d MultiplyQuat(UnityEngine.QuaternionD quat, Vector3d toMul)
+        public static SeleneVector MultiplyQuat(UnityEngine.QuaternionD quat, SeleneVector toMul)
         {
-            return quat * toMul;
+            return new SeleneVector(quat * toMul);
         }
-        public static Vector3d MultiplyQuat(Vector3d toMul, UnityEngine.QuaternionD quat)
-        {           
-            return quat * toMul;
+        public static SeleneVector MultiplyQuat(SeleneVector toMul, UnityEngine.QuaternionD quat)
+        {
+            return new SeleneVector(quat * toMul);
         }
 
-        public static Vector3d AddVec(Vector3d a, Vector3d b)
+        public static SeleneVector AddVec(SeleneVector a, SeleneVector b)
         {
             return a + b;
         }
-        public static Vector3d SubstractVec(Vector3d a, Vector3d b)
+        public static SeleneVector SubstractVec(SeleneVector a, SeleneVector b)
         {
             return a - b;
         }
-        public static Vector3d MultiplyVec(Vector3d a, double b)
+        public static SeleneVector MultiplyVec(SeleneVector a, double b)
         {
             return a * b;
         }
-        public static Vector3d DivideVec(Vector3d a, double b)
+        public static SeleneVector DivideVec(SeleneVector a, double b)
         {
             return a / b;
         }

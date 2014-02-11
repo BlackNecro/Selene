@@ -5,31 +5,26 @@ using System.Text;
 
 namespace Selene.DataTypes
 {
-    public class SeleneVectorToKill
+    public struct SeleneVector
     {
         public double x;
         public double y;
         public double z;
 
-        public SeleneVectorToKill()
-        {
-            x = y = z = 0;
-        }
-
-        public SeleneVectorToKill(UnityEngine.Vector3 init)
+        public SeleneVector(UnityEngine.Vector3 init)
         {
             x = init.x;
             y = init.y;
             z = init.z;
         }
-        public SeleneVectorToKill(Vector3d init)
+        public SeleneVector(Vector3d init)
         {
             x = init.x;
             y = init.y;
             z = init.z;
         }
 
-        public SeleneVectorToKill(double x, double y, double z)
+        public SeleneVector(double x, double y, double z)
         {
             this.x = x;
             this.y = y;
@@ -56,51 +51,55 @@ namespace Selene.DataTypes
             return "(" + x + ", " + y + ", " + z + ")";
         }
 
-        public static implicit operator Vector3d(SeleneVectorToKill d)
+        public static implicit operator Vector3d(SeleneVector vec)
         {
-            return d.Vector3D;
+            return vec.Vector3D;
+        }
+        public static implicit operator SeleneVector(Vector3d vec)
+        {
+            return new SeleneVector(vec);
         }
 
-        public static SeleneVectorToKill operator *(SeleneVectorToKill a, float b) { return new SeleneVectorToKill(a.x * b, a.y * b, a.z * b); }
-        public static SeleneVectorToKill operator *(SeleneVectorToKill a, double b) { return new SeleneVectorToKill(a.x * b, a.y * b, a.z * b); }
-        public static SeleneVectorToKill operator /(SeleneVectorToKill a, double b) { return new SeleneVectorToKill(a.x / b, a.y / b, a.z / b); }
-        public static SeleneVectorToKill operator +(SeleneVectorToKill a, SeleneVectorToKill b) { return new SeleneVectorToKill(a.x + b.x, a.y + b.y, a.z + b.z); }
-        public static SeleneVectorToKill operator -(SeleneVectorToKill a, SeleneVectorToKill b) { return new SeleneVectorToKill(a.x - b.x, a.y - b.y, a.z - b.z); } 
+        public static SeleneVector operator *(SeleneVector a, float b) { return new SeleneVector(a.x * b, a.y * b, a.z * b); }
+        public static SeleneVector operator *(SeleneVector a, double b) { return new SeleneVector(a.x * b, a.y * b, a.z * b); }
+        public static SeleneVector operator /(SeleneVector a, double b) { return new SeleneVector(a.x / b, a.y / b, a.z / b); }
+        public static SeleneVector operator +(SeleneVector a, SeleneVector b) { return new SeleneVector(a.x + b.x, a.y + b.y, a.z + b.z); }
+        public static SeleneVector operator -(SeleneVector a, SeleneVector b) { return new SeleneVector(a.x - b.x, a.y - b.y, a.z - b.z); } 
 
-        public static SeleneVectorToKill Add(SeleneVectorToKill left, SeleneVectorToKill right)
+        public static SeleneVector Add(SeleneVector left, SeleneVector right)
         {
             return (left + right);
         }
 
-        public static SeleneVectorToKill Substract(SeleneVectorToKill left, SeleneVectorToKill right)
+        public static SeleneVector Substract(SeleneVector left, SeleneVector right)
         {
             return (left - right);
         }
 
-        public static SeleneVectorToKill Multiply(double toMul, SeleneVectorToKill vec)
+        public static SeleneVector Multiply(double toMul, SeleneVector vec)
         {
             return (vec * toMul);
         }
-        public static SeleneVectorToKill Multiply(SeleneVectorToKill vec, double toMul)
+        public static SeleneVector Multiply(SeleneVector vec, double toMul)
         {
             return (vec * toMul);
         }
 
-        public static SeleneVectorToKill Divide(SeleneVectorToKill vec, double toDiv)
+        public static SeleneVector Divide(SeleneVector vec, double toDiv)
         {
             return (vec / toDiv);
         }
-        public static SeleneVectorToKill Divide(double toDiv, SeleneVectorToKill vec)
+        public static SeleneVector Divide(double toDiv, SeleneVector vec)
         {
             return (vec / toDiv);
         }
      
-        public SeleneVectorToKill Normalized
+        public SeleneVector Normalized
         {
             get
             {
                 double invLen = 1/Length;
-                return new SeleneVectorToKill(x * invLen, y * invLen, z * invLen);
+                return new SeleneVector(x * invLen, y * invLen, z * invLen);
             }
         }
 
@@ -112,21 +111,21 @@ namespace Selene.DataTypes
             }
             set
             {
-                SeleneVectorToKill newLen = (Normalized * value);
+                SeleneVector newLen = (Normalized * value);
                 x = newLen.x;
                 y = newLen.y;
                 z = newLen.z;
             }
         }
 
-        public double Dot(SeleneVectorToKill other)
+        public double Dot(SeleneVector other)
         {
             return x * other.x + y * other.y + z * other.z;
         }
 
-        public SeleneVectorToKill Cross(SeleneVectorToKill other)
+        public SeleneVector Cross(SeleneVector other)
         {
-            return new SeleneVectorToKill(this.y * other.z - this.z * other.x, this.z * other.x - this.x * other.z, this.x * other.y - this.y * other.x);
+            return new SeleneVector(this.y * other.z - this.z * other.x, this.z * other.x - this.x * other.z, this.x * other.y - this.y * other.x);
         }
 
 

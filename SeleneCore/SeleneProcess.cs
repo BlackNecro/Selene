@@ -327,9 +327,9 @@ namespace Selene
                     }
                     savedTables.Remove(tableName);
                 }
-                else if (val is Vector3d)
+                else if (val is Selene.DataTypes.SeleneVector)
                 {
-                    Vector3d vec = (Vector3d)val;
+                    Selene.DataTypes.SeleneVector vec = (Selene.DataTypes.SeleneVector)val;
                     newNode.name = "Vector";
                     newNode.AddValue("X", vec.x);
                     newNode.AddValue("Y", vec.y);
@@ -390,7 +390,7 @@ namespace Selene
                 case "Boolean":
                     return Boolean.Parse(loadFrom.GetValue("Value"));
                 case "Vector":
-                    return new Vector3d(
+                    return new Selene.DataTypes.SeleneVector(
                         Double.Parse(loadFrom.GetValue("X")),
                         Double.Parse(loadFrom.GetValue("Y")),
                         Double.Parse(loadFrom.GetValue("Z")));
