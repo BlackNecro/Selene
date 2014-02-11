@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Selene.DataTypes;
 
 namespace SeleneDebugger.DebugImplementations.DataTypes
 {
@@ -9,7 +10,7 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
     {
         bool enabled = false;
         double percentage = 0.5;
-        public Selene.DataTypes.Vector GetOffset()
+        public SeleneVector GetOffset()
         {
             throw new NotImplementedException();
         }

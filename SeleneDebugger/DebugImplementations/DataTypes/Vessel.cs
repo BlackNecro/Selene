@@ -5,7 +5,7 @@ using System.Text;
 using NLua;
 using Selene;
 using Selene.DataTypes;
-using SVector = Selene.DataTypes.Vector;
+using SVector = Selene.DataTypes.SeleneVector;
 
 namespace SeleneDebugger.DebugImplementations.DataTypes
 {
