@@ -59,7 +59,7 @@ namespace Selene
                 luanet.load_assembly('Assembly-CSharp-firstpass')
                 luanet.load_assembly('SeleneCore')
                 Vector = luanet.import_type('Selene.DataTypes.SeleneVector')
-                Quaternion = luanet.import_type('UnityEngine.QuaternionD')
+                Quaternion = luanet.import_type('Selene.DataTypes.SeleneQuaternion')
                 Debug = luanet.import_type('UnityEngine.Debug')
                 local util = luanet.import_type('Selene.DataTypes.VectorQuaternionUtil')
                 

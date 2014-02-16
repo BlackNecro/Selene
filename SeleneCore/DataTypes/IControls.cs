@@ -15,5 +15,9 @@ namespace Selene.DataTypes
         double GetThrottle();
         void SetThrottle(double newValue);
 
+        double GetWheelSteer();
+        void SetWheelSteer(double newValue);
+        double GetWheelThrottle();
+        void SetWheelThrottle(double newValue);
     }
 }

@@ -42,7 +42,7 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public UnityEngine.QuaternionD GetRotation()
+        public SeleneQuaternion GetRotation()
         {
             return part.orgRot;
         }

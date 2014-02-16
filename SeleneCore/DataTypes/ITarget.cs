@@ -9,7 +9,7 @@ namespace Selene.DataTypes
     public interface ITarget
     {
         SeleneVector GetPosition();
-        QuaternionD GetRotation();
+        SeleneQuaternion GetRotation();
         string GetName();
 
         SeleneVector WorldToLocal(SeleneVector toTransform);

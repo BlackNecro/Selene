@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Selene.DataTypes
 {
-    public struct SeleneVector
+    public class SeleneVector
     {
         public double x;
         public double y;
