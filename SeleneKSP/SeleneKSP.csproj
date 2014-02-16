@@ -73,6 +73,7 @@
     <Compile Include="KSPDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModuleSelene.cs" />
+    <Compile Include="Util\Math.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SeleneCore\SeleneCore.csproj">

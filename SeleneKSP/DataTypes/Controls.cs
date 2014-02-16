@@ -5,6 +5,8 @@ using System.Text;
 using KSPVessel = Vessel;
 using Selene;
 using Selene.DataTypes;
+using SeleneKSP.Util;
+
 
 namespace SeleneKSP.DataTypes
 {
@@ -25,9 +27,10 @@ namespace SeleneKSP.DataTypes
 
         public void SetTranslation(SeleneVector newValue)
         {
-            ctrlstate.X = (float)newValue.x;
-            ctrlstate.Y = (float)newValue.z;
-            ctrlstate.Z = (float)newValue.y;
+            SeleneVector clamped = Util.Math.Clamp(newValue, -1.0, 1.0);
+            ctrlstate.X = (float)clamped.x;
+            ctrlstate.Y = (float)clamped.z;
+            ctrlstate.Z = (float)clamped.y;
         }
 
         public SeleneVector GetRotation()
@@ -37,9 +40,10 @@ namespace SeleneKSP.DataTypes
 
         public void SetRotation(SeleneVector newValue)
         {
-            ctrlstate.pitch = (float)newValue.x;
-            ctrlstate.yaw = (float)newValue.y;
-            ctrlstate.roll = (float)newValue.z;
+            SeleneVector clamped = Util.Math.Clamp(newValue, -1.0, 1.0);
+            ctrlstate.pitch = (float)clamped.x;
+            ctrlstate.yaw = (float)clamped.y;
+            ctrlstate.roll = (float)clamped.z;
         }
 
         public double GetThrottle()
@@ -49,7 +53,7 @@ namespace SeleneKSP.DataTypes
 
         public void SetThrottle(double newValue)
         {
-            ctrlstate.mainThrottle = (float)newValue;
+            ctrlstate.mainThrottle = (float)Util.Math.Clamp(newValue, 0.0, 1.0); ;
         }
 
         public double GetWheelSteer()
@@ -58,7 +62,7 @@ namespace SeleneKSP.DataTypes
         }
         public void SetWheelSteer(double newValue)
         {
-            ctrlstate.wheelSteer = (float)newValue;
+            ctrlstate.wheelSteer = (float)Util.Math.Clamp(newValue, -1.0, 1.0);
         }
 
         public double GetWheelThrottle()
@@ -67,7 +71,7 @@ namespace SeleneKSP.DataTypes
         }
         public void SetWheelThrottle(double newValue)
         {
-            ctrlstate.wheelThrottle = (float)newValue;
+            ctrlstate.wheelThrottle = (float)Util.Math.Clamp(newValue, -1.0, 1.0);
         }
     }
 }
