@@ -55,7 +55,15 @@ namespace Selene
                 }
                 catch (NLua.Exceptions.LuaException ex)
                 {
-                    luaState.Log(String.Format("Error Executing Callback: {0}", ex.Message),0);
+                    string details = "";
+                    Exception curLevel = ex;
+                    while (curLevel != null)
+                    {
+                        details = details + "\n " + curLevel.ToString();
+                        curLevel = curLevel.InnerException;
+                    }
+
+                    luaState.Log(String.Format("Error Executing Callback:\nDetails:{0}\nTrace:\n{1}", details, ex.StackTrace), 0);
                     return false;
                 }                
             }

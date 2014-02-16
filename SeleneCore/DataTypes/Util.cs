@@ -7,15 +7,15 @@ namespace Selene.DataTypes
 {
     public static class VectorQuaternionUtil
     {
-        public static UnityEngine.QuaternionD MultiplyQuat(UnityEngine.QuaternionD left, UnityEngine.QuaternionD right)
+        public static SeleneQuaternion MultiplyQuat(SeleneQuaternion left, SeleneQuaternion right)
         {
-            return (left * right);
+            return new SeleneQuaternion(left * right);
         }
-        public static SeleneVector MultiplyQuat(UnityEngine.QuaternionD quat, SeleneVector toMul)
+        public static SeleneVector MultiplyQuat(SeleneQuaternion quat, SeleneVector toMul)
         {
             return new SeleneVector(quat * toMul);
         }
-        public static SeleneVector MultiplyQuat(SeleneVector toMul, UnityEngine.QuaternionD quat)
+        public static SeleneVector MultiplyQuat(SeleneVector toMul, SeleneQuaternion quat)
         {
             return new SeleneVector(quat * toMul);
         }

@@ -9,7 +9,7 @@ namespace Selene.DataTypes
     {
         #region Positional Info
         double GetRadarHeight();
-        double GetNormalHegiht();
+        double GetNormalHeight();
         double GetOrbitSpeed();
         SeleneVector GetOrbitVelocity(); 
         double GetSurfaceSpeed();
@@ -18,7 +18,8 @@ namespace Selene.DataTypes
 
         double GetApoapsis();
         double GetPeriapsis();
-        UnityEngine.QuaternionD GetSurfaceRelativeRotation();
+        SeleneQuaternion GetSurfaceRelativeRotation();
+        SeleneQuaternion GetSurfaceRotation();
         ICelestialBody GetParentBody();
         #endregion
         #region Vessel properties

@@ -51,5 +51,23 @@ namespace SeleneKSP.DataTypes
         {
             ctrlstate.mainThrottle = (float)newValue;
         }
+
+        public double GetWheelSteer()
+        {
+            return ctrlstate.wheelSteer;
+        }
+        public void SetWheelSteer(double newValue)
+        {
+            ctrlstate.wheelSteer = (float)newValue;
+        }
+
+        public double GetWheelThrottle()
+        {
+            return ctrlstate.wheelThrottle;
+        }
+        public void SetWheelThrottle(double newValue)
+        {
+            ctrlstate.wheelThrottle = (float)newValue;
+        }
     }
 }

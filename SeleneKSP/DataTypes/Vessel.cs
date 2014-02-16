@@ -40,9 +40,9 @@ namespace SeleneKSP.DataTypes
             return vessel.heightFromTerrain;
         }
 
-        public double GetNormalHegiht()
+        public double GetNormalHeight()
         {
-            return vessel.heightFromSurface;
+            return vessel.altitude;//.heightFromSurface;
         }
 
         public double GetOrbitSpeed()
@@ -114,7 +114,7 @@ namespace SeleneKSP.DataTypes
             return new SeleneVector(vessel.GetWorldPos3D());
         }
 
-        public UnityEngine.QuaternionD GetRotation()
+        public SeleneQuaternion GetRotation()
         {
             return vessel.transform.rotation;
         }
@@ -130,9 +130,21 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public UnityEngine.QuaternionD GetSurfaceRelativeRotation()
+        public SeleneQuaternion GetSurfaceRelativeRotation()
         {
-            return vessel.srfRelRotation;
+            // Transform the vessel rotation into the surface reference
+            UnityEngine.Quaternion absRotation = GetRotation();
+            UnityEngine.Quaternion srfRelRotation = UnityEngine.Quaternion.Inverse(GetSurfaceRotation()) * absRotation;
+            return srfRelRotation;
+        }
+        public SeleneQuaternion GetSurfaceRotation()
+        {
+            // Adapted from Mechjeb2 VesselState.cs
+            Vector3d CoM = vessel.findWorldCenterOfMass();
+            Vector3d up = (CoM - vessel.mainBody.position).normalized;
+            Vector3d north = Vector3d.Exclude(up, (vessel.mainBody.position + vessel.mainBody.transform.up * (float)vessel.mainBody.Radius) - CoM).normalized;
+            Vector3d east = vessel.mainBody.getRFrmVel(CoM).normalized;
+            return UnityEngine.Quaternion.LookRotation(north, up);
         }
 
         public SeleneVector GetAngularVelocity()
