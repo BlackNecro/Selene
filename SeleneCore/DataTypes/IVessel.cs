@@ -8,8 +8,8 @@ namespace Selene.DataTypes
     public interface IVessel : ITarget
     {
         #region Positional Info
-        double GetRadarHeight();
-        double GetNormalHeight();
+        double GetRadarAltitude();
+        double GetAltitude();
         double GetOrbitSpeed();
         SeleneVector GetOrbitVelocity(); 
         double GetSurfaceSpeed();

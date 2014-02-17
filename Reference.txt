@@ -108,10 +108,10 @@ Vessel : Target
 		returns the celestial body the vessel is orbiting
 	GetPeriapsis() number
 		returns the current periapsis
-	GetRadarHeight() number
-		returns the height over terrain
-	GetNormalHeight() number
-		returns the height over sea level
+	GetRadarAltitude() number
+		returns the altitude over terrain
+	GetAltitude() number
+		returns the altitude over sea level
 	GetSurfaceRelativeRotation() Quaternion
 		returns the vessels rotation relative to the surface
 	GetSurfaceSpeed() number

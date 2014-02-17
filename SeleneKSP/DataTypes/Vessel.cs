@@ -35,12 +35,12 @@ namespace SeleneKSP.DataTypes
             return vessel.GetHashCode();
         }
 
-        public double GetRadarHeight()
+        public double GetRadarAltitude()
         {
             return vessel.heightFromTerrain;
         }
 
-        public double GetNormalHeight()
+        public double GetAltitude()
         {
             return vessel.altitude;//.heightFromSurface;
         }
