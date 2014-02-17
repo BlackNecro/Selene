@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Selene.DataTypes;
 
-namespace SeleneKSP.Util
+namespace Selene.Util
 {
-    class Math
+    public static class Math
     {
         public static double Clamp(double val, double vMin, double vMax)
         {

@@ -5,7 +5,7 @@ using System.Text;
 using KSPVessel = Vessel;
 using Selene;
 using Selene.DataTypes;
-using SeleneKSP.Util;
+using Util = Selene.Util;
 
 
 namespace SeleneKSP.DataTypes
