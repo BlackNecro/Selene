@@ -220,7 +220,7 @@ namespace Selene
 
         public void Execute(CallbackType type, params object[] parameters)
         {
-            if (run)
+            if (run && luaState.GetExecutingVessel() != null)
             {
                 foreach (var child in Children)
                 {

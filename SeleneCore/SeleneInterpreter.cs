@@ -13,13 +13,10 @@ namespace Selene
 
         public SeleneProcess RootProcess;
 
-        //public List<SeleneProcess> Processes = new List<SeleneProcess>();        
-
         public void OnFlyByWire(FlightCtrlState newState)
         {
             Selene.DataTypes.IControls luaControlObject = ((ILuaDataProvider)luaState).CreateControlState(newState);
-            object[] parameters = { (object)luaControlObject };
-            RootProcess.Execute(CallbackType.Control, parameters);
+            RootProcess.Execute(CallbackType.Control, luaControlObject);
         }
 
 

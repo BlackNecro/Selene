@@ -35,15 +35,15 @@ namespace SeleneKSP.DataTypes
 
         public SeleneVector GetRotation()
         {
-            return new SeleneVector(ctrlstate.pitch, ctrlstate.yaw, ctrlstate.roll);
+            return new SeleneVector(-ctrlstate.pitch, -ctrlstate.roll,-ctrlstate.yaw);
         }
 
         public void SetRotation(SeleneVector newValue)
         {
             SeleneVector clamped = Util.Math.Clamp(newValue, -1.0, 1.0);
-            ctrlstate.pitch = (float)clamped.x;
-            ctrlstate.yaw = (float)clamped.y;
-            ctrlstate.roll = (float)clamped.z;
+            ctrlstate.pitch = (float)-clamped.x;
+            ctrlstate.yaw = (float)-clamped.z;
+            ctrlstate.roll = (float)-clamped.y;
         }
 
         public double GetThrottle()
