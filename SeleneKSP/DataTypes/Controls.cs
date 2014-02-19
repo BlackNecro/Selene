@@ -22,15 +22,15 @@ namespace SeleneKSP.DataTypes
 
         public SeleneVector GetTranslation()
         {
-            return new SeleneVector(ctrlstate.X, ctrlstate.Z, ctrlstate.Y);
-        }
+            return new SeleneVector(-ctrlstate.X, -ctrlstate.Z, -ctrlstate.Y);
+        }                                         
 
         public void SetTranslation(SeleneVector newValue)
         {
             SeleneVector clamped = Util.Math.Clamp(newValue, -1.0, 1.0);
-            ctrlstate.X = (float)clamped.x;
-            ctrlstate.Y = (float)clamped.z;
-            ctrlstate.Z = (float)clamped.y;
+            ctrlstate.X = (float)-clamped.x;
+            ctrlstate.Y = (float)-clamped.z;
+            ctrlstate.Z = (float)-clamped.y;
         }
 
         public SeleneVector GetRotation()

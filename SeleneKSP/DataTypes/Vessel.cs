@@ -167,17 +167,12 @@ namespace SeleneKSP.DataTypes
 
         public SeleneVector WorldToLocal(SeleneVector toTransform)
         {
-
-            var config = KSP.IO.PluginConfiguration.CreateForType<SeleneInterpreter>();
-
-            UnityEngine.QuaternionD test = vessel.transform.rotation;
-
-            return new SeleneVector(((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform);
+            return new SeleneVector(UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform);                                                                                          
         }
 
         public SeleneVector LocalToWorld(SeleneVector toTransform)
         {
-            return new SeleneVector( UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform);
+            return new SeleneVector(((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform);
         }
     }
 }

@@ -296,14 +296,14 @@ namespace SeleneKSP.GUI
                         VariableTreeView.Unindent();
                     }
                 }
-                else if (value is UnityEngine.QuaternionD)
+                else if (value is Selene.DataTypes.SeleneQuaternion)
                 {
                     string newPath = keyPath + "/" + key;
                     VariableTreeView.CollapsibleButton(key.ToString() + " (Quaternion)", newPath, VariableStyle);
                     if (VariableTreeView.Expanded(newPath))
                     {
                         VariableTreeView.Indent();
-                        UnityEngine.QuaternionD quat = (UnityEngine.QuaternionD)value;
+                        Selene.DataTypes.SeleneQuaternion quat = (Selene.DataTypes.SeleneQuaternion)value;
                         VariableTreeView.SpacedButton("x = " + quat.x, VariableStyle);
                         VariableTreeView.SpacedButton("y = " + quat.y, VariableStyle);
                         VariableTreeView.SpacedButton("z = " + quat.z, VariableStyle);

@@ -9,6 +9,9 @@ Vector
 Quaternion See UnityEngine.QuaternionD
 	ctor:
 		Quaternion(x,y,z,w)
+	Inversed 	
+		the inverse of the quaternion
+
 
 Selene
 	Selene:CreateNewManeuverNode() ManeuverNode

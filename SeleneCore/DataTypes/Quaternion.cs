@@ -70,6 +70,14 @@ namespace Selene.DataTypes
             get { return unityQuat.w; }
         }
 
+        public SeleneQuaternion Inversed
+        {
+            get
+            {
+                return Inverse(this);
+            }
+        }
+
         public override string ToString()
         {
             return "(" + unityQuat.x + ", " + unityQuat.y + ", " + unityQuat.z + ", " + unityQuat.w + ")";
