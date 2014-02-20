@@ -58,15 +58,8 @@ namespace SeleneKSP.DataTypes
         {
             return part.orgRot;
         }
-        public void Execute(string actionName)
-        {
-            foreach(var module in includedModules)
-            {
-                Util.ActionHelper.ExecuteActionInClass(module, actionName, new KSPActionParam(KSPActionGroup.None, KSPActionType.Activate));
-            }            
-        }
 
-        public object Field(string fieldName)
+        public object GetField(string fieldName)
         {
             foreach(var module in includedModules)
             {
@@ -81,7 +74,6 @@ namespace SeleneKSP.DataTypes
 
         public bool SetField(string fieldName, object value)
         {
-            //TODO Make it work
             bool success = true;
             foreach (var module in includedModules)
             {
@@ -120,7 +112,7 @@ namespace SeleneKSP.DataTypes
 
 
 
-        public LuaTable ListActions()
+        public LuaTable GetActions()
         {
             LuaTable toReturn = dataProvider.GetNewTable();
 
@@ -140,7 +132,7 @@ namespace SeleneKSP.DataTypes
             return toReturn;
         }
 
-        public LuaTable ListEvents()
+        public LuaTable GetEvents()
         {
             LuaTable toReturn = dataProvider.GetNewTable();
 
@@ -160,7 +152,7 @@ namespace SeleneKSP.DataTypes
             return toReturn;
         }
 
-        public LuaTable ListFields()
+        public LuaTable GetFields()
         {
             LuaTable toReturn = dataProvider.GetNewTable();
 

@@ -2,21 +2,24 @@ vessel = Selene:GetExecutingVessel()
 parts = vessel:GetParts()
 partsTable = parts:GetPartTable()
 
-panels = parts:PartsIncludingModule("ModuleDeployableSolarPanel")
+panels = parts:GetPartsByMod("ModuleDeployableSolarPanel")
 panelsTable = panels:GetPartTable()
 
-engines = parts:PartsIncludingModule("ModuleEngines")
+chutes = parts:GetPartsByMod("ModuleParachute")
+chuteEvents = chutes:GetEvents()
+
+engines = parts:GetPartsByMod("ModuleEngines")
 engineTable = engines:GetPartTable()
 values = {}
-events = parts:ListEvents()
-actions = parts:ListActions()
+events = parts:GetEvents()
+actions = parts:GetActions()
 
 function Selene:OnTick(delta)
 	tickDelta = delta
 	for k,v in pairs(panelsTable) do
-		values[k] = v:Field("Sun Exposure")
+		values[k] = v:GetField("Sun Exposure")
 	end
-	return 10
+	return 50
 end
 --[[
 

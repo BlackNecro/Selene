@@ -15,16 +15,16 @@ namespace Selene.DataTypes
         double GetMass();
 
         bool SetField(string fieldName, object value);
-        object Field(string fieldName);
+        object GetField(string fieldName);
 
         bool Action(string actionName, bool activate);
 
         bool Event(string eventName);
 
         
-        LuaTable ListActions();
-        LuaTable ListEvents();
-        LuaTable ListFields();
+        LuaTable GetActions();
+        LuaTable GetEvents();
+        LuaTable GetFields();
 
 
     }

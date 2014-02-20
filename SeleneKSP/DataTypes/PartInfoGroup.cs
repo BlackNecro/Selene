@@ -18,13 +18,13 @@ namespace SeleneKSP.DataTypes
 
         public PartInfoGroup(KSPDataProvider prov)
         {
-            dataProvider = prov;            
+            dataProvider = prov;
         }
 
-        public PartInfoGroup(KSPDataProvider prov, KVessel vessel) 
+        public PartInfoGroup(KSPDataProvider prov, KVessel vessel)
         {
             dataProvider = prov;
-            foreach(KPart part in vessel.Parts)
+            foreach (KPart part in vessel.Parts)
             {
                 AddPart(part);
             }
@@ -45,17 +45,17 @@ namespace SeleneKSP.DataTypes
             includedParts.Add(toAdd.part);
         }
 
-        public IPartInfoGroup PartsIncludingModule(string moduleName)
+        public IPartInfoGroup GetPartsByMod(string moduleName)
         {
             PartInfoGroup toReturn = new PartInfoGroup(dataProvider);
 
             Type moduleType = AssemblyLoader.GetClassByName(typeof(PartModule), moduleName);
-            
-            if(moduleType == null)
+
+            if (moduleType == null)
             {
                 return null;
-            }                                                   
-            foreach(PartModule module in includedModules)
+            }
+            foreach (PartModule module in includedModules)
             {
                 if (moduleType == module.GetType())
                 {
@@ -66,14 +66,14 @@ namespace SeleneKSP.DataTypes
         }
         public LuaTable GetPartTable()
         {
-            
+
             LuaTable toReturn = dataProvider.GetNewTable();
 
             int num = 1;
-            foreach(KPart part in includedParts)
+            foreach (KPart part in includedParts)
             {
                 PartInfo newPart = new PartInfo(dataProvider, part);
-                toReturn[num++] = newPart;                
+                toReturn[num++] = newPart;
             }
             return toReturn;
         }
@@ -100,7 +100,7 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public LuaTable ListEvents()
+        public LuaTable GetEvents()
         {
             LuaTable toReturn = dataProvider.GetNewTable();
 
@@ -120,7 +120,7 @@ namespace SeleneKSP.DataTypes
             return toReturn;
         }
 
-        public LuaTable ListActions()
+        public LuaTable GetActions()
         {
             LuaTable toReturn = dataProvider.GetNewTable();
 

@@ -8,12 +8,12 @@ namespace Selene.DataTypes
 {
     public interface IPartInfoGroup
     {
-        IPartInfoGroup PartsIncludingModule(string moduleName);
+        IPartInfoGroup GetPartsByMod(string moduleName);
         LuaTable GetPartTable();    
         bool Action(string actionName, bool activate);
         bool Event(string eventName);
-        LuaTable ListActions();
-        LuaTable ListEvents();
+        LuaTable GetActions();
+        LuaTable GetEvents();
 
     }
 }

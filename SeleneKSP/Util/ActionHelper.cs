@@ -163,7 +163,7 @@ namespace SeleneKSP.Util
                 }
                 else if (fieldToUse.FieldType == typeof(Single) && value is double)
                 {
-                    Single newVal = (Single)value;
+                    Single newVal = Convert.ToSingle(value);
                     fieldToUse.SetValue(objectToUse, newVal);
                 }
                 else if (fieldToUse.FieldType == typeof(double) && value is double)
@@ -240,14 +240,14 @@ namespace SeleneKSP.Util
 
             Type type = toUse.GetType();
 
-            if (cachedEvents.ContainsKey(type))
+            if (cachedFields.ContainsKey(type))
             {
-                return cachedEvents[type];
+                return cachedFields[type];
             }
 
 
             HashSet<string> toReturn = new HashSet<string>();
-            cachedEvents[type] = toReturn;
+            cachedFields[type] = toReturn;
             
             var fields = type.GetFields();
             foreach (var field in fields)
