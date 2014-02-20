@@ -64,6 +64,8 @@
     <Compile Include="DataTypes\Controls.cs" />
     <Compile Include="DataTypes\EngineInfo.cs" />
     <Compile Include="DataTypes\Part.cs" />
+    <Compile Include="DataTypes\PartInfo.cs" />
+    <Compile Include="DataTypes\PartInfoGroup.cs" />
     <Compile Include="DataTypes\Vessel.cs" />
     <Compile Include="GUI\GUIBehaviour.cs" />
     <Compile Include="GUI\MainTreeView.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="KSPDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModuleSelene.cs" />
+    <Compile Include="Util\ActionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SeleneCore\SeleneCore.csproj">

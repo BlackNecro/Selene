@@ -10,6 +10,8 @@ namespace SeleneKSP.DataTypes
     class Part : Selene.DataTypes.IPart
     {
         protected KPart part;
+
+
         public Part(KPart toUse)
         {
             part = toUse;                                

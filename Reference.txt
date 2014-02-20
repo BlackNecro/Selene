@@ -13,6 +13,7 @@ Quaternion See UnityEngine.QuaternionD
 		the inverse of the quaternion
 
 
+
 Selene
 	Selene:CreateNewManeuverNode() ManeuverNode
 		Creates a new Maneuver Node 
@@ -95,7 +96,7 @@ Vessel : Target
 		returns the vessels center of mass including resources
 	GetDryMass() number
 		returns the vessels mass excluding resources
-	GetEngines() table of Engines
+	GetEngines() table of Engines -- obsolete
 		returns a table of the vessels engines 
 	GetLastControls() Controls
 		returns the last executed control state of the vessel
@@ -121,8 +122,18 @@ Vessel : Target
 		returns the speed over ground
 	GetSurfaceVelocity() Vector
 		returns the velocity relative to ground
+	GetParts()	PartInfoGroup
+		returns PartInfoGroup containing all parts of the Vessel
 
-Part
+PartInfoGroup
+	ToDo finish documenting this
+
+PartInfo
+	Todo finish documenting this
+
+
+
+Part -- obsolete
 	GetOffset() Vector
 		returns the position relative to the vessel
 	GetName() string
@@ -135,7 +146,7 @@ Part
 		returns the part mass including resources
 	
 
-Engine : Part
+Engine : Part -- obsolete
 	GetEnabled() bool
 		gets whether the engine is enabled or not
 	SetEnabled(bool)

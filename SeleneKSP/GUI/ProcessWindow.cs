@@ -268,7 +268,11 @@ namespace SeleneKSP.GUI
                     Keys.Add(key);
                 }
             }
-            foreach (var key in Keys.OrderBy(key => key.ToString()))
+
+            var numbers = (Keys.OfType<double>().OrderBy(a=>a)).Cast<object>();
+            var others = Keys.Except(numbers).OrderBy(a => a.ToString());
+
+            foreach (var key in numbers.Union(others))
             {
                 object value = tab[key];
                 if (value is NLua.LuaTable)

@@ -25,7 +25,7 @@ namespace Selene
             luaState = provider;
             RootProcess = new SeleneProcess(provider);
             RootProcess.name = "Root";
-            RootProcess.AddCallback(CallbackType.Tick, luaState.LuaState.LoadString("collectgarbage()", "garbage collector"));
+            //RootProcess.AddCallback(CallbackType.Tick, luaState.LuaState.LoadString("collectgarbage()", "garbage collector"));
             RootProcess.Active = true;
         }
         public bool CreateProcess(string file)

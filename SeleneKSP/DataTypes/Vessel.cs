@@ -174,5 +174,11 @@ namespace SeleneKSP.DataTypes
         {
             return new SeleneVector(((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform);
         }
+
+
+        public IPartInfoGroup GetParts()
+        {
+            return new PartInfoGroup(provider,vessel);
+        }
     }
 }

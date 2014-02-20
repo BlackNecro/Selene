@@ -31,6 +31,7 @@ namespace Selene.DataTypes
         #endregion
         #region Part Info
         NLua.LuaTable GetEngines();
+        IPartInfoGroup GetParts();
         #endregion
         IControls GetLastControls();
 

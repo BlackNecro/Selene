@@ -5,7 +5,7 @@ using System.Text;
 using KSPVessel = Vessel;
 using Selene;
 using Selene.DataTypes;
-using Util = Selene.Util;
+using SUtil = Selene.Util;
 
 
 namespace SeleneKSP.DataTypes
@@ -27,7 +27,7 @@ namespace SeleneKSP.DataTypes
 
         public void SetTranslation(SeleneVector newValue)
         {
-            SeleneVector clamped = Util.Math.Clamp(newValue, -1.0, 1.0);
+            SeleneVector clamped = SUtil.Math.Clamp(newValue, -1.0, 1.0);
             ctrlstate.X = (float)-clamped.x;
             ctrlstate.Y = (float)-clamped.z;
             ctrlstate.Z = (float)-clamped.y;
@@ -40,7 +40,7 @@ namespace SeleneKSP.DataTypes
 
         public void SetRotation(SeleneVector newValue)
         {
-            SeleneVector clamped = Util.Math.Clamp(newValue, -1.0, 1.0);
+            SeleneVector clamped = SUtil.Math.Clamp(newValue, -1.0, 1.0);
             ctrlstate.pitch = (float)-clamped.x;
             ctrlstate.yaw = (float)-clamped.z;
             ctrlstate.roll = (float)-clamped.y;
@@ -53,7 +53,7 @@ namespace SeleneKSP.DataTypes
 
         public void SetThrottle(double newValue)
         {
-            ctrlstate.mainThrottle = (float)Util.Math.Clamp(newValue, 0.0, 1.0); ;
+            ctrlstate.mainThrottle = (float)SUtil.Math.Clamp(newValue, 0.0, 1.0); ;
         }
 
         public double GetWheelSteer()
@@ -62,7 +62,7 @@ namespace SeleneKSP.DataTypes
         }
         public void SetWheelSteer(double newValue)
         {
-            ctrlstate.wheelSteer = (float)Util.Math.Clamp(newValue, -1.0, 1.0);
+            ctrlstate.wheelSteer = (float)SUtil.Math.Clamp(newValue, -1.0, 1.0);
         }
 
         public double GetWheelThrottle()
@@ -71,7 +71,7 @@ namespace SeleneKSP.DataTypes
         }
         public void SetWheelThrottle(double newValue)
         {
-            ctrlstate.wheelThrottle = (float)Util.Math.Clamp(newValue, -1.0, 1.0);
+            ctrlstate.wheelThrottle = (float)SUtil.Math.Clamp(newValue, -1.0, 1.0);
         }
     }
 }
