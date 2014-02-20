@@ -139,5 +139,15 @@ namespace SeleneKSP.DataTypes
 
             return toReturn;
         }
+
+        public void Activate()
+        {
+            foreach(var part in includedParts)
+            {
+                part.force_activate();
+            }
+        }
+
+
     }
 }

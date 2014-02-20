@@ -232,6 +232,7 @@ namespace SeleneKSP.Util
                 return null;
             }
         }
+        
 
         static Dictionary<Type, HashSet<string>> cachedFields = new Dictionary<Type, HashSet<string>>();
 
@@ -248,8 +249,8 @@ namespace SeleneKSP.Util
 
             HashSet<string> toReturn = new HashSet<string>();
             cachedFields[type] = toReturn;
-            
-            var fields = type.GetFields();
+
+            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
             foreach (var field in fields)
             {
                 var attributes = field.GetCustomAttributes(true);
@@ -270,7 +271,8 @@ namespace SeleneKSP.Util
             }
 
             return toReturn;
-        }
+        }              
+
 
         static Dictionary<Type, HashSet<string>> cachedActions = new Dictionary<Type, HashSet<string>>();
 
@@ -279,16 +281,16 @@ namespace SeleneKSP.Util
 
             Type type = toUse.GetType();
 
-            if (cachedEvents.ContainsKey(type))
+            if (cachedActions.ContainsKey(type))
             {
-                return cachedEvents[type];
+                return cachedActions[type];
             }
 
 
             HashSet<string> toReturn = new HashSet<string>();
-            cachedEvents[type] = toReturn;
+            cachedActions[type] = toReturn;
 
-            var methods = type.GetMethods();
+            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
             foreach (var method in methods)
             {
                 var attributes = method.GetCustomAttributes(true);
@@ -310,44 +312,54 @@ namespace SeleneKSP.Util
 
             return toReturn;
         }
-
+                                   
         static Dictionary<Type, HashSet<string>> cachedEvents = new Dictionary<Type, HashSet<string>>();
 
         public static HashSet<string> ListEvents(object toUse)
         {
 
+            
             Type type = toUse.GetType();
+            UnityEngine.Debug.Log("Getting Events for " + type.ToString());
 
             if (cachedEvents.ContainsKey(type))
             {
+                UnityEngine.Debug.Log(" Was cached already returning old value");
                 return cachedEvents[type];
             }
 
 
             HashSet<string> toReturn = new HashSet<string>();
             cachedEvents[type] = toReturn;
+            UnityEngine.Debug.Log(" Fresh list");
 
-            var methods = type.GetMethods();
+            var methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.FlattenHierarchy);
             foreach (var method in methods)
             {
                 var attributes = method.GetCustomAttributes(true);
+                UnityEngine.Debug.Log(" checking method " + method.Name);
                 foreach (var attribute in attributes)
                 {
                     if (attribute is KSPEvent)
                     {
-                        string actionName = ((KSPEvent)attribute).guiName;
+                        UnityEngine.Debug.Log("  method is event");
+                        string eventName = ((KSPEvent)attribute).guiName;
 
-                        toReturn.Add(actionName);
+                        toReturn.Add(eventName);
+                        
                         if (!cachedEventMethods.ContainsKey(type))
                         {
+                            UnityEngine.Debug.Log("   type wasn't cached, adding new dict");
                             cachedEventMethods[type] = new Dictionary<string, MethodInfo>();
                         }
-                        cachedEventMethods[type][actionName] = method;
+                        cachedEventMethods[type][eventName] = method;
+                        UnityEngine.Debug.Log("   caching method");
                     }
                 }
             }
-
+                       
             return toReturn;
         }
+                                    
     }
 }

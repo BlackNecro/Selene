@@ -105,7 +105,7 @@ namespace SeleneKSP.DataTypes
                     EngineInfo info = new EngineInfo(part, engine);
                     tab[index++] = info;
                 }
-            }
+            }            
             return tab;
         }
 
@@ -179,6 +179,27 @@ namespace SeleneKSP.DataTypes
         public IPartInfoGroup GetParts()
         {
             return new PartInfoGroup(provider,vessel);
+        }
+
+
+        public int GetCurrentStage()
+        {
+            return vessel.currentStage;
+        }
+
+        public int GetStageCount()
+        {
+            return vessel.Parts.Max(part => part.inverseStage) + 1;
+        }
+
+        public IPartInfoGroup GetPartsByStage(int stageNum)
+        {
+            PartInfoGroup toReturn = new PartInfoGroup(provider);
+            foreach(var part in vessel.Parts.Where(part => part.inverseStage == stageNum))
+            {
+                toReturn.AddPart(part);
+            }
+            return toReturn;
         }
     }
 }

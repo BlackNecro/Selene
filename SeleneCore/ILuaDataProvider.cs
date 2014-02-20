@@ -23,5 +23,7 @@ namespace Selene
         bool WriteFile(string path, string content);
         IControls CreateControlState(FlightCtrlState toCreate);
 
+        void AdvanceStage();
+
     }
 }

@@ -35,5 +35,11 @@ namespace Selene.DataTypes
         #endregion
         IControls GetLastControls();
 
+        int GetCurrentStage();
+
+        int GetStageCount();
+
+        IPartInfoGroup GetPartsByStage(int stageNum);
+
     }
 }

@@ -121,5 +121,9 @@ namespace SeleneKSP
             }
             return true;
         }
+        public override void AdvanceStage()
+        {
+            Staging.ActivateNextStage();
+        }
     }
 }

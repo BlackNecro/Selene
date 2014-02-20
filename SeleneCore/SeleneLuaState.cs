@@ -263,5 +263,8 @@ namespace Selene
         abstract public bool AppendFile(string path, string content);
 
         abstract public bool WriteFile(string path, string content);
+
+
+        abstract public void AdvanceStage();
     }
 }

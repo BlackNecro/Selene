@@ -15,5 +15,7 @@ namespace Selene.DataTypes
         LuaTable GetActions();
         LuaTable GetEvents();
 
+        void Activate();
+
     }
 }

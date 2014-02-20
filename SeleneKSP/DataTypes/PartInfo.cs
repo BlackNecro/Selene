@@ -171,5 +171,11 @@ namespace SeleneKSP.DataTypes
 
             return toReturn;
         }
+
+
+        public void Activate()
+        {
+            part.force_activate();
+        }
     }
 }
