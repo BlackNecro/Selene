@@ -177,5 +177,35 @@ namespace SeleneKSP.DataTypes
         {
             part.force_activate();
         }
+
+
+        public LuaTable GetResources()
+        {
+            LuaTable toReturn = dataProvider.GetNewTable();
+            int key = 0;
+            foreach(PartResource res in part.Resources)
+            {
+                toReturn[++key] = res.resourceName;
+            }
+            return toReturn;
+        }
+
+        public double GetResourceCapacity(string name)
+        {
+            if(part.Resources.Contains(name))
+            {
+                return part.Resources[name].maxAmount;
+            }
+            return 0;
+        }
+
+        public double GetResourceAmount(string name)
+        {
+            if (part.Resources.Contains(name))
+            {
+                return part.Resources[name].maxAmount;
+            }
+            return 0;
+        }
     }
 }

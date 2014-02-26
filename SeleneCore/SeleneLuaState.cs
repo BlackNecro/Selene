@@ -154,6 +154,18 @@ namespace Selene
             CurrentProcess.AddCallback(CallbackType.Load, toCall);
         }
 
+        public void RegisterVesselChange(LuaFunction toCall)
+        {
+            CurrentProcess.AddCallback(CallbackType.VesselChange, toCall);
+        }
+        public LuaFunction OnVesselChange
+        {
+            set
+            {
+                RegisterVesselChange(value);
+            }
+        }
+
         public LuaFunction OnLoad
         {
             set

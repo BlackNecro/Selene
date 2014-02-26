@@ -45,7 +45,7 @@ namespace SeleneKSP.DataTypes
             includedParts.Add(toAdd.part);
         }
 
-        public IPartInfoGroup GetPartsByMod(string moduleName)
+        public IPartInfoGroup GetPartsByModule(string moduleName)
         {
             PartInfoGroup toReturn = new PartInfoGroup(dataProvider);
 
@@ -142,12 +142,58 @@ namespace SeleneKSP.DataTypes
 
         public void Activate()
         {
-            foreach(var part in includedParts)
+            foreach (var part in includedParts)
             {
                 part.force_activate();
             }
         }
 
 
+
+
+        public LuaTable GetResources()
+        {            
+            HashSet<string> resources = new HashSet<string>();
+            foreach (var part in includedParts)
+            {
+                foreach (PartResource res in part.Resources)
+                {
+                    resources.Add(res.resourceName);
+                }
+            }
+            LuaTable toReturn = dataProvider.GetNewTable();
+            int key = 0;
+            foreach(var res in resources)
+            {
+                toReturn[++key] = res;
+            }
+            return toReturn;
+        }
+
+        public double GetResourceCapacity(string name)
+        {
+            double sum = 0;
+            foreach (var part in includedParts)
+            {
+                if (part.Resources.Contains(name))
+                {
+                    sum += part.Resources[name].maxAmount;
+                }
+            }
+            return sum;
+        }
+
+        public double GetResourceAmount(string name)
+        {
+            double sum = 0;
+            foreach (var part in includedParts)
+            {
+                if (part.Resources.Contains(name))
+                {
+                    sum += part.Resources[name].amount;
+                }
+            }
+            return sum;
+        }
     }
 }

@@ -2,14 +2,14 @@ vessel = Selene:GetExecutingVessel()
 parts = vessel:GetParts()
 partsTable = parts:GetPartTable()
 
-panels = parts:GetPartsByMod("ModuleDeployableSolarPanel")
+panels = parts:GetPartsByModule("ModuleDeployableSolarPanel")
 panelsTable = panels:GetPartTable()
 
-chutes = parts:GetPartsByMod("ModuleParachute")
+chutes = parts:GetPartsByModule("ModuleParachute")
 chuteTable = chutes:GetPartTable()
 chuteEvents = chutes:GetEvents()
 
-engines = parts:GetPartsByMod("ModuleEngines")
+engines = parts:GetPartsByModule("ModuleEngines")
 engineTable = engines:GetPartTable()
 values = {}
 events = parts:GetEvents()

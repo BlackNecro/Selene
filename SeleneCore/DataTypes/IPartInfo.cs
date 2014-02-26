@@ -25,8 +25,11 @@ namespace Selene.DataTypes
         LuaTable GetActions();
         LuaTable GetEvents();
         LuaTable GetFields();
-
         void Activate();
+
+        LuaTable GetResources();
+        double GetResourceCapacity(string name);
+        double GetResourceAmount(string name);
 
     }
 }

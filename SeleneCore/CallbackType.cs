@@ -12,6 +12,7 @@ namespace Selene
         PhysicsUpdate,
         Control,
         Save,
-        Load
+        Load,
+        VesselChange
     }
 }

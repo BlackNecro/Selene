@@ -101,5 +101,9 @@ namespace Selene
         {
             RootProcess.Execute(CallbackType.PhysicsUpdate);
         }
+        public void VesselChange()
+        {
+            RootProcess.Execute(CallbackType.VesselChange);
+        }
     }
 }

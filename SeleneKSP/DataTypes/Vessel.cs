@@ -185,6 +185,7 @@ namespace SeleneKSP.DataTypes
         public int GetCurrentStage()
         {
             return vessel.currentStage;
+
         }
 
         public int GetStageCount()

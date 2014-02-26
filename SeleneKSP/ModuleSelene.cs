@@ -27,6 +27,8 @@ namespace SeleneKSP
             if (vessel != null)
             {
                 vessel.OnFlyByWire += interpreter.OnFlyByWire;
+
+                GameEvents.onVesselWasModified.Add(v => { UnityEngine.Debug.Log("Selene Vessel Change"); if (v == vessel) { UnityEngine.Debug.Log("Right Vessel"); interpreter.VesselChange(); } });
             }
         }
 
