@@ -183,7 +183,8 @@ Process
 	Priority number 
 		sets the process priority defaults to 0
 		lower numbers get executed first
-		for now has no effect on root level processes
+	Name string
+		The name the process is listed under in the process list			
 	LoadFromFile(string path) bool
 		reloads the process from a file 
 		returns whether it was successful

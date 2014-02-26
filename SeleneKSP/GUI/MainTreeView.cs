@@ -235,7 +235,7 @@ namespace SeleneKSP.GUI
             {
                 DrawCollapseButton(proc);
             }
-            if (GUILayout.Button(proc.name))
+            if (GUILayout.Button(proc.Name))
             {
                 ToggleWindow(proc);
             }

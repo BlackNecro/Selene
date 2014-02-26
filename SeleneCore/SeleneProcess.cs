@@ -83,7 +83,8 @@ namespace Selene
         }
 
         SeleneCallback currentCallback;
-        public string name = "";
+        public string Name = "";
+        public string path = "";
         public string source = "";
         bool fromFile = false;
         bool run = false;
@@ -133,9 +134,10 @@ namespace Selene
             }
         }
 
-        public bool LoadFromFile(string path)
+        public bool LoadFromFile(string filepath)
         {
-            name = path;
+            path = filepath;
+            Name = path;
             source = ((ILuaDataProvider)luaState).ReadFile(path);
             fromFile = true;
 
@@ -143,10 +145,11 @@ namespace Selene
             return true;
         }
 
-        public bool LoadFromString(string newSource, string file)
+        public bool LoadFromString(string newSource, string sourceName)
         {
             fromFile = false;
-            name = file;
+            path = "";
+            Name = sourceName;
             source = newSource;
 
             LoadSource();
@@ -189,18 +192,18 @@ namespace Selene
                 callbackList.Clear();
             }
             environment = luaState.GetNewEnvironment();
-            return RunString(source, name);
+            return RunString(source, path);
         }
 
         public bool Reload()
         {
             if (fromFile)
             {
-                return LoadFromFile(name);
+                return LoadFromFile(path);
             }
             else
             {
-                return LoadFromString(source, name);
+                return LoadFromString(source, path);
             }
         }
 
@@ -265,7 +268,7 @@ namespace Selene
         {
             ConfigNode proc = new ConfigNode("Process");
             saveInto.AddNode(proc);
-            proc.AddValue("Name", EncodeString(name));
+            proc.AddValue("Name", EncodeString(path));
             proc.AddValue("Active", Active);
             if (!fromFile)
             {
@@ -359,7 +362,7 @@ namespace Selene
         {
             if (loadFrom != null)
             {
-                name = DecodeString(loadFrom.GetValue("Name"));
+                path = DecodeString(loadFrom.GetValue("Name"));
                 Active = Boolean.Parse(loadFrom.GetValue("Active"));
                 fromFile = Boolean.Parse(loadFrom.GetValue("FromFile"));
                 if (loadFrom.HasValue("Source"))

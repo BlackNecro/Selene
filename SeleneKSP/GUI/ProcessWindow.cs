@@ -57,7 +57,7 @@ namespace SeleneKSP.GUI
         {
             if (draw)
             {
-                windowPos = GUILayout.Window(windowID, windowPos, DrawWindow, process.name, GUILayout.MinHeight(300), GUILayout.MinWidth(400));
+                windowPos = GUILayout.Window(windowID, windowPos, DrawWindow, process.path, GUILayout.MinHeight(300), GUILayout.MinWidth(400));
                 UnityEngine.GUI.Box(ResizeHandle, "", HighLogic.Skin.box);
                 HandleResize();
             }
