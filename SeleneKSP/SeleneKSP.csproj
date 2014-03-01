@@ -76,6 +76,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModuleSelene.cs" />
     <Compile Include="Util\ActionHelper.cs" />
+    <Compile Include="Util\PartHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SeleneCore\SeleneCore.csproj">

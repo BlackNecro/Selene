@@ -7,6 +7,7 @@ using KSPVessel = global::Vessel;
 using Selene;
 using Selene.DataTypes;
 using NLua;
+using SeleneKSP.Util;
 
 namespace SeleneKSP.DataTypes
 {
@@ -197,6 +198,15 @@ namespace SeleneKSP.DataTypes
         {
             PartInfoGroup toReturn = new PartInfoGroup(provider);
             foreach(var part in vessel.Parts.Where(part => part.inverseStage == stageNum))
+            {
+                toReturn.AddPart(part);
+            }
+            return toReturn;
+        }
+        public IPartInfoGroup GetPartsByDecoupleStage(int stageNum)
+        {
+            PartInfoGroup toReturn = new PartInfoGroup(provider);
+            foreach (var part in vessel.Parts.Where(part => part.GetDecoupleStage() == stageNum))
             {
                 toReturn.AddPart(part);
             }

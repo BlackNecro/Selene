@@ -62,6 +62,7 @@ namespace SeleneKSP
         public override ICelestialBody GetCelestialBody(string name)
         {
             throw new NotImplementedException();
+            //FlightGlobals.fetch.bodies.Find(body => body.name == name);
         }
 
         public override IManeuverNode GetNextManeuverNode()
@@ -124,6 +125,10 @@ namespace SeleneKSP
         public override void AdvanceStage()
         {
             Staging.ActivateNextStage();
+        }
+        public override int GetCurrentStage()
+        {
+            return Staging.CurrentStage;
         }
     }
 }

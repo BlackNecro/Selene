@@ -278,5 +278,6 @@ namespace Selene
 
 
         abstract public void AdvanceStage();
+        abstract public int GetCurrentStage();
     }
 }

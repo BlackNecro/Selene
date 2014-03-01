@@ -28,6 +28,10 @@ namespace Selene.DataTypes
             unityQuat.z = (float)z;
             unityQuat.w = (float)w;
         }
+        public SeleneQuaternion(double rx, double ry, double rz)
+        {
+            SetEulerAngles(rx, ry, rz);
+        }
 
         public UnityEngine.Quaternion Quaternion
         {

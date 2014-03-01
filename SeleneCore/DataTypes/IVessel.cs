@@ -40,6 +40,6 @@ namespace Selene.DataTypes
         int GetStageCount();
 
         IPartInfoGroup GetPartsByStage(int stageNum);
-
+        IPartInfoGroup GetPartsByDecoupleStage(int stageNum);
     }
 }
