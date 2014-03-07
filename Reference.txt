@@ -196,3 +196,31 @@ Process
 		returns whether it was successful
 	Delete()
 		Deletes the process
+
+OrbitInfo
+	ap double
+		see apA	
+	apA double
+		apoapsis (distance from surface)
+	apR double
+		apoapsis (distance from center of parent body)
+	pe double
+		see peA	
+	peA double
+		periapsis (distance from surface)
+	peR double
+		periapsis (distance from center of parent body)
+	semiLatusRectum double
+		half the length of the chord parallel to the directrix through one of the orbit's foci
+	semiMinorAxis double
+		half the length of the shorter axis through the center of the orbit
+	eccentricity double
+		eccentricity of the orbit (0 being circular and 1 being parabolic)
+	inclination double
+		inclination of the orbit above the reference plane (degrees)
+	period double
+		orbital period (seconds)
+	timeToAp double
+		time before reaching the apoapsis (seconds)
+	timeToPe double
+		time before reaching the periapsis (seconds)

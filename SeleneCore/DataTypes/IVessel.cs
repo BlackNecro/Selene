@@ -21,6 +21,7 @@ namespace Selene.DataTypes
         SeleneQuaternion GetSurfaceRelativeRotation();
         SeleneQuaternion GetSurfaceRotation();
         ICelestialBody GetParentBody();
+        IOrbitInfo GetOrbit();
         #endregion
         #region Vessel properties
         double GetDryMass();

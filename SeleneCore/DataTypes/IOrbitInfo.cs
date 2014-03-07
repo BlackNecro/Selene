@@ -18,7 +18,7 @@ namespace Selene.DataTypes
         double semiMinorAxis { get; }
 
         double eccentricity { get; }
-        double inclication { get; }
+        double inclination { get; }
         double period { get; }
         double timeToAp { get; }
         double timeToPe { get; }

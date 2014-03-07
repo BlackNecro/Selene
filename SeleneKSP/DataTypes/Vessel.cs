@@ -70,6 +70,11 @@ namespace SeleneKSP.DataTypes
             throw new NotImplementedException();
         }
 
+        public IOrbitInfo GetOrbit()
+        {
+            return new OrbitInfo(provider, vessel.orbit);
+        }
+
         public double GetDryMass()
         {
             throw new NotImplementedException();
