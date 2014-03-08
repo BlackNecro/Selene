@@ -7,6 +7,8 @@ namespace Selene.DataTypes
 {
     public interface IOrbitInfo
     {
+        ICelestialBody body { get; }
+
         double ap { get; } // ApA
         double apA { get; } // surface
         double apR { get; } // center

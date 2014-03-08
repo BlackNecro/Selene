@@ -75,6 +75,11 @@ namespace SeleneKSP.DataTypes
             return new OrbitInfo(provider, vessel.orbit);
         }
 
+        public IFlightPlan GetFlightPlan()
+        {
+            return new FlightPlan(vessel.patchedConicSolver, vessel, provider);
+        }
+
         public double GetDryMass()
         {
             throw new NotImplementedException();

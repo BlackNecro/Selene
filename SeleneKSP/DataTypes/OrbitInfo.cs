@@ -23,6 +23,17 @@ namespace SeleneKSP.DataTypes
             return "( Ap:" + orbit.ApA + " Pe:" + orbit.PeA + " Inc:" + orbit.inclination + " Ecc:" + orbit.eccentricity + " )";
         }
 
+        public ICelestialBody body
+        {
+            get
+            {
+                if (orbit.referenceBody != null)
+                    return new CelestialBody(dataProvider, orbit.referenceBody);
+                else
+                    return null;
+            }
+        }
+
         public double ap { get { return orbit.ApA; } }
         public double apA { get { return orbit.ApA; } }
         public double apR { get { return orbit.ApR; } }

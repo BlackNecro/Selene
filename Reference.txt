@@ -82,8 +82,31 @@ Target
 		transforms a given local space vector into world space
 
 CelestialBody : Target
-	GetRadius() number
-		returns the radius
+	radius double
+		radius of the body (sea level)
+	mass double
+		mass of the body
+	gravity double
+		*not yet sure (CelestialBody.gravParameter)
+	atmosphereThickness double
+		thickness of the atmosphere (from sea level)
+	rotationPeriod double
+		time taken for the body to complete a rotation
+	sphereOfInfluence double
+		radius of the body's SOI
+	orbit OrbitInfo
+		body's orbit around reference body
+	referenceBody CelestialBody
+		reference body this body is orbiting
+	GetOrbitingBodies() table
+		sequential table of all satellite bodies
+	GetLat(Vector worldPos) double
+		returns latitude of given world position
+	GetLon(Vector worldPos) double
+		returns longitude of given world position
+	GetLatLonPos(double lat, double lon) Vector
+		returns world position of given coordinates (at sea level)
+
 
 Vessel : Target
 	GetAngularVelocity() Vector
@@ -110,6 +133,10 @@ Vessel : Target
 		returns current orbit velocity
 	GetParentBody() CelestialBody
 		returns the celestial body the vessel is orbiting
+	GetOrbit() OrbitInfo
+		returns the current orbit
+	GetFlightPlan() FlightPlan
+		returns the flight plan
 	GetPeriapsis() number
 		returns the current periapsis
 	GetRadarAltitude() number
@@ -198,6 +225,8 @@ Process
 		Deletes the process
 
 OrbitInfo
+	body CelestialBody
+		reference body
 	ap double
 		see apA	
 	apA double
@@ -224,3 +253,37 @@ OrbitInfo
 		time before reaching the apoapsis (seconds)
 	timeToPe double
 		time before reaching the periapsis (seconds)
+
+FlightPlan
+	Add(double UniversalTime) ManeuverNode
+		adds a new maneuver node to the flight plan
+	Add(double UniverseTime, Vector deltaV) ManeuverNode
+		adds a new maneuver node to the flight plan
+	Remove(ManeuverNode node)
+		removes a previously added maneuver node from the flight plan
+	GetNextNode() ManeuverNode
+		returns the first maneuver node in the flight plan, or nil
+	GetNextEncounter() OrbitInfo
+		returns the next encounter orbit, or nil
+	GetNodes() table
+		returns a sequential table of all maneuver nodes in the flight plan
+	GetOrbits() table
+		returns a sequential table of all orbits in the flight plan
+
+ManeuverNode
+	SetTime(double), GetTime() double, time double
+		sets/gets the universal time of the node
+	SetTimeTo(double), GetTimeTo() double, timeTo double
+		sets/gets the time of the node relative to the current time
+	SetRadial(double), GetRadial() double, radial double
+		sets/gets the node's delta-v radial (x) component		
+	SetNormal(double), GetNormal() double, normal double
+		sets/gets the node's delta-v normal (y) component
+	SetPrograde(double), GetPrograde() double, prograde double
+		sets/gets the node's delta-v prograde (z) component
+	SetDeltaV(Vector), GetDeltaV() Vector, deltaV Vector
+		sets/gets the node's delta-v (radial, normal, prograde)
+	GetBurnVector() Vector, burnVector Vector
+		gets the node's burn vector in world space
+	GetResultingOrbit() OrbitInfo, resultingOrbit OrbitInfo
+		gets the predicted orbit after this node

@@ -8,6 +8,7 @@ using Selene;
 using Selene.DataTypes;
 
 using SVessel = SeleneKSP.DataTypes.Vessel;
+using SCelestialBody = SeleneKSP.DataTypes.CelestialBody;
 using SeleneKSP.DataTypes;
 
 namespace SeleneKSP
@@ -61,8 +62,11 @@ namespace SeleneKSP
 
         public override ICelestialBody GetCelestialBody(string name)
         {
-            throw new NotImplementedException();
-            //FlightGlobals.fetch.bodies.Find(body => body.name == name);
+            CelestialBody b = FlightGlobals.fetch.bodies.Find(body => body.name == name);
+            if (b != null)
+                return new SCelestialBody(this, b);
+            else
+                return null;
         }
 
         public override IManeuverNode GetNextManeuverNode()
@@ -89,7 +93,10 @@ namespace SeleneKSP
         public override string ReadFile(string path)
         {
             path = System.IO.Path.Combine(AssemblyLoader.GetPathByType(typeof(Selene.SeleneInterpreter)),path);
-            return System.IO.File.ReadAllText(path);
+            if (System.IO.File.Exists(path))
+                return System.IO.File.ReadAllText(path);
+            else
+                return null;
         }
 
         public override NLua.LuaTable GetVessels()
