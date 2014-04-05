@@ -21,6 +21,8 @@ namespace Selene.DataTypes
         SeleneQuaternion GetSurfaceRelativeRotation();
         SeleneQuaternion GetSurfaceRotation();
         ICelestialBody GetParentBody();
+        IOrbitInfo GetOrbit();
+        IFlightPlan GetFlightPlan();
         #endregion
         #region Vessel properties
         double GetDryMass();
@@ -40,6 +42,6 @@ namespace Selene.DataTypes
         int GetStageCount();
 
         IPartInfoGroup GetPartsByStage(int stageNum);
-
+        IPartInfoGroup GetPartsByDecoupleStage(int stageNum);
     }
 }

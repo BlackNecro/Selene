@@ -62,6 +62,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTypes\IFlightPlan.cs" />
+    <Compile Include="DataTypes\IOrbitInfo.cs" />
     <Compile Include="DataTypes\IPartInfoGroup.cs" />
     <Compile Include="DataTypes\IPartInfo.cs" />
     <Compile Include="DataTypes\Quaternion.cs" />

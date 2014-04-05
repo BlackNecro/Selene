@@ -61,8 +61,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTypes\CelestialBody.cs" />
     <Compile Include="DataTypes\Controls.cs" />
     <Compile Include="DataTypes\EngineInfo.cs" />
+    <Compile Include="DataTypes\FlightPlan.cs" />
+    <Compile Include="DataTypes\ManeuverNode.cs" />
+    <Compile Include="DataTypes\OrbitInfo.cs" />
     <Compile Include="DataTypes\Part.cs" />
     <Compile Include="DataTypes\PartInfo.cs" />
     <Compile Include="DataTypes\PartInfoGroup.cs" />
@@ -76,6 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModuleSelene.cs" />
     <Compile Include="Util\ActionHelper.cs" />
+    <Compile Include="Util\PartHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SeleneCore\SeleneCore.csproj">

@@ -95,6 +95,13 @@ namespace Selene
                     end
                     Selene:Log(table.concat(sorted,' '))
                 end");
+            luaState.DoString(@"
+                function dofile(path)
+                    local src = assert(Selene:ReadFile(path), 'dofile: could not read file '..path);
+	                local chunk = assert(loadstring(src))
+	                setfenv(chunk, getfenv(2))
+	                return chunk()
+                end");
             FinalizeLuaState();
         }
 
@@ -278,5 +285,6 @@ namespace Selene
 
 
         abstract public void AdvanceStage();
+        abstract public int GetCurrentStage();
     }
 }

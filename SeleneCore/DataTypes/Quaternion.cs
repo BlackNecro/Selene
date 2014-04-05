@@ -28,6 +28,10 @@ namespace Selene.DataTypes
             unityQuat.z = (float)z;
             unityQuat.w = (float)w;
         }
+        public SeleneQuaternion(double rx, double ry, double rz)
+        {
+            SetEulerAngles(rx, ry, rz);
+        }
 
         public UnityEngine.Quaternion Quaternion
         {
@@ -139,6 +143,14 @@ namespace Selene.DataTypes
             return q.Quaternion;
         }
 
+        public static SeleneQuaternion Euler(double rx, double ry, double rz)
+        {
+            return UnityEngine.Quaternion.Euler((float)rx, (float)ry, (float)rz);
+        }
+        public static SeleneQuaternion Euler(SeleneVector angles)
+        {
+            return UnityEngine.Quaternion.Euler(angles.Vector3D);
+        }
         public static SeleneQuaternion AngleAxis(double angle, SeleneVector axis)
         {
             return UnityEngine.Quaternion.AngleAxis((float)angle, axis.Vector3D);
