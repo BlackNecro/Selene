@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using KPart = global::Part;
 using KSPVessel = global::Vessel;
 using Selene;
@@ -67,7 +68,7 @@ namespace SeleneKSP.DataTypes
 
         public ICelestialBody GetParentBody()
         {
-            throw new NotImplementedException();
+            return new CelestialBody(provider,vessel.mainBody);
         }
 
         public IOrbitInfo GetOrbit()
@@ -82,7 +83,7 @@ namespace SeleneKSP.DataTypes
 
         public double GetDryMass()
         {
-            throw new NotImplementedException();
+            return this.vessel.parts.Where(item => item.physicalSignificance == KPart.PhysicalSignificance.FULL).Sum((item) => item.mass);
         }
 
         public double GetMass()
@@ -97,11 +98,16 @@ namespace SeleneKSP.DataTypes
 
         public SeleneVector GetCenterOfDryMass()
         {
-            throw new NotImplementedException();
+            var center = new Vector3d();
+            var parts = this.vessel.parts.Where(item => item.physicalSignificance == KPart.PhysicalSignificance.FULL);
+            center = parts.Aggregate(center, (current, item) => current + (item.orgPos + (item.orgRot*item.CoMOffset)) *item.mass);
+            center /= parts.Sum((item) => item.mass);
+            return new SeleneVector(center);
         }
 
         public SeleneVector GetMomentOfInertia()
         {
+            //TODO Figure out the maths
             throw new NotImplementedException();
         }
 
