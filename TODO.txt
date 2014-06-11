@@ -36,7 +36,7 @@ Library:
 		Relative to Orbit
 		Relative to Surface
 		Relative to Planet		
-	
+
 	Autostage ( last stage )
 		
 	Burn delta V (amount)
@@ -51,6 +51,11 @@ Library:
 
 	Landing(lon, lat)
 
+	Drive to position(lon, lat)
+
+	Rendezvous(target, final distance)
+
+	Dock(target, docking port)
 
 
 
