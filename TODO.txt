@@ -29,6 +29,10 @@ Feature Scope Missing:
 			Firing them 
 
 Library:
+	Timer
+		Instance usage for getting delays and the like
+		Callback usage with repitition
+
 	PID Controller	
 
 	Hold Course
