@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using NLua;
 
 namespace Selene
@@ -161,18 +162,25 @@ namespace Selene
             luaState.CurrentProcess = this;
             try
             {
-
-                LuaFunction function = luaState.LuaState.LoadString(src, name);
-                LuaFunction envChanger = (LuaFunction)luaState.LuaState.LoadString(@"
-                    local args = {...}                                 
-                    setfenv(args[1],args[2])         
-                    ", "Environment Changer");
-                envChanger.Call(function, environment);
-                function.Call();
+                LuaFunction runInEnv = (LuaFunction) luaState.LuaState.LoadString(@"
+                    local args = {...}
+                    return load(args[1],args[2], 'bt',args[3]);  
+                ","Enviroment Runner");
+                object[] ret = runInEnv.Call(src, name, environment);
+                if (ret[0] is LuaFunction)
+                {
+                    ((LuaFunction) ret[0]).Call();
+                }
+                else
+                {
+                    luaState.Log(string.Format("Lua Error in {0}:\n{1} ", name.ToString(), ret[1]));
+                    luaState.revertCallStack();
+                    return false;
+                }
             }
             catch (NLua.Exceptions.LuaException ex)
             {
-                luaState.Log(string.Format("Lua Error in {0}:\n{1} ", name, ex.Message));
+                luaState.Log(string.Format("Lua Error in {0}:\n{1} ", name.ToString(), ex.Message));
                 luaState.revertCallStack();
                 return false;
             }
@@ -330,17 +338,17 @@ namespace Selene
                     }
                     savedTables.Remove(tableName);
                 }
-                else if (val is Selene.DataTypes.SeleneVector)
+                else if (val is Vector3d)
                 {
-                    Selene.DataTypes.SeleneVector vec = (Selene.DataTypes.SeleneVector)val;
+                    Vector3d vec = (Vector3d)val;
                     newNode.name = "Vector";
                     newNode.AddValue("X", vec.x);
                     newNode.AddValue("Y", vec.y);
                     newNode.AddValue("Z", vec.z);
                 }
-                else if (val is UnityEngine.QuaternionD)
+                else if (val is QuaternionD)
                 {
-                    UnityEngine.QuaternionD quat = (UnityEngine.QuaternionD)val;
+                    QuaternionD quat = (QuaternionD)val;
                     newNode.name = "Quaternion";
                     newNode.AddValue("X", quat.x);
                     newNode.AddValue("Y", quat.y);
@@ -393,12 +401,12 @@ namespace Selene
                 case "Boolean":
                     return Boolean.Parse(loadFrom.GetValue("Value"));
                 case "Vector":
-                    return new Selene.DataTypes.SeleneVector(
+                    return new Vector3d(
                         Double.Parse(loadFrom.GetValue("X")),
                         Double.Parse(loadFrom.GetValue("Y")),
                         Double.Parse(loadFrom.GetValue("Z")));
                 case "Quaternion":
-                    return new UnityEngine.QuaternionD(
+                    return new QuaternionD(
                         Double.Parse(loadFrom.GetValue("X")),
                         Double.Parse(loadFrom.GetValue("Y")),
                         Double.Parse(loadFrom.GetValue("Z")),

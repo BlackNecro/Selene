@@ -32,7 +32,7 @@ namespace SeleneKSP.DataTypes
             }
             return null;
         }
-        public IManeuverNode Add(double ut, SeleneVector dv)
+        public IManeuverNode Add(double ut, Vector3d dv)
         {
             KManeuverNode n = solver.AddManeuverNode(ut);
             if (n != null)

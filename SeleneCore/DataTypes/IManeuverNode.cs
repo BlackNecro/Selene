@@ -27,12 +27,12 @@ namespace Selene.DataTypes
         double GetPrograde();
         double prograde { get; }
 
-        void SetDeltaV(SeleneVector dv);
-        SeleneVector GetDeltaV();
-        SeleneVector deltaV { get; }
+        void SetDeltaV(Vector3d dv);
+        Vector3d GetDeltaV();
+        Vector3d deltaV { get; }
 
-        SeleneVector GetBurnVector();
-        SeleneVector burnVector { get; }
+        Vector3d GetBurnVector();
+        Vector3d burnVector { get; }
 
         IOrbitInfo GetResultingOrbit();
         IOrbitInfo resultingOrbit { get; }

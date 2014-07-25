@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NLua;
+using UnityEngine;
 
 namespace Selene.DataTypes
 {
     public interface IPartInfo
     {
-        SeleneVector GetOffset();
-        SeleneQuaternion GetRotation();
+        Vector3d GetOffset();
+        QuaternionD GetRotation();
         string GetName();
         string GetTitle();
         double GetMass();

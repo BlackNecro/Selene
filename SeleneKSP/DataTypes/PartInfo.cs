@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using KVessel = Vessel;
 using KPart = Part;
 using Selene;
@@ -28,9 +29,9 @@ namespace SeleneKSP.DataTypes
             }                               
         }
 
-        public SeleneVector GetOffset()
+        public Vector3d GetOffset()
         {
-            return new SeleneVector(part.orgPos);
+            return part.orgPos;
         }
 
         public string GetName()
@@ -54,7 +55,7 @@ namespace SeleneKSP.DataTypes
             return part.mass;
         }
 
-        public SeleneQuaternion GetRotation()
+        public QuaternionD GetRotation()
         {
             return part.orgRot;
         }

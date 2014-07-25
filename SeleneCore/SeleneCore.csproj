@@ -39,16 +39,8 @@
       <HintPath>..\..\..\KSP_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="KeraLua">
-      <HintPath>..\KeraLua.dll</HintPath>
-    </Reference>
-    <Reference Include="KopiLua, Version=1.3.5135.3288, Culture=neutral, PublicKeyToken=e25f4af1e4f7b31c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\KopiLua.dll</HintPath>
-    </Reference>
-    <Reference Include="NLua, Version=1.3.0.0, Culture=neutral, PublicKeyToken=8df2ab518030ea95, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\NLua.dll</HintPath>
+    <Reference Include="NLua">
+      <HintPath>..\..\KSPLua\NLua.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,15 +58,12 @@
     <Compile Include="DataTypes\IOrbitInfo.cs" />
     <Compile Include="DataTypes\IPartInfoGroup.cs" />
     <Compile Include="DataTypes\IPartInfo.cs" />
-    <Compile Include="DataTypes\Quaternion.cs" />
-    <Compile Include="DataTypes\Vector.cs" />
     <Compile Include="SeleneLuaState.cs" />
     <Compile Include="CallbackType.cs" />
     <Compile Include="DataTypes\ICelestialBody.cs" />
     <Compile Include="DataTypes\IControls.cs" />
     <Compile Include="DataTypes\IEngineInfo.cs" />
     <Compile Include="DataTypes\IPart.cs" />
-    <Compile Include="DataTypes\Util.cs" />
     <Compile Include="GUI\IButton.cs" />
     <Compile Include="GUI\IGUIElement.cs" />
     <Compile Include="DataTypes\IManeuverNode.cs" />

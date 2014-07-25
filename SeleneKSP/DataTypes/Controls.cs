@@ -20,27 +20,27 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public SeleneVector GetTranslation()
+        public Vector3d GetTranslation()
         {
-            return new SeleneVector(-ctrlstate.X, -ctrlstate.Z, -ctrlstate.Y);
+            return new Vector3d(-ctrlstate.X, -ctrlstate.Z, -ctrlstate.Y);
         }                                         
 
-        public void SetTranslation(SeleneVector newValue)
+        public void SetTranslation(Vector3d newValue)
         {
-            SeleneVector clamped = SUtil.Math.Clamp(newValue, -1.0, 1.0);
+            Vector3d clamped = SUtil.Math.Clamp(newValue, -1.0, 1.0);
             ctrlstate.X = (float)-clamped.x;
             ctrlstate.Y = (float)-clamped.z;
             ctrlstate.Z = (float)-clamped.y;
         }
 
-        public SeleneVector GetRotation()
+        public Vector3d GetRotation()
         {
-            return new SeleneVector(-ctrlstate.pitch, -ctrlstate.roll,-ctrlstate.yaw);
+            return new Vector3d(-ctrlstate.pitch, -ctrlstate.roll,-ctrlstate.yaw);
         }
 
-        public void SetRotation(SeleneVector newValue)
+        public void SetRotation(Vector3d newValue)
         {
-            SeleneVector clamped = SUtil.Math.Clamp(newValue, -1.0, 1.0);
+            Vector3d clamped = SUtil.Math.Clamp(newValue, -1.0, 1.0);
             ctrlstate.pitch = (float)-clamped.x;
             ctrlstate.yaw = (float)-clamped.z;
             ctrlstate.roll = (float)-clamped.y;

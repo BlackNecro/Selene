@@ -19,8 +19,8 @@ namespace Selene.DataTypes
         ICelestialBody referenceBody { get; }
 
         LuaTable GetOrbitingBodies();
-        double GetLat(SeleneVector wpos);
-        double GetLon(SeleneVector wpos);
-        SeleneVector GetLatLonPos(double lat, double lon);
+        double GetLat(Vector3d wpos);
+        double GetLon(Vector3d wpos);
+        Vector3d GetLatLonPos(double lat, double lon);
     }
 }

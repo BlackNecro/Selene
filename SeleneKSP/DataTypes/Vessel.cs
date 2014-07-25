@@ -51,9 +51,9 @@ namespace SeleneKSP.DataTypes
         {
             return vessel.obt_speed;
         }
-        public SeleneVector GetOrbitVelocity()
+        public Vector3d GetOrbitVelocity()
         {
-            return new SeleneVector(vessel.obt_velocity);
+            return vessel.obt_velocity;
         }
 
         public double GetSurfaceSpeed()
@@ -61,9 +61,9 @@ namespace SeleneKSP.DataTypes
             return vessel.srfSpeed;
         }
 
-        public SeleneVector GetSurfaceVelocity()
+        public Vector3d GetSurfaceVelocity()
         {
-            return new SeleneVector(vessel.srf_velocity);
+            return vessel.srf_velocity;
         }
 
         public ICelestialBody GetParentBody()
@@ -91,21 +91,21 @@ namespace SeleneKSP.DataTypes
             return vessel.GetTotalMass();
         }
 
-        public SeleneVector GetCenterOfMass()
+        public Vector3d GetCenterOfMass()
         {
-            return new SeleneVector(vessel.findLocalCenterOfMass());
+            return vessel.findLocalCenterOfMass();
         }
 
-        public SeleneVector GetCenterOfDryMass()
+        public Vector3d GetCenterOfDryMass()
         {
             var center = new Vector3d();
             var parts = this.vessel.parts.Where(item => item.physicalSignificance == KPart.PhysicalSignificance.FULL);
             center = parts.Aggregate(center, (current, item) => current + (item.orgPos + (item.orgRot*item.CoMOffset)) *item.mass);
             center /= parts.Sum((item) => item.mass);
-            return new SeleneVector(center);
+            return center;
         }
 
-        public SeleneVector GetMomentOfInertia()
+        public Vector3d GetMomentOfInertia()
         {
             //TODO Figure out the maths
             throw new NotImplementedException();
@@ -126,12 +126,12 @@ namespace SeleneKSP.DataTypes
             return tab;
         }
 
-        public SeleneVector GetPosition()
+        public Vector3d GetPosition()
         {
-            return new SeleneVector(vessel.GetWorldPos3D());
+            return vessel.GetWorldPos3D();
         }
 
-        public SeleneQuaternion GetRotation()
+        public QuaternionD GetRotation()
         {
             return vessel.transform.rotation;
         }
@@ -147,14 +147,14 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public SeleneQuaternion GetSurfaceRelativeRotation()
+        public QuaternionD GetSurfaceRelativeRotation()
         {
             // Transform the vessel rotation into the surface reference
             UnityEngine.Quaternion absRotation = GetRotation();
             UnityEngine.Quaternion srfRelRotation = UnityEngine.Quaternion.Inverse(GetSurfaceRotation()) * absRotation;
             return srfRelRotation;
         }
-        public SeleneQuaternion GetSurfaceRotation()
+        public QuaternionD GetSurfaceRotation()
         {
             // Adapted from Mechjeb2 VesselState.cs
             Vector3d CoM = vessel.findWorldCenterOfMass();
@@ -164,9 +164,9 @@ namespace SeleneKSP.DataTypes
             return UnityEngine.Quaternion.LookRotation(north, up);
         }
 
-        public SeleneVector GetAngularVelocity()
+        public Vector3d GetAngularVelocity()
         {
-            return new SeleneVector(vessel.angularVelocity);
+            return vessel.angularVelocity;
         }
 
 
@@ -182,14 +182,14 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public SeleneVector WorldToLocal(SeleneVector toTransform)
+        public Vector3d WorldToLocal(Vector3d toTransform)
         {
-            return new SeleneVector(UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform);                                                                                          
+            return UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform;                                                                                          
         }
 
-        public SeleneVector LocalToWorld(SeleneVector toTransform)
+        public Vector3d LocalToWorld(Vector3d toTransform)
         {
-            return new SeleneVector(((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform);
+            return ((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform;
         }
 
 

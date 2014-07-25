@@ -285,29 +285,29 @@ namespace SeleneKSP.GUI
                         ListVariable((NLua.LuaTable)value, newPath);
                     }
                 }
-                else if (value is Selene.DataTypes.SeleneVector)
+                else if (value is Vector3d)
                 {
                     string newPath = keyPath + "/" + key;
                     VariableTreeView.CollapsibleButton(key.ToString() + " (Vector)", newPath, VariableStyle);
                     if (VariableTreeView.Expanded(newPath))
                     {
                         VariableTreeView.Indent();
-                        Selene.DataTypes.SeleneVector vec = (Selene.DataTypes.SeleneVector)value;
+                        Vector3d vec = (Vector3d)value;
                         VariableTreeView.SpacedButton("x = " + vec.x, VariableStyle);
                         VariableTreeView.SpacedButton("y = " + vec.y, VariableStyle);
                         VariableTreeView.SpacedButton("z = " + vec.z, VariableStyle);
-                        VariableTreeView.SpacedButton("length = " + vec.Length, VariableStyle);
+                        VariableTreeView.SpacedButton("mag = " + vec.magnitude, VariableStyle);
                         VariableTreeView.Unindent();
                     }
                 }
-                else if (value is Selene.DataTypes.SeleneQuaternion)
+                else if (value is QuaternionD)
                 {
                     string newPath = keyPath + "/" + key;
                     VariableTreeView.CollapsibleButton(key.ToString() + " (Quaternion)", newPath, VariableStyle);
                     if (VariableTreeView.Expanded(newPath))
                     {
                         VariableTreeView.Indent();
-                        Selene.DataTypes.SeleneQuaternion quat = (Selene.DataTypes.SeleneQuaternion)value;
+                        QuaternionD quat = (QuaternionD)value;
                         VariableTreeView.SpacedButton("x = " + quat.x, VariableStyle);
                         VariableTreeView.SpacedButton("y = " + quat.y, VariableStyle);
                         VariableTreeView.SpacedButton("z = " + quat.z, VariableStyle);

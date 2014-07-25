@@ -90,25 +90,25 @@ namespace SeleneKSP.DataTypes
             get { return GetPrograde(); }
         }
 
-        public void SetDeltaV(SeleneVector dv)
+        public void SetDeltaV(Vector3d dv)
         {
-            node.DeltaV = dv.Vector3D;
+            node.DeltaV = dv;
             Update();
         }
-        public SeleneVector GetDeltaV()
+        public Vector3d GetDeltaV()
         {
-            return new SeleneVector(node.DeltaV);
+            return node.DeltaV;
         }
-        public SeleneVector deltaV
+        public Vector3d deltaV
         {
             get { return GetDeltaV(); }
         }
 
-        public SeleneVector GetBurnVector()
+        public Vector3d GetBurnVector()
         {
-            return new SeleneVector(node.GetBurnVector(vessel.orbit));
+            return node.GetBurnVector(vessel.orbit);
         }
-        public SeleneVector burnVector
+        public Vector3d burnVector
         {
             get { return GetBurnVector(); }
         }

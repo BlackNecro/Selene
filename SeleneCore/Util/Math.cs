@@ -12,9 +12,9 @@ namespace Selene.Util
         {
             return (val < vMin ? vMin : (val < vMax ? val : vMax));
         }
-        public static SeleneVector Clamp(SeleneVector v, double vMin, double vMax)
+        public static Vector3d Clamp(Vector3d v, double vMin, double vMax)
         {
-            return new SeleneVector(Clamp(v.x, vMin, vMax), Clamp(v.y, vMin, vMax), Clamp(v.z, vMin, vMax));
+            return new Vector3d(Clamp(v.x, vMin, vMax), Clamp(v.y, vMin, vMax), Clamp(v.z, vMin, vMax));
         }
     }
 }

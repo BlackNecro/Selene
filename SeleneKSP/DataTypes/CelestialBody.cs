@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Selene.DataTypes;
 using NLua;
+using UnityEngine;
 using KCelestialBody = global::CelestialBody;
 
 namespace SeleneKSP.DataTypes
@@ -52,24 +53,24 @@ namespace SeleneKSP.DataTypes
             }
             return toReturn;
         }
-        public double GetLat(SeleneVector wpos)
+        public double GetLat(Vector3d wpos)
         {
-            return body.GetLatitude(wpos.Vector3D);
+            return body.GetLatitude(wpos);
         }
-        public double GetLon(SeleneVector wpos)
+        public double GetLon(Vector3d wpos)
         {
-            return body.GetLongitude(wpos.Vector3D);
+            return body.GetLongitude(wpos);
         }
-        public SeleneVector GetLatLonPos(double lat, double lon)
+        public Vector3d GetLatLonPos(double lat, double lon)
         {
             return body.GetWorldSurfacePosition(lat, lon, 0);
         }
 
-        public SeleneVector GetPosition()
+        public Vector3d GetPosition()
         {
             return body.position;
         }
-        public SeleneQuaternion GetRotation()
+        public QuaternionD GetRotation()
         {
             return body.transform.rotation;
         }
@@ -78,13 +79,13 @@ namespace SeleneKSP.DataTypes
             return body.name;
         }
 
-        public SeleneVector WorldToLocal(SeleneVector toTransform)
+        public Vector3d WorldToLocal(Vector3d toTransform)
         {
-            return new SeleneVector(UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)body.transform.rotation) * toTransform);
+            return (UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)body.transform.rotation)) * toTransform;
         }
-        public SeleneVector LocalToWorld(SeleneVector toTransform)
+        public Vector3d LocalToWorld(Vector3d toTransform)
         {
-            return new SeleneVector(((UnityEngine.QuaternionD)body.transform.rotation) * toTransform);
+            return (((UnityEngine.QuaternionD)body.transform.rotation) * toTransform);
         }
     }
 }

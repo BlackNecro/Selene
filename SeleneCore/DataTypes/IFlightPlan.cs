@@ -9,7 +9,7 @@ namespace Selene.DataTypes
     public interface IFlightPlan
     {
         IManeuverNode Add(double ut);
-        IManeuverNode Add(double ut, SeleneVector dv);
+        IManeuverNode Add(double ut, Vector3d dv);
         void Remove(IManeuverNode node);
 
         IManeuverNode GetNextNode();

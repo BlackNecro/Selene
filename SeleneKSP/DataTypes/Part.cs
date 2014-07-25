@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 using KPart = Part;
 using Selene.DataTypes;
 
@@ -17,9 +18,9 @@ namespace SeleneKSP.DataTypes
             part = toUse;                                
         }
 
-        public SeleneVector GetOffset()
+        public Vector3d GetOffset()
         {
-            return new SeleneVector(part.orgPos);
+            return part.orgPos;
         }
 
         public string GetName()
@@ -44,7 +45,7 @@ namespace SeleneKSP.DataTypes
         }
 
 
-        public SeleneQuaternion GetRotation()
+        public QuaternionD GetRotation()
         {
             return part.orgRot;
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Selene.DataTypes
 {
@@ -11,15 +12,15 @@ namespace Selene.DataTypes
         double GetRadarAltitude();
         double GetAltitude();
         double GetOrbitSpeed();
-        SeleneVector GetOrbitVelocity(); 
+        Vector3d GetOrbitVelocity(); 
         double GetSurfaceSpeed();
-        SeleneVector GetSurfaceVelocity();
-        SeleneVector GetAngularVelocity();
+        Vector3d GetSurfaceVelocity();
+        Vector3d GetAngularVelocity();
 
         double GetApoapsis();
         double GetPeriapsis();
-        SeleneQuaternion GetSurfaceRelativeRotation();
-        SeleneQuaternion GetSurfaceRotation();
+        QuaternionD GetSurfaceRelativeRotation();
+        QuaternionD GetSurfaceRotation();
         ICelestialBody GetParentBody();
         IOrbitInfo GetOrbit();
         IFlightPlan GetFlightPlan();
@@ -27,9 +28,9 @@ namespace Selene.DataTypes
         #region Vessel properties
         double GetDryMass();
         double GetMass();
-        SeleneVector GetCenterOfMass();
-        SeleneVector GetCenterOfDryMass();
-        SeleneVector GetMomentOfInertia();
+        Vector3d GetCenterOfMass();
+        Vector3d GetCenterOfDryMass();
+        Vector3d GetMomentOfInertia();
         #endregion
         #region Part Info
         NLua.LuaTable GetEngines();

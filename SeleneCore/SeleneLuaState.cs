@@ -58,11 +58,15 @@ namespace Selene
                 luanet.load_assembly('Assembly-CSharp')
                 luanet.load_assembly('Assembly-CSharp-firstpass')
                 luanet.load_assembly('SeleneCore')
-                Vector = luanet.import_type('Selene.DataTypes.SeleneVector')
-                Quaternion = luanet.import_type('Selene.DataTypes.SeleneQuaternion')
+                
+                Vector = luanet.import_type('Vector3d')
+                Quaternion = luanet.import_type('UnityEngine.QuaternionD')
                 Debug = luanet.import_type('UnityEngine.Debug')
+
+                --[[
                 local util = luanet.import_type('Selene.DataTypes.VectorQuaternionUtil')
                 
+
                 local quat = Quaternion(0,0,0,0)
                 local qmt = getmetatable(quat)
                 qmt.__mul = util.MultiplyQuat
@@ -78,6 +82,7 @@ namespace Selene
                 qmt = nil
                 vmt = nil
                 util = nil
+                ]]
             ", "Library Initialization");
             luaState["Selene"] = this;
             luaState.DoString(@"
@@ -94,13 +99,6 @@ namespace Selene
                         sorted[i] = tostring(args[i])
                     end
                     Selene:Log(table.concat(sorted,' '))
-                end");
-            luaState.DoString(@"
-                function dofile(path)
-                    local src = assert(Selene:ReadFile(path), 'dofile: could not read file '..path);
-	                local chunk = assert(loadstring(src))
-	                setfenv(chunk, getfenv(2))
-	                return chunk()
                 end");
             FinalizeLuaState();
         }
