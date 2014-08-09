@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using KSPLua;
 using NLua;
 
 namespace Selene
@@ -180,7 +181,7 @@ namespace Selene
         }
         public LuaTable GetNewTable()
         {
-            return (LuaTable)luaState.DoString("return {}")[0];
+            return luaState.CreateTable();
         }
 
         public LuaTable GetNewEnvironment()
