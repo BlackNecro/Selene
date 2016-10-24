@@ -10,10 +10,6 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
     {
         bool enabled = false;
         double percentage = 0.5;
-        public SeleneVector GetOffset()
-        {
-            throw new NotImplementedException();
-        }
 
         public bool GetEnabled()
         {
@@ -25,12 +21,12 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
             enabled = newValue;
         }
 
-        public double GetThrottlePercentage()
+        public double GetThrustPercentage()
         {
             return percentage;
         }
 
-        public void SetThrottlePercentage(double newValue)
+        public void SetThrustPercentage(double newValue)
         {
             percentage = newValue;
         }
@@ -38,6 +34,37 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
         public double GetMaxThrust()
         {
             return 1000;
+        }
+
+
+        public SeleneVector GetOffset()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UnityEngine.QuaternionD GetRotation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetTitle()
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetMass()
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetDryMass()
+        {
+            throw new NotImplementedException();
         }
     }
 }

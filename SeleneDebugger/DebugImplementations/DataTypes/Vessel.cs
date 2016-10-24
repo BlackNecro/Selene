@@ -12,7 +12,7 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
     class Vessel : IVessel
     {
         Lua luaState;
-        
+
         public Vessel(Lua state)
         {
             luaState = state;
@@ -84,7 +84,7 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
             LuaTable toReturn = (LuaTable)luaState.DoString("return {}")[0];
             toReturn[1] = new Engine();
             toReturn[2] = new Engine();
-      
+
             return toReturn;
         }
 
@@ -99,7 +99,7 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
             throw new NotImplementedException();
         }
 
-        double IVessel.GetHeight()
+        double IVessel.GetNormalHeight()
         {
             throw new NotImplementedException();
         }
@@ -164,7 +164,7 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
             throw new NotImplementedException();
         }
 
-        UnityEngine.Quaternion ITarget.GetRotation()
+        UnityEngine.QuaternionD ITarget.GetRotation()
         {
             throw new NotImplementedException();
         }
@@ -178,5 +178,38 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
         {
             throw new NotImplementedException();
         }
+
+
+        public SeleneVector GetAngularVelocity()
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetApoapsis()
+        {
+            throw new NotImplementedException();
+        }
+
+        public double GetPeriapsis()
+        {
+            throw new NotImplementedException();
+        }
+
+        public UnityEngine.QuaternionD GetSurfaceRelativeRotation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public SeleneVector WorldToLocal(SeleneVector toTransform)
+        {
+            throw new NotImplementedException();
+        }
+
+        public SeleneVector LocalToWorld(SeleneVector toTransform)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }

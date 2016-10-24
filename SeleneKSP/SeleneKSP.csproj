@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -41,7 +41,6 @@
       <HintPath>..\..\KSPLua\NLua.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -50,8 +49,23 @@
       <HintPath>..\..\000_Toolbar\Toolbar.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\KSP-1.2-prerelease\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\KSP-1.2-prerelease\KSP_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>..\..\KSP-1.2-prerelease\KSP_Data\Managed\System.Core.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\KSP_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\KSP-1.2-prerelease\KSP_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\KSP-1.2-prerelease\KSP_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="KSPAssets">
+      <HintPath>..\..\KSP-1.2-prerelease\KSP_Data\Managed\KSPAssets.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -87,11 +101,15 @@
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>
+  <!--
   <PropertyGroup>
-    <PostBuildEvent>COPY $(TargetDir)$(TargetFileName) $(SolutionDir)Plugins
-COPY $(TargetDir)SeleneCore.dll $(SolutionDir)Plugins</PostBuildEvent>
+    <PostBuildEvent>
+      COPY $(TargetDir)$(TargetFileName) $(SolutionDir)Plugins
+      COPY $(TargetDir)SeleneCore.dll $(SolutionDir)Plugins
+    </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+-->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
