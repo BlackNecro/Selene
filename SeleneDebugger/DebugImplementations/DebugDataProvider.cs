@@ -14,7 +14,6 @@ namespace SeleneDebugger.DebugImplementations
 
         //event RegisterCallback CreateTickCallback;
 
-
         public DebugDataProvider()
         {
             LoadLuaClasses();
@@ -65,7 +64,6 @@ namespace SeleneDebugger.DebugImplementations
             throw new NotImplementedException();
         }
 
-
         public Selene.GUI.IButton CreateNewButton(string Name)
         {
             throw new NotImplementedException();
@@ -75,7 +73,6 @@ namespace SeleneDebugger.DebugImplementations
         //{
         //    throw new NotImplementedException();
         //}
-
 
         public void Log(string toLog)
         {
@@ -168,5 +165,15 @@ vmt.__div = Vector.Divide
         //{
         //    throw new NotImplementedException();
         //}
+
+        public void AdvanceStage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetCurrentStage()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

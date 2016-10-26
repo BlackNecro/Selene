@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Selene.DataTypes;
+//using Selene.DataTypes;
+using UnityEngine;
 
 namespace SeleneDebugger.DebugImplementations.DataTypes
 {
@@ -36,8 +37,7 @@ namespace SeleneDebugger.DebugImplementations.DataTypes
             return 1000;
         }
 
-
-        public SeleneVector GetOffset()
+        public Vector3d GetOffset()
         {
             throw new NotImplementedException();
         }

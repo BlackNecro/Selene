@@ -68,7 +68,7 @@ namespace SeleneKSP.DataTypes
 
         public ICelestialBody GetParentBody()
         {
-            return new CelestialBody(provider,vessel.mainBody);
+            return new CelestialBody(provider, vessel.mainBody);
         }
 
         public IOrbitInfo GetOrbit()
@@ -93,14 +93,14 @@ namespace SeleneKSP.DataTypes
 
         public Vector3d GetCenterOfMass()
         {
-            return vessel.findLocalCenterOfMass();
+            return vessel.localCoM;
         }
 
         public Vector3d GetCenterOfDryMass()
         {
             var center = new Vector3d();
             var parts = this.vessel.parts.Where(item => item.physicalSignificance == KPart.PhysicalSignificance.FULL);
-            center = parts.Aggregate(center, (current, item) => current + (item.orgPos + (item.orgRot*item.CoMOffset)) *item.mass);
+            center = parts.Aggregate(center, (current, item) => current + (item.orgPos + (item.orgRot * item.CoMOffset)) * item.mass);
             center /= parts.Sum((item) => item.mass);
             return center;
         }
@@ -122,7 +122,7 @@ namespace SeleneKSP.DataTypes
                     EngineInfo info = new EngineInfo(part, engine);
                     tab[index++] = info;
                 }
-            }            
+            }
             return tab;
         }
 
@@ -157,7 +157,7 @@ namespace SeleneKSP.DataTypes
         public QuaternionD GetSurfaceRotation()
         {
             // Adapted from Mechjeb2 VesselState.cs
-            Vector3d CoM = vessel.findWorldCenterOfMass();
+            Vector3d CoM = vessel.CoM;
             Vector3d up = (CoM - vessel.mainBody.position).normalized;
             Vector3d north = Vector3d.Exclude(up, (vessel.mainBody.position + vessel.mainBody.transform.up * (float)vessel.mainBody.Radius) - CoM).normalized;
             Vector3d east = vessel.mainBody.getRFrmVel(CoM).normalized;
@@ -184,7 +184,7 @@ namespace SeleneKSP.DataTypes
 
         public Vector3d WorldToLocal(Vector3d toTransform)
         {
-            return UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform;                                                                                          
+            return UnityEngine.QuaternionD.Inverse((UnityEngine.QuaternionD)vessel.transform.rotation) * toTransform;
         }
 
         public Vector3d LocalToWorld(Vector3d toTransform)
@@ -195,7 +195,7 @@ namespace SeleneKSP.DataTypes
 
         public IPartInfoGroup GetParts()
         {
-            return new PartInfoGroup(provider,vessel);
+            return new PartInfoGroup(provider, vessel);
         }
 
 
@@ -213,7 +213,7 @@ namespace SeleneKSP.DataTypes
         public IPartInfoGroup GetPartsByStage(int stageNum)
         {
             PartInfoGroup toReturn = new PartInfoGroup(provider);
-            foreach(var part in vessel.Parts.Where(part => part.inverseStage == stageNum))
+            foreach (var part in vessel.Parts.Where(part => part.inverseStage == stageNum))
             {
                 toReturn.AddPart(part);
             }

@@ -24,6 +24,5 @@ namespace Selene
         IControls CreateControlState(FlightCtrlState toCreate);
         void AdvanceStage();
         int GetCurrentStage();
-
     }
 }
