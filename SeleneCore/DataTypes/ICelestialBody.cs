@@ -11,7 +11,7 @@ namespace Selene.DataTypes
         double radius { get; }
         double mass { get; }
         double gravity { get; }
-        double atmosphereThickness { get; }
+        //double atmosphereThickness { get; }
         double rotationPeriod { get; }
         double sphereOfInfluence { get; }
 

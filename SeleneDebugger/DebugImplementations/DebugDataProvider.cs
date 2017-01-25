@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Selene;
+using Selene.DataTypes;
+using NLua;
 
 namespace SeleneDebugger.DebugImplementations
 {
@@ -10,8 +12,7 @@ namespace SeleneDebugger.DebugImplementations
     {
         NLua.Lua luaState = new NLua.Lua();
 
-        event RegisterCallback CreateTickCallback;
-
+        //event RegisterCallback CreateTickCallback;
 
         public DebugDataProvider()
         {
@@ -32,6 +33,12 @@ namespace SeleneDebugger.DebugImplementations
         {
             throw new NotImplementedException();
         }
+
+        public LuaTable GetVessels()
+        {
+            throw new NotImplementedException();
+        }
+
         public Selene.DataTypes.ITarget GetCurrentTarget()
         {
             throw new NotImplementedException();
@@ -57,17 +64,15 @@ namespace SeleneDebugger.DebugImplementations
             throw new NotImplementedException();
         }
 
-
         public Selene.GUI.IButton CreateNewButton(string Name)
         {
             throw new NotImplementedException();
         }
 
-        Selene.GUI.IButton Selene.ILuaDataProvider.CreateNewButton(string Name)
-        {
-            throw new NotImplementedException();
-        }
-
+        //Selene.GUI.IButton Selene.ILuaDataProvider.CreateNewButton(string Name)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Log(string toLog)
         {
@@ -76,7 +81,7 @@ namespace SeleneDebugger.DebugImplementations
 
         public void RegisterTick(NLua.LuaFunction toCall)
         {
-            CreateTickCallback(Selene.CallbackType.Tick, toCall);
+            //CreateTickCallback(Selene.CallbackType.Tick, toCall);
         }
         #region Custom Crap
 
@@ -93,14 +98,14 @@ namespace SeleneDebugger.DebugImplementations
 
         #endregion
 
-        NLua.Lua Selene.ILuaDataProvider.GetLuaState()
-        {
-            return luaState;
-        }
-        void Selene.ILuaDataProvider.RegisterCallbackEvent(RegisterCallback toCall)
-        {
-            CreateTickCallback += toCall;
-        }
+        //NLua.Lua Selene.ILuaDataProvider.GetLuaState()
+        //{
+        //    return luaState;
+        //}
+        //void Selene.ILuaDataProvider.RegisterCallbackEvent(RegisterCallback toCall)
+        //{
+        //    CreateTickCallback += toCall;
+        //}
 
 
         public void LoadLuaClasses()
@@ -136,7 +141,37 @@ vmt.__div = Vector.Divide
             throw new NotImplementedException();
         }
 
-        public IControl CreateControlState(FlightCtrlState toCreate)
+        public string ReadFile(string path)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AppendFile(string path, string content)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool WriteFile(string path, string content)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IControls CreateControlState(FlightCtrlState toCreate)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public IControl CreateControlState(FlightCtrlState toCreate)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public void AdvanceStage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetCurrentStage()
         {
             throw new NotImplementedException();
         }

@@ -35,7 +35,7 @@ namespace SeleneKSP
 
         public override IVessel GetExecutingVessel()
         {
-            if(parentModule == null)
+            if (parentModule == null)
             {
                 return null;
             }
@@ -92,7 +92,7 @@ namespace SeleneKSP
 
         public override string ReadFile(string path)
         {
-            path = System.IO.Path.Combine(AssemblyLoader.GetPathByType(typeof(Selene.SeleneInterpreter)),path);
+            path = System.IO.Path.Combine(AssemblyLoader.GetPathByType(typeof(Selene.SeleneInterpreter)), path);
             if (System.IO.File.Exists(path))
                 return System.IO.File.ReadAllText(path);
             else
@@ -131,11 +131,13 @@ namespace SeleneKSP
         }
         public override void AdvanceStage()
         {
-            Staging.ActivateNextStage();
+            //Staging.ActivateNextStage();
+            throw new NotImplementedException();
         }
         public override int GetCurrentStage()
         {
-            return Staging.CurrentStage;
+            //return Staging.CurrentStage;
+            throw new NotImplementedException();
         }
     }
 }

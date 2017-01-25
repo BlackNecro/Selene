@@ -9,7 +9,8 @@ namespace SeleneKSP.Util
     {
         public static bool IsDecoupler(this Part p)
         {
-            return (p is Decoupler || p is DecouplerGUI || p is RadialDecoupler || p.Modules.OfType<ModuleDecouple>().Count() > 0);
+            //return (p is Decoupler || p is DecouplerGUI || p is RadialDecoupler || p.Modules.OfType<ModuleDecouple>().Count() > 0);
+            return false;
         }
         public static bool IsLaunchClamp(this Part p)
         {

@@ -14,7 +14,7 @@ namespace SeleneKSP.GUI
 
         Dictionary<Vessel, HashSet<SeleneKSP.ModuleSelene>> loadedModules = new Dictionary<Vessel, HashSet<SeleneKSP.ModuleSelene>>();
         private bool Displayed = false;
-        Rect WindowPosition = new Rect(0,Screen.height/4,0,0);
+        Rect WindowPosition = new Rect(0, Screen.height / 4, 0, 0);
 
         float indentSize = 30;
 
@@ -25,7 +25,7 @@ namespace SeleneKSP.GUI
         HashSet<object> ExpandedObjects = new HashSet<object>();
         HashSet<Selene.SeleneProcess> ProcessesToDelete = new HashSet<Selene.SeleneProcess>();
 
-        Dictionary<Selene.SeleneProcess, ProcessWindow> ProcessWindows = new Dictionary<Selene.SeleneProcess,ProcessWindow>();
+        Dictionary<Selene.SeleneProcess, ProcessWindow> ProcessWindows = new Dictionary<Selene.SeleneProcess, ProcessWindow>();
 
         TreeFileBrowser fileSelection;
 
@@ -106,16 +106,16 @@ namespace SeleneKSP.GUI
                 WindowPosition = GUILayout.Window(windowID, WindowPosition, DrawWindow, "Selene", GUILayout.ExpandWidth(true));
             }
 
-            int WindowID = windowID;
-            foreach( var kv in ProcessWindows)
+            //int WindowID = windowID;
+            foreach (var kv in ProcessWindows)
             {
-                if(kv.Key.Parent == null)
+                if (kv.Key.Parent == null)
                 {
                     ProcessesToDelete.Add(kv.Key);
                 }
                 else
                 {
-                    kv.Value.Draw();   
+                    kv.Value.Draw();
                 }
             }
             if (Event.current.type == EventType.Repaint)
@@ -176,7 +176,7 @@ namespace SeleneKSP.GUI
 
         private void DrawCollapseButton(object toToggle)
         {
-            string caption = "▶";     
+            string caption = "▶";
             if (ExpandedObjects.Contains(toToggle))
             {
                 caption = "◢";
@@ -222,7 +222,7 @@ namespace SeleneKSP.GUI
         void ListProcesses(ModuleSelene mod)
         {
             var proc = mod.Interpreter.RootProcess;
-            ListProcess(mod.Interpreter,proc);
+            ListProcess(mod.Interpreter, proc);
         }
 
         private void ListProcess(Selene.SeleneInterpreter interp, Selene.SeleneProcess proc)
@@ -244,21 +244,22 @@ namespace SeleneKSP.GUI
             {
                 if (GUILayout.Button("✖", GUILayout.Width(buttonWidth)))
                 {
-                    ProcessesToDelete.Add(proc);                    
+                    ProcessesToDelete.Add(proc);
                 }
             }
             else
             {
-                if(GUILayout.Button("+",GUILayout.Width(buttonWidth)))
-                {                    
+                if (GUILayout.Button("+", GUILayout.Width(buttonWidth)))
+                {
                     fileSelection = new TreeFileBrowser(
-                    (success,path)=>{
-                        if(success)
+                    (success, path) =>
+                    {
+                        if (success)
                         {
                             interp.CreateProcess(path);
                         }
                         return true;
-                    }, AssemblyLoader.GetPathByType(typeof(Selene.SeleneInterpreter)), 243885754);                  
+                    }, AssemblyLoader.GetPathByType(typeof(Selene.SeleneInterpreter)), 243885754);
                 }
             }
             string caption = "■";
@@ -267,7 +268,7 @@ namespace SeleneKSP.GUI
                 if (proc.IsActive)
                 {
                     caption = "▶";
-                } 
+                }
                 else
                 {
                     caption = "▷";
@@ -289,7 +290,7 @@ namespace SeleneKSP.GUI
             {
                 foreach (var child in proc.Children)
                 {
-                    ListProcess(interp,child);
+                    ListProcess(interp, child);
                 }
             }
             curIndent -= indentSize;

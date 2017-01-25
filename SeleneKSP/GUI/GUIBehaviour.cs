@@ -12,20 +12,20 @@ namespace SeleneKSP.GUI
     {
 
 
-        Toolbar.IButton toolbarButton;
+        //Toolbar.IButton toolbarButton;
         MainTreeView main;
 
         void Start()
         {
             main = new MainTreeView();
-            toolbarButton = Toolbar.ToolbarManager.Instance.add("Selene", "selenebutton");
-            toolbarButton.TexturePath = "Selene/icon";
-            toolbarButton.ToolTip = "Selene";
-            toolbarButton.OnClick += (e) => main.Toggle();
+            //toolbarButton = Toolbar.ToolbarManager.Instance.add("Selene", "selenebutton");
+            //toolbarButton.TexturePath = "Selene/icon";
+            //toolbarButton.ToolTip = "Selene";
+            //toolbarButton.OnClick += (e) => main.Toggle();
         }
         void OnDestroy()
         {
-            toolbarButton.Destroy();
+            //toolbarButton.Destroy();
         }
 
 
@@ -33,5 +33,5 @@ namespace SeleneKSP.GUI
         {
             main.Draw();
         }
-    }   
+    }
 }

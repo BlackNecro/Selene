@@ -17,13 +17,13 @@ namespace SeleneKSP.DataTypes
         public CelestialBody(KSPDataProvider provider, KCelestialBody toUse)
         {
             dataProvider = provider;
-            body = toUse;                       
+            body = toUse;
         }
 
         public double radius { get { return body.Radius; } }
         public double mass { get { return body.Mass; } }
         public double gravity { get { return body.gravParameter; } }
-        public double atmosphereThickness { get { return body.maxAtmosphereAltitude; } }
+        //public double atmosphereThickness { get { return body.maxAtmosphereAltitude; } }
         public double rotationPeriod { get { return body.rotationPeriod; } }
         public double sphereOfInfluence { get { return body.sphereOfInfluence; } }
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +6,7 @@ using Selene.DataTypes;
 using NLua;
 
 namespace Selene
-{    
+{
     public interface ILuaDataProvider
     {
         double GetUniverseTime();
@@ -24,6 +24,5 @@ namespace Selene
         IControls CreateControlState(FlightCtrlState toCreate);
         void AdvanceStage();
         int GetCurrentStage();
-
     }
 }
